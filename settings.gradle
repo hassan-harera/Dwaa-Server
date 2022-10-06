@@ -1,0 +1,3 @@
+rootProject.name = "Dwaa-Server"
+include ":medicine"
+
