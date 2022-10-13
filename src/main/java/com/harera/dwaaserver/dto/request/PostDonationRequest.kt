@@ -1,16 +1,15 @@
 package com.harera.dwaaserver.dto.request
 
-import com.harera.dwaaserver.dto.UserLocation
+import com.harera.dwaaserver.common.utils.CustomPattern
+import javax.validation.constraints.Pattern
 
 data class PostDonationRequest (
     val medicineId: Int,
     val packagingId: Int,
-    val quantity: Int,
-    val price: Int,
+    val quantity: Float,
+    @field:Pattern(regexp = CustomPattern.DESCRIPTION)
     val description: String,
-    val validityInDays: Int,
-    val validityInMonths: Int,
-    val validityInYears: Int,
-    val productionDate: String,
-    val location: UserLocation
+    @field:Pattern(regexp = CustomPattern.DATE_FORMAT)
+    val expirationDate: String,
+    val cityId: Int
 )

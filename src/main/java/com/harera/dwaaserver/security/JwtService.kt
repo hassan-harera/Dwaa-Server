@@ -24,4 +24,5 @@ interface JwtService {
 
     fun extractUsernameFromAuthorization(authorization: String): String
     fun extractUsernameFromBearerToken(token: String): String
+    fun generateUserToken(uid: Int): String
 }

@@ -1,21 +1,16 @@
 package com.harera.dwaaserver.entity
 
-import java.sql.Date
-import java.util.*
+import java.util.Date
 import javax.persistence.*
 
 @Entity
-@Table(name = "Donation_Post", schema = "public", catalog = "Dwaa")
+@Table(name = "donation_post", schema = "public", catalog = "Dwaa")
 open class DonationPostEntity {
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "post_id")
     open var postId: Int? = null
-
-    @Basic
-    @Column(name = "post_title")
-    open var postTitle: String? = null
 
     @Basic
     @Column(name = "post_description")
@@ -26,28 +21,42 @@ open class DonationPostEntity {
     open var postDate: Date? = null
 
     @Basic
-    @Column(name = "user_id")
-    open var userId: String? = null
+    @Column(name = "medicine_id")
+    open var medicineId: Int? = null
 
     @Basic
-    @Column(name = "medicine_production_date")
-    open var medicineProductionDate: Date? = null
+    @Column(name = "medicine_expiration_date")
+    open var medicineExpirationDate: Date? = null
 
     @Basic
-    @Column(name = "medicine_validity_months")
-    open var medicineValidityMonths: Int? = null
+    @Column(name = "city_id")
+    open var cityId: Int? = null
 
     @Basic
-    @Column(name = "medicine_validity_days")
-    open var medicineValidityDays: Int? = null
+    @Column(name = "uid")
+    open var uid: Int? = null
 
     @Basic
-    @Column(name = "medicine_validity_years")
-    open var medicineValidityYears: Int? = null
-
-    @Basic
-    @Column(name = "user_location_id")
-    open var userLocationId: Int? = null
+    @Column(name = "post_state_id")
+    open var postStateId: Int = 1
 
     constructor()
+
+    constructor(
+        uid: Int,
+        medicineId: Int,
+        medicineExpirationDate: Date,
+        postDescription: String? = null,
+        postDate: Date,
+        cityId: Int,
+        postStateId: Int = 1,
+    ) {
+        this.postDescription = postDescription
+        this.postDate = postDate
+        this.medicineId = medicineId
+        this.medicineExpirationDate = medicineExpirationDate
+        this.cityId = cityId
+        this.uid = uid
+        this.postStateId = postStateId
+    }
 }

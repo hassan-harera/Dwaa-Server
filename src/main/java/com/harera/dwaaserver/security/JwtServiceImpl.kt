@@ -55,6 +55,12 @@ class JwtServiceImpl : JwtService {
         return createToken(claims, userDetails.username, date)
     }
 
+    override fun generateUserToken(uid : Int): String {
+        val claims: Map<String, Any> = HashMap()
+        val date = Date(Date().time + USER_TOKEN_EXPIRATION_IN_MILLIS)
+        return createToken(claims, uid.toString(), date)
+    }
+
     override fun generateDriverToken(userDetails: UserDetails): String {
         val claims: Map<String, Any> = HashMap()
         return createToken(claims, userDetails.username, MILLIS_IN_DAY)
