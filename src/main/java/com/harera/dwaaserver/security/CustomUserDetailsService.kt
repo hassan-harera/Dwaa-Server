@@ -11,11 +11,13 @@ class CustomUserDetailsService(
 ) : UserDetailsService {
 
     override fun loadUserByUsername(username: String): UserDetails? {
-        val user = userRepository.getUserWithUsername(username)
-        return if (user.isPresent) {
-            CustomUserDetails(user.get().username!!, user.get().password!!)
-        } else {
-            null
+        try {
+            val uid: Int = username.toInt()
+            val user = userRepository.getUserWithUid(uid).get()
+            return CustomUserDetails(user.uid.toString(), user.password!!)
+        } catch (exception: Exception) {
+            exception.printStackTrace()
+            return null
         }
     }
 }

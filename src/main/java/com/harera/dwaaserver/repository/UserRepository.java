@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 
 @Repository
-public interface UserRepository extends JpaRepository<UserEntity, String> {
+public interface UserRepository extends JpaRepository<UserEntity, Integer> {
 
     @Query("select u from UserEntity u where u.username = ?1")
     Optional<UserEntity> getUserWithUsername(@NonNull String username);

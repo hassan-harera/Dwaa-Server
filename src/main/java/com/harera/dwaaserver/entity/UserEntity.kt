@@ -1,9 +1,7 @@
 package com.harera.dwaaserver.entity
 
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.Id
-import javax.persistence.Table
+import javax.persistence.*
+import javax.validation.constraints.Email
 
 @Entity
 @Table(name = "user", schema = "public", catalog = "Dwaa")
@@ -11,11 +9,13 @@ class UserEntity {
 
     @Id
     @Column(name = "uid")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     var uid: Int? = null
 
     @Column(name = "username", unique = true)
     var username: String? = null
 
+    @Email(message = "Email should be valid")
     @Column(name = "email", unique = true)
     var email: String? = null
 
@@ -34,14 +34,12 @@ class UserEntity {
     constructor() {}
 
     constructor(
-        uid: Int,
         username: String,
         password: String,
-        phoneNumber: String,
         lastName: String,
         firstName: String,
+        phoneNumber: String? = null,
     ) {
-        this.uid = uid
         this.username = username
         this.password = password
         this.phoneNumber = phoneNumber
