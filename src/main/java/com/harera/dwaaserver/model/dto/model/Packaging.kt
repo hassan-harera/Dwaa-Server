@@ -1,4 +1,4 @@
-package com.harera.dwaaserver.dto.model
+package com.harera.dwaaserver.model.dto.model
 
 data class Packaging(
     val packagingId: Int,

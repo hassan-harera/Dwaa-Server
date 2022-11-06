@@ -1,4 +1,4 @@
-package com.harera.dwaaserver.entity
+package com.harera.dwaaserver.model.entity
 
 import javax.persistence.Column
 import javax.persistence.Entity

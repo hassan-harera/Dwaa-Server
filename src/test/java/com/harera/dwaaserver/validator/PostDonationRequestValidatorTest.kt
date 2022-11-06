@@ -1,6 +1,6 @@
 package com.harera.dwaaserver.validator
 
-import com.harera.dwaaserver.dto.request.PostDonationRequest
+import com.harera.dwaaserver.model.dto.request.PostDonationRequest
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.w3c.dom.ls.LSResourceResolver

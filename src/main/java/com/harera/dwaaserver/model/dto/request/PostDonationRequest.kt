@@ -1,4 +1,4 @@
-package com.harera.dwaaserver.dto.request
+package com.harera.dwaaserver.model.dto.request
 
 import com.harera.dwaaserver.common.utils.CustomPattern
 import javax.validation.constraints.Pattern

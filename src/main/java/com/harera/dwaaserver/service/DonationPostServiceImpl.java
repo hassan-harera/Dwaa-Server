@@ -7,8 +7,8 @@ import javax.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.harera.dwaaserver.dto.request.PostDonationRequest;
-import com.harera.dwaaserver.entity.DonationPostEntity;
+import com.harera.dwaaserver.model.dto.request.PostDonationRequest;
+import com.harera.dwaaserver.model.entity.DonationPostEntity;
 import com.harera.dwaaserver.mapper.DonationPostEntityMapper;
 import com.harera.dwaaserver.repository.DonationPostEntityRepository;
 

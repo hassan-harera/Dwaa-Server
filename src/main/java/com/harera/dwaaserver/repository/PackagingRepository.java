@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import com.harera.dwaaserver.entity.PackagingEntity;
+import com.harera.dwaaserver.model.entity.PackagingEntity;
 
 @Repository
 public interface PackagingRepository extends JpaRepository<PackagingEntity, Integer> {

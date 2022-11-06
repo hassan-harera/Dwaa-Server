@@ -1,4 +1,4 @@
-package com.harera.dwaaserver.dto.response
+package com.harera.dwaaserver.model.dto.response
 
 class PostDonationResponse {
     var donationId: String? = null

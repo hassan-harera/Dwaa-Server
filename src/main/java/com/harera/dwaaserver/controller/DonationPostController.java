@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.harera.dwaaserver.common.exception.NullDateException;
-import com.harera.dwaaserver.dto.request.PostDonationRequest;
-import com.harera.dwaaserver.entity.DonationPostEntity;
+import com.harera.dwaaserver.model.dto.request.PostDonationRequest;
+import com.harera.dwaaserver.model.entity.DonationPostEntity;
 import com.harera.dwaaserver.security.JwtService;
 import com.harera.dwaaserver.service.DonationPostService;
 

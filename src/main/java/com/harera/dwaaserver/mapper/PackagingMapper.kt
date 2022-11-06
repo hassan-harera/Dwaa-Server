@@ -1,7 +1,7 @@
 package com.harera.dwaaserver.mapper
 
-import com.harera.dwaaserver.dto.model.Packaging
-import com.harera.dwaaserver.entity.PackagingEntity
+import com.harera.dwaaserver.model.dto.model.Packaging
+import com.harera.dwaaserver.model.entity.PackagingEntity
 
 object PackagingMapper {
 

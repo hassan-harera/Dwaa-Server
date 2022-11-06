@@ -1,6 +1,6 @@
-package com.harera.dwaaserver.entity
+package com.harera.dwaaserver.model.entity
 
-import com.harera.dwaaserver.entity.pk.MedicineIngredientPK
+import com.harera.dwaaserver.model.entity.pk.MedicineIngredientPK
 import javax.persistence.*
 
 @Entity

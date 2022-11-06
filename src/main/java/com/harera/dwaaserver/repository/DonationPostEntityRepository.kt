@@ -1,6 +1,6 @@
 package com.harera.dwaaserver.repository;
 
-import com.harera.dwaaserver.entity.DonationPostEntity
+import com.harera.dwaaserver.model.entity.DonationPostEntity
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 

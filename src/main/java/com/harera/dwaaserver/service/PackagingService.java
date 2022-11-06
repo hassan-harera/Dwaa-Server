@@ -4,7 +4,7 @@ import reactor.core.publisher.Mono;
 
 import java.util.List;
 
-import com.harera.dwaaserver.dto.model.Packaging;
+import com.harera.dwaaserver.model.dto.model.Packaging;
 
 public interface PackagingService {
 

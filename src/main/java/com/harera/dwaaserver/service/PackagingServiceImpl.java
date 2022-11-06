@@ -8,8 +8,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.harera.dwaaserver.dto.model.Packaging;
-import com.harera.dwaaserver.entity.PackagingEntity;
+import com.harera.dwaaserver.model.dto.model.Packaging;
+import com.harera.dwaaserver.model.entity.PackagingEntity;
 import com.harera.dwaaserver.mapper.PackagingMapper;
 import com.harera.dwaaserver.repository.PackagingRepository;
 

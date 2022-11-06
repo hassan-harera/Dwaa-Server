@@ -1,7 +1,7 @@
 package com.harera.dwaaserver.data
 
-import com.harera.dwaaserver.dto.request.PostDonationRequest
-import com.harera.dwaaserver.entity.DonationPostEntity
+import com.harera.dwaaserver.model.dto.request.PostDonationRequest
+import com.harera.dwaaserver.model.entity.DonationPostEntity
 import java.util.*
 
 

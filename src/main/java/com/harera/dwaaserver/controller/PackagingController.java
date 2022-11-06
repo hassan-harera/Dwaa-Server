@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.harera.dwaaserver.controller.utils.Param;
-import com.harera.dwaaserver.dto.model.Packaging;
+import com.harera.dwaaserver.model.dto.model.Packaging;
 import com.harera.dwaaserver.service.PackagingService;
 
 @RestController

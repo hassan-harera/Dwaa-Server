@@ -15,12 +15,12 @@ import com.harera.dwaaserver.model.user.OAuthLoginRequest;
 import com.harera.dwaaserver.repository.UserRepository;
 import com.harera.dwaaserver.util.MStringUtils;
 
-import static com.harera.dwaaserver.consts.ErrorCode.INCORRECT_USERNAME_FORMAT;
-import static com.harera.dwaaserver.consts.ErrorCode.INCORRECT_USERNAME_PASSWORD_CODE;
-import static com.harera.dwaaserver.consts.ErrorCode.MANDATORY_PASSWORD;
-import static com.harera.dwaaserver.consts.ErrorCode.MANDATORY_TOKEN;
-import static com.harera.dwaaserver.consts.ErrorCode.MANDATORY_USER_NAME;
-import static com.harera.dwaaserver.consts.ErrorMessage.INCORRECT_USERNAME_PASSWORD_MESSAGE;
+import static com.harera.dwaaserver.util.ErrorCode.INCORRECT_USERNAME_FORMAT;
+import static com.harera.dwaaserver.util.ErrorCode.INCORRECT_USERNAME_PASSWORD_CODE;
+import static com.harera.dwaaserver.util.ErrorCode.MANDATORY_PASSWORD;
+import static com.harera.dwaaserver.util.ErrorCode.MANDATORY_TOKEN;
+import static com.harera.dwaaserver.util.ErrorCode.MANDATORY_USER_NAME;
+import static com.harera.dwaaserver.util.ErrorMessage.INCORRECT_USERNAME_PASSWORD_MESSAGE;
 
 @Log4j2
 @Service

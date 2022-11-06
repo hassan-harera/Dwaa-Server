@@ -1,4 +1,4 @@
-package com.harera.dwaaserver.dto
+package com.harera.dwaaserver.model.dto
 
 data class UserLocation(
     val userId: String,

@@ -1,6 +1,6 @@
 package com.harera.dwaaserver.data
 
-import com.harera.dwaaserver.entity.UserEntity
+import com.harera.dwaaserver.model.entity.UserEntity
 
 
 const val uid = 10004

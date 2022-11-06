@@ -1,4 +1,4 @@
-package com.harera.dwaaserver.entity.pk
+package com.harera.dwaaserver.model.entity.pk
 
 import java.io.Serializable
 
