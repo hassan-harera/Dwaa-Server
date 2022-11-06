@@ -5,7 +5,6 @@ import com.harera.dwaaserver.common.mapper.DateMapper
 import com.harera.dwaaserver.dto.request.PostDonationRequest
 import com.harera.dwaaserver.entity.DonationPostEntity
 import java.util.*
-import kotlin.jvm.Throws
 
 object DonationPostEntityMapper {
 
