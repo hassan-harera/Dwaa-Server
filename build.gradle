@@ -49,6 +49,9 @@ dependencies {
 
     //Lang 3
     implementation("org.apache.commons:commons-lang3:3.12.0")
+
+    //firebase
+    implementation 'com.google.firebase:firebase-admin:8.2.0'
 }
 
 tasks.named('test') {
