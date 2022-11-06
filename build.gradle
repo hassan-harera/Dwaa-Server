@@ -7,7 +7,7 @@ plugins {
 
 group = 'com.harera'
 version = '1.0.0-SNAPSHOT'
-sourceCompatibility = '17'
+sourceCompatibility = '8'
 
 configurations {
     compileOnly {
