@@ -1,11 +1,12 @@
-package com.harera.dwaaserver.util;
+package com.harera.dwaaserver.util
 
-public final class DateFormat {
-    public static final String DATE_FORMAT = "yyyy-MM-dd";
-    public static final String TIME_FORMAT = "HH:mm";
-    public static final String DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm";
+object DateFormat {
+    @JvmStatic
+    val DATE_FORMAT = "yyyy-MM-dd"
 
-    private DateFormat() {
+    @JvmStatic
+    val TIME_FORMAT = "HH:mm"
 
-    }
+    @JvmStatic
+    val DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm"
 }

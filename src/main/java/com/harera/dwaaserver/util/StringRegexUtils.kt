@@ -1,7 +1,6 @@
 package com.harera.dwaaserver.util
 
-object MStringUtils {
-
+object StringRegexUtils {
 
     fun isUsername(subject: String): Boolean {
         return subject.matches(RegexPattern.USERNAME_REGEX.toRegex())
@@ -13,5 +12,10 @@ object MStringUtils {
 
     fun isPhoneNumber(subject: String): Boolean {
         return subject.matches(RegexPattern.MOBILE_REGEX.toRegex())
+    }
+
+    @JvmStatic
+    fun isValidPassword(Password: String): Boolean {
+        return Password.matches(RegexPattern.PASSWORD_REGEX.toRegex())
     }
 }

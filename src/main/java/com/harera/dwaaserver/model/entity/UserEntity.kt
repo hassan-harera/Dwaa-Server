@@ -39,6 +39,7 @@ class UserEntity {
         lastName: String,
         firstName: String,
         phoneNumber: String? = null,
+        email: String? = null,
     ) {
         this.username = username
         this.password = password
