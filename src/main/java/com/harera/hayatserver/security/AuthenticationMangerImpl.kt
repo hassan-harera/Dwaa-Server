@@ -1,6 +1,6 @@
 package com.harera.hayatserver.security
 
-import com.englizya.security.AuthenticationManager
+import com.harera.security.AuthenticationManager
 import com.harera.hayatserver.security.utils.Constant.MILLIS_IN_DAY
 import com.harera.hayatserver.security.utils.Constant.USER_TOKEN_EXPIRATION_IN_DAYS
 import io.jsonwebtoken.Claims

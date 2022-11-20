@@ -14,7 +14,7 @@ class CustomUserDetailsService(
         try {
             val uid: Int = username.toInt()
             val user = userRepository.getUserWithUid(uid).get()
-            return CustomUserDetails(user.uid.toString(), user.password!!)
+            return CustomUserDetails(user.id.toString(), user.password!!)
         } catch (exception: Exception) {
             exception.printStackTrace()
             return null

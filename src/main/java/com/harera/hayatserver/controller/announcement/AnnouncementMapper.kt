@@ -1,4 +1,4 @@
-package com.harera.hayatserver.announcements.mapper
+package com.harera.hayatserver.controller.announcement
 
 //object AnnouncementMapper {
 //

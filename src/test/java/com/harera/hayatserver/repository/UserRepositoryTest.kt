@@ -8,7 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest
 
 
 @SpringBootTest
-class UserEntityRepositoryTest {
+class UserRepositoryTest {
 
     @Autowired
     private lateinit var userRepository: UserRepository
@@ -20,7 +20,7 @@ class UserEntityRepositoryTest {
          *
          */
         userRepository.deleteById(uid)
-        val optional = userRepository.saveAndFlush(userEntity)
+        val optional = userRepository.saveAndFlush(user)
         Assertions.assertThat(optional).isNotNull
     }
     @Test

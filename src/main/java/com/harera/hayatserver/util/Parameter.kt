@@ -1,4 +1,4 @@
-package com.englizya.announcements.utils
+package com.harera.hayatserver.util
 
 object Parameter {
     const val ANNOUNCEMENT_STATE = "announcement_state"

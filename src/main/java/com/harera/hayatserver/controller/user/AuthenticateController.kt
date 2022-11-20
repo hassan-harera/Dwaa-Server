@@ -35,7 +35,7 @@ class AuthenticateController(
         }
     }
 
-    @PostMapping("/login/oauth")
+    @PostMapping("/oauth/login")
     fun login(@RequestBody loginRequest: OAuthLoginRequest): ResponseEntity<LoginResponse> {
         return userService.login(loginRequest).let { ResponseEntity.ok(it) }
     }

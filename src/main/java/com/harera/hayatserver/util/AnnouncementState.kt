@@ -1,4 +1,4 @@
-package com.englizya.announcements.utils
+package com.harera.hayatserver.util
 
 object AnnouncementState {
     const val ACTIVE = "active"

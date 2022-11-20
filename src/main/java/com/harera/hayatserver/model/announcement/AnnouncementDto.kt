@@ -1,6 +1,6 @@
-package com.harera.hayatserver.announcements.dto
+package com.harera.hayatserver.model.announcement
 
-class Announcement {
+open class AnnouncementDto {
     var id: Long = 0
     lateinit var title: String
     var description: String? = null
