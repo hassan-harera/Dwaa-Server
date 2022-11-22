@@ -25,4 +25,7 @@ object ErrorCode {
     const val FORMAT_USER_PASSWORD = "password_002"
     const val UNIQUE_CLINIC_MOBILE = "mobile_003"
     const val FORMAT_CLINIC_MOBILE = "mobile_004"
+
+    const val NOT_FOUND_CITY_ID = "city_001"
+    const val NOT_FOUND_STATE_ID = "state_001"
 }

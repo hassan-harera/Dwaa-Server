@@ -18,7 +18,7 @@ import com.harera.hayatserver.model.communication.CommunicationType;
 import com.harera.hayatserver.model.user.User;
 
 @Entity
-@Table(name = "donation", schema = "public", catalog = "Dwaa")
+@Table(name = "donation")
 @Setter
 @Getter
 public class Donation extends BaseEntity {
@@ -40,7 +40,7 @@ public class Donation extends BaseEntity {
     private ZonedDateTime expirationDate;
 
     @ManyToOne(targetEntity = Category.class)
-    @JoinColumn(name = "donation_type_id", referencedColumnName = "category_id")
+    @JoinColumn(name = "donation_type_id", referencedColumnName = "id")
     private Category category;
 
     @ManyToOne(targetEntity = DonationState.class)

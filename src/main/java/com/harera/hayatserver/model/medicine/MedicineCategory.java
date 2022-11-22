@@ -1,4 +1,4 @@
-package com.harera.hayatserver.model.donation;
+package com.harera.hayatserver.model.medicine;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -10,13 +10,13 @@ import javax.persistence.Table;
 
 import com.harera.hayatserver.model.BaseEntity;
 
-@Entity
-@Table(name = "donation_state", schema = "public", catalog = "Dwaa")
 @Setter
 @Getter
-public class DonationState extends BaseEntity {
+@Entity
+@Table(name = "medicine_category")
+public class MedicineCategory extends BaseEntity {
 
     @Basic
-    @Column(name = "state")
-    private String donationState;
+    @Column(name = "name")
+    private String category;
 }

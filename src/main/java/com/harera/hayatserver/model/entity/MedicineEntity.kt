@@ -11,16 +11,16 @@ import javax.persistence.Table
 open class MedicineEntity {
 
     @Id
-    @Column(name = "medicine_id")
+    @Column(name = "id")
     open var medicineId: Int? = null
 
-    @Column(name = "medicine_name")
+    @Column(name = "name")
     open var medicineName: String? = null
 
-    @Column(name = "package_id", insertable = false, updatable = false)
+    @Column(name = "unit_id", insertable = false, updatable = false)
     open var packageId: Int? = null
 
-    @Column(name = "package_id")
+    @Column(name = "unit_id")
     lateinit open var medicineDescription: String
 
     @Column(name = "inserting_date")

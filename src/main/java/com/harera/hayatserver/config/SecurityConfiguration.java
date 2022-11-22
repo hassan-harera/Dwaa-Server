@@ -55,6 +55,8 @@ public class SecurityConfiguration {
                 .authorizeRequests()
                 .antMatchers("/api/v1/login", "/api/v1/signup").permitAll()
                 .antMatchers("/api/v1/unit/**").permitAll()
+                .antMatchers("/api/v1/cities/**").permitAll()
+                .antMatchers("/api/v1/states/**").permitAll()
                 .antMatchers("/api/v1/packaging/**").permitAll()
                 .antMatchers("/api/v1/announcements/**").permitAll()
                 .anyRequest()

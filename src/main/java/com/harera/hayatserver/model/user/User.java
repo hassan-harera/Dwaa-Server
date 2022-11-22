@@ -1,7 +1,5 @@
 package com.harera.hayatserver.model.user;
 
-import lombok.Data;
-
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,7 +8,7 @@ import javax.persistence.Table;
 import com.harera.hayatserver.model.BaseEntity;
 
 @Entity
-@Table(name = "user", schema = "public", catalog = "Dwaa")
+@Table(name = "user")
 public class User extends BaseEntity {
 
     @Basic
