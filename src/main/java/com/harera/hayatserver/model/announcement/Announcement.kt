@@ -24,9 +24,9 @@ open class Announcement : BaseEntity {
     @Column(name = "description", nullable = true)
     open var description: String? = null
 
-    @Basic
-    @Column(name = "image", nullable = false)
-    lateinit var imageUrl: String
+//    @Basic
+//    @Column(name = "image", nullable = false)
+//    lateinit var imageUrl: String
 
     @Basic
     @Column(name = "title", nullable = false)

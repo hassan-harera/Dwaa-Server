@@ -1,7 +1,7 @@
 package com.harera.hayatserver.controller.announcements
 
 import com.harera.hayatserver.util.Parameter
-import com.harera.hayatserver.model.announcement.AnnouncementDto
+import com.harera.hayatserver.model.announcement.AnnouncementResponse
 import com.harera.hayatserver.service.announcement.AnnouncementService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
@@ -16,7 +16,7 @@ class AnnouncementController(
 ) {
 
     @GetMapping
-    fun get(): ResponseEntity<List<AnnouncementDto>> {
+    fun get(): ResponseEntity<List<AnnouncementResponse>> {
         return announcementService.getAnnouncements().let {
             ResponseEntity.ok(it)
         }
@@ -28,7 +28,7 @@ class AnnouncementController(
             value = Parameter.ANNOUNCEMENT_ID,
             required = true
         ) announcementId: Long
-    ): ResponseEntity<AnnouncementDto> {
+    ): ResponseEntity<AnnouncementResponse> {
         return announcementService
             .getAnnouncement(announcementId)
             .let {

@@ -7,12 +7,10 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 import com.harera.hayatserver.security.JwtRequestFilter;
 import com.harera.hayatserver.security.JwtService;
@@ -51,21 +49,22 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http, JwtRequestFilter jwtRequestFilter) throws Exception {
         return http.csrf().disable()
-                .addFilterBefore(jwtRequestFilter, BasicAuthenticationFilter.class)
-                .authorizeRequests()
-                .antMatchers("/api/v1/login", "/api/v1/signup").permitAll()
-                .antMatchers("/api/v1/unit/**").permitAll()
-                .antMatchers("/api/v1/cities/**").permitAll()
-                .antMatchers("/api/v1/states/**").permitAll()
-                .antMatchers("/api/v1/packaging/**").permitAll()
-                .antMatchers("/api/v1/announcements/**").permitAll()
-                .anyRequest()
-                .authenticated()
-                .and()
-                .httpBasic()
-                .and()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and().build();
+//                .addFilterBefore(jwtRequestFilter, BasicAuthenticationFilter.class)
+//                .authorizeRequests()
+//                .antMatchers("/api/v1/login", "/api/v1/signup").permitAll()
+//                .antMatchers("/api/v1/unit/**").permitAll()
+//                .antMatchers("/api/v1/cities/**").permitAll()
+//                .antMatchers("/api/v1/states/**").permitAll()
+//                .antMatchers("/api/v1/packaging/**").permitAll()
+//                .antMatchers("/api/v1/announcements/**").permitAll()
+//                .anyRequest()
+//                .authenticated()
+//                .and()
+//                .httpBasic()
+//                .and()
+//                .sessionManagement()
+//                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//                .and()
+                .build();
     }
 }

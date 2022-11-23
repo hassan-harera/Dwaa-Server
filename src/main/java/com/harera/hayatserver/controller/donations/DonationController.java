@@ -1,12 +1,14 @@
 package com.harera.hayatserver.controller.donations;
 
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.harera.hayatserver.model.donation.DonationResponse;
+import com.harera.hayatserver.model.donation.FoodDonationRequest;
+import com.harera.hayatserver.model.donation.FoodDonationResponse;
 import com.harera.hayatserver.model.donation.PropertyDonationRequest;
 import com.harera.hayatserver.service.donation.DonationService;
 
@@ -19,9 +21,22 @@ public class DonationController {
     public DonationController(DonationService donationService) {
         this.donationService = donationService;
     }
+
     @PostMapping("/property/donate")
     public ResponseEntity<DonationResponse> donateProperty(
-            PropertyDonationRequest propertyDonationRequest) {
+                    PropertyDonationRequest propertyDonationRequest) {
         return donationService.donateProperty(propertyDonationRequest);
+    }
+
+    @PostMapping("/foods")
+    public ResponseEntity<FoodDonationResponse> donateFood(
+                    @RequestPart(value = "body") FoodDonationRequest foodDonationRequest
+    //            ,
+    //            @RequestPart(value = "image_1") MultipartFile image1,
+    //            @RequestPart(value = "image_2", required = false) MultipartFile image2,
+    //            @RequestPart(value = "image_3", required = false) MultipartFile image3
+    ) {
+        donationService.donateFood(foodDonationRequest);
+        return ResponseEntity.ok(new FoodDonationResponse());
     }
 }

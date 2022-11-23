@@ -1,9 +1,7 @@
 package com.harera.hayatserver.config;
 
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.JwtException;
-import io.jsonwebtoken.MalformedJwtException;
-import lombok.extern.log4j.Log4j2;
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 import java.time.format.DateTimeParseException;
 import java.util.Optional;
@@ -28,6 +26,7 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import com.harera.hayatserver.exception.EntityNotFoundException;
+import com.harera.hayatserver.exception.FieldLimitException;
 import com.harera.hayatserver.exception.FormatFieldException;
 import com.harera.hayatserver.exception.LogicError;
 import com.harera.hayatserver.exception.MandatoryFieldException;
@@ -36,8 +35,10 @@ import com.harera.hayatserver.model.GlobalMessage;
 import com.harera.hayatserver.model.exception.ApiError;
 import com.harera.hayatserver.repository.GlobalMessageRepository;
 
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
-import static org.springframework.http.HttpStatus.NOT_FOUND;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.MalformedJwtException;
+import lombok.extern.log4j.Log4j2;
 
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @ControllerAdvice
@@ -64,6 +65,24 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         log.error(ex);
         String error = ex.getParameterName() + " parameter is missing";
         return buildResponseEntity(new ApiError(BAD_REQUEST, error, ex));
+    }
+
+    /**
+     * Handle {@link FieldLimitException}. Triggered when a
+     * 'field' exceeds limit.
+     *
+     * @param ex {@link FieldLimitException}
+     * @return the ApiError object
+     */
+    @ExceptionHandler(FieldLimitException.class)
+    protected ResponseEntity<Object> handleFieldLimitException(FieldLimitException ex,
+                    WebRequest request) {
+        ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST);
+        apiError.setMessage(ex.getMessage());
+        apiError.setCode(ex.getCode());
+        apiError.setDisplayMessage(assignDisplayMessage(getLanguage(request),
+                        ex.getMessage(), ex.getCode()));
+        return buildResponseEntity(apiError);
     }
 
     /**

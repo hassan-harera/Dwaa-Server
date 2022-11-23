@@ -2,6 +2,27 @@ package com.harera.hayatserver.util
 
 object ErrorCode {
 
+    @JvmField
+    var MANDATORY_EXPIRATION_DATE: String = "expiration_date_002"
+
+    @JvmField
+    var FORMAT_EXPIRATION_DATE = "expiration_date_001"
+
+    @JvmField
+    var FORMAT_UNIT: String = "unit_001"
+
+    @JvmField
+    var FORMAT_AMOUNT: String = "amount_002"
+
+    @JvmField
+    var MANDATORY_AMOUNT: String = "amount_001"
+
+    @JvmField
+    var MANDATORY_COMMUNICATION: String = "communication_001"
+
+    @JvmField
+    var MANDATORY_TITLE: String = "title_001"
+
     const val MANDATORY_SUBJECT = "subject_001"
     const val MANDATORY_UID = "uid_001"
     const val MANDATORY_FIRST_NAME = "first_name_001"

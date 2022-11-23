@@ -1,7 +1,6 @@
 package com.harera.hayatserver.model.donation;
 
-import lombok.Getter;
-import lombok.Setter;
+import java.time.ZonedDateTime;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -9,13 +8,13 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import java.time.ZonedDateTime;
 
 import com.harera.hayatserver.model.BaseEntity;
-import com.harera.hayatserver.model.category.Category;
 import com.harera.hayatserver.model.city.City;
-import com.harera.hayatserver.model.communication.CommunicationType;
 import com.harera.hayatserver.model.user.User;
+
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "donation")
@@ -39,17 +38,15 @@ public class Donation extends BaseEntity {
     @Column(name = "expiration_date")
     private ZonedDateTime expirationDate;
 
-    @ManyToOne(targetEntity = Category.class)
-    @JoinColumn(name = "donation_type_id", referencedColumnName = "id")
-    private Category category;
+    @Column(name = "communication_type")
+    private CommunicationType communicationType;
+
+    @Column(name = "donation_type")
+    private DonationType donationType;
 
     @ManyToOne(targetEntity = DonationState.class)
     @JoinColumn(name = "donation_state_id", referencedColumnName = "id")
     private DonationState donationState;
-
-    @ManyToOne(targetEntity = CommunicationType.class)
-    @JoinColumn(name = "communication_type_id", referencedColumnName = "id")
-    private CommunicationType communicationType;
 
     @ManyToOne(targetEntity = City.class)
     @JoinColumn(name = "city_id", referencedColumnName = "id")

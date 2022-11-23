@@ -7,7 +7,6 @@ import java.time.ZonedDateTime;
 import com.harera.hayatserver.model.BaseEntityDto;
 import com.harera.hayatserver.model.category.Category;
 import com.harera.hayatserver.model.city.City;
-import com.harera.hayatserver.model.communication.CommunicationType;
 import com.harera.hayatserver.model.user.User;
 
 @Data

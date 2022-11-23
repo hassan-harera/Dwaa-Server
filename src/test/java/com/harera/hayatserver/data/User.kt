@@ -8,9 +8,4 @@ const val username = "hassan-harera"
 const val phoneNumber = "+201062227714"
 const val email = "Hassan.Shaban.Harera@gmail.com"
 
-val user = User(
-    username = username,
-    password = "password",
-    lastName = "Harera",
-    firstName = "Hassan",
-)
+val user = User()
