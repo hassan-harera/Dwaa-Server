@@ -1,11 +1,11 @@
-package com.harera.hayatserver.model.donation;
-
-import lombok.Data;
+package com.harera.hayatserver.model.donation.property;
 
 import java.time.ZonedDateTime;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.harera.hayatserver.model.BaseEntity;
+
+import lombok.Data;
 
 @Data
 public class PropertyDonationRequest extends BaseEntity {

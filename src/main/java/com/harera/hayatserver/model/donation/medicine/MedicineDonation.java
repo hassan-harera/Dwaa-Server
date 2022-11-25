@@ -1,4 +1,4 @@
-package com.harera.hayatserver.model.donation;
+package com.harera.hayatserver.model.donation.medicine;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -13,6 +13,7 @@ import javax.persistence.Table;
 import java.time.ZonedDateTime;
 
 import com.harera.hayatserver.model.BaseEntity;
+import com.harera.hayatserver.model.donation.Donation;
 import com.harera.hayatserver.model.medicine.Medicine;
 
 @Setter

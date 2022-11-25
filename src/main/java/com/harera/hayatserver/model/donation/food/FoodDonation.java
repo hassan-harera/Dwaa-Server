@@ -1,4 +1,4 @@
-package com.harera.hayatserver.model.donation;
+package com.harera.hayatserver.model.donation.food;
 
 import java.time.ZonedDateTime;
 

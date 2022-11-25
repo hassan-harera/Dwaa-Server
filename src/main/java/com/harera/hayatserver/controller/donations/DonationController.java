@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.harera.hayatserver.model.donation.DonationResponse;
-import com.harera.hayatserver.model.donation.FoodDonationRequest;
-import com.harera.hayatserver.model.donation.FoodDonationResponse;
-import com.harera.hayatserver.model.donation.PropertyDonationRequest;
+import com.harera.hayatserver.model.donation.food.FoodDonationRequest;
+import com.harera.hayatserver.model.donation.food.FoodDonationResponse;
+import com.harera.hayatserver.model.donation.property.PropertyDonationRequest;
 import com.harera.hayatserver.service.donation.DonationService;
 
 @RestController

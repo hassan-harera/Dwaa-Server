@@ -1,19 +1,20 @@
-package com.harera.hayatserver.model.donation;
+package com.harera.hayatserver.model.donation.property;
 
-import lombok.Getter;
-import lombok.Setter;
+import java.time.ZonedDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import java.time.ZonedDateTime;
 
 import com.harera.hayatserver.model.BaseEntity;
+
+import lombok.Getter;
+import lombok.Setter;
 
 @Setter
 @Getter
 @Entity
-@Table(name = "donation_residence")
+@Table(name = "donation_property")
 public class PropertyDonation extends BaseEntity {
 
     @Column(name = "rooms")

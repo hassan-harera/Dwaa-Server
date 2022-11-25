@@ -10,8 +10,8 @@ import com.harera.hayatserver.exception.EntityNotFoundException;
 import com.harera.hayatserver.exception.FieldLimitException;
 import com.harera.hayatserver.exception.FormatFieldException;
 import com.harera.hayatserver.exception.MandatoryFieldException;
-import com.harera.hayatserver.model.donation.FoodDonationRequest;
-import com.harera.hayatserver.model.donation.PropertyDonationRequest;
+import com.harera.hayatserver.model.donation.food.FoodDonationRequest;
+import com.harera.hayatserver.model.donation.property.PropertyDonationRequest;
 import com.harera.hayatserver.model.food.FoodUnit;
 import com.harera.hayatserver.repository.city.CityRepository;
 import com.harera.hayatserver.repository.food.FoodUnitRepository;
@@ -142,10 +142,11 @@ public class DonationValidation {
             throw new FieldLimitException(ErrorCode.FORMAT_UNIT, "Unit",
                             foodDonationRequest.getAmount().toString());
         }
-        if (!ZonedDateTimeUtils.INSTANCE
-                        .isValidZonedDateTime(foodDonationRequest.getExpirationDate())) {
+        if (!ZonedDateTimeUtils.INSTANCE.isValidZonedDateTime(
+                        foodDonationRequest.getFoodExpirationDate())) {
             throw new FormatFieldException(ErrorCode.FORMAT_EXPIRATION_DATE,
-                            "Expiration Date", foodDonationRequest.getExpirationDate());
+                            "Expiration Date",
+                            foodDonationRequest.getFoodExpirationDate());
         }
     }
 
@@ -164,7 +165,7 @@ public class DonationValidation {
             throw new MandatoryFieldException(ErrorCode.MANDATORY_COMMUNICATION,
                             "Communication");
         }
-        if (foodDonationRequest.getExpirationDate() == null) {
+        if (foodDonationRequest.getFoodExpirationDate() == null) {
             throw new MandatoryFieldException(ErrorCode.MANDATORY_EXPIRATION_DATE,
                             "Expiration Date");
         }

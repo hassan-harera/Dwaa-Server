@@ -28,7 +28,7 @@ public class Donation extends BaseEntity {
 
     @Basic
     @Column(name = "description")
-    private String donationDescription;
+    private String description;
 
     @Basic
     @Column(name = "date")
@@ -36,17 +36,16 @@ public class Donation extends BaseEntity {
 
     @Basic
     @Column(name = "expiration_date")
-    private ZonedDateTime expirationDate;
+    private ZonedDateTime availableTo;
 
-    @Column(name = "communication_type")
-    private CommunicationType communicationType;
+    @Column(name = "communication_method")
+    private CommunicationMethod communicationMethod;
 
-    @Column(name = "donation_type")
-    private DonationType donationType;
+    @Column(name = "category")
+    private DonationCategory category;
 
-    @ManyToOne(targetEntity = DonationState.class)
-    @JoinColumn(name = "donation_state_id", referencedColumnName = "id")
-    private DonationState donationState;
+    @Column(name = "state")
+    private DonationState state;
 
     @ManyToOne(targetEntity = City.class)
     @JoinColumn(name = "city_id", referencedColumnName = "id")

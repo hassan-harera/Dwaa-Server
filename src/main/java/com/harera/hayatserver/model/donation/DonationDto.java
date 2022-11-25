@@ -1,13 +1,13 @@
 package com.harera.hayatserver.model.donation;
 
-import lombok.Data;
-
 import java.time.ZonedDateTime;
 
 import com.harera.hayatserver.model.BaseEntityDto;
-import com.harera.hayatserver.model.category.Category;
+import com.harera.hayatserver.model.category.DonationCategory;
 import com.harera.hayatserver.model.city.City;
 import com.harera.hayatserver.model.user.User;
+
+import lombok.Data;
 
 @Data
 public class DonationDto extends BaseEntityDto {
@@ -16,9 +16,9 @@ public class DonationDto extends BaseEntityDto {
     private String description;
     private ZonedDateTime donationDate;
     private ZonedDateTime expirationDate;
-    private Category category;
-    private DonationState donationState;
-    private CommunicationType communicationType;
+    private DonationCategory category;
+    private DonationState state;
+    private CommunicationMethod communicationMethod;
     private City city;
     private User user;
 }

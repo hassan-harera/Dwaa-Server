@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.7"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.7
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.7.xsd">
+    <changeSet id="20221124_1600" author="hharera@pocketsolutions.net">
+        <sql>
+            insert into notification_setup (code, role_type, title, body, screen_name)
+            values ('create_reservation', 'DOC_ROLE', 'تم حجز معاد الساعة "%s"
+            فى عيادة "%s" ليوم "%s"', 'تم اضافة حجز جديد', 'ReservationDetails');
+        </sql>
+    </changeSet>
+</databaseChangeLog>

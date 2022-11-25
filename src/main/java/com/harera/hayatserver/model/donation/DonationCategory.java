@@ -1,6 +1,6 @@
 package com.harera.hayatserver.model.donation;
 
-public enum Category {
+public enum DonationCategory {
     FOOD,
     CLOTHES,
     MEDICINE,

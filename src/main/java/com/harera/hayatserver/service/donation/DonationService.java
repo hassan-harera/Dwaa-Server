@@ -10,9 +10,10 @@ import org.springframework.stereotype.Service;
 
 import com.harera.hayatserver.model.donation.Donation;
 import com.harera.hayatserver.model.donation.DonationResponse;
-import com.harera.hayatserver.model.donation.FoodDonationRequest;
-import com.harera.hayatserver.model.donation.PropertyDonation;
-import com.harera.hayatserver.model.donation.PropertyDonationRequest;
+import com.harera.hayatserver.model.donation.food.FoodDonation;
+import com.harera.hayatserver.model.donation.food.FoodDonationRequest;
+import com.harera.hayatserver.model.donation.property.PropertyDonation;
+import com.harera.hayatserver.model.donation.property.PropertyDonationRequest;
 import com.harera.hayatserver.repository.donation.DonationRepository;
 
 @Service
@@ -53,6 +54,9 @@ public class DonationService {
 
     public void donateFood(FoodDonationRequest foodDonationRequest) {
         donationValidation.validateDonateFood(foodDonationRequest);
+
+        FoodDonation foodDonation =
+                        modelMapper.map(foodDonationRequest, FoodDonation.class);
         Donation donation = modelMapper.map(foodDonationRequest, Donation.class);
         donationRepository.save(donation);
     }
