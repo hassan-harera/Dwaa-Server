@@ -29,8 +29,8 @@ public class DonationController {
     }
 
     @PostMapping("/foods")
-    public ResponseEntity<FoodDonationResponse> donateFood(
-                    @RequestPart(value = "body") FoodDonationRequest foodDonationRequest
+    public ResponseEntity<FoodDonationResponse> donateFood(@RequestPart(name = "body",
+                    required = true) FoodDonationRequest foodDonationRequest
     //            ,
     //            @RequestPart(value = "image_1") MultipartFile image1,
     //            @RequestPart(value = "image_2", required = false) MultipartFile image2,

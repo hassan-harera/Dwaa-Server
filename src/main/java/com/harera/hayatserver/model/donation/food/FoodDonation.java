@@ -12,6 +12,11 @@ import javax.persistence.Table;
 import com.harera.hayatserver.model.BaseEntity;
 import com.harera.hayatserver.model.food.FoodUnit;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Setter
+@Getter
 @Entity
 @Table(name = "donation_food")
 public class FoodDonation extends BaseEntity {

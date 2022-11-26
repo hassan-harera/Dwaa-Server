@@ -13,8 +13,8 @@ import lombok.Data;
 public class FoodDonationRequest extends FoodDonationDto {
 
     @JsonProperty(value = "city_id")
-    private String cityId;
+    private long cityId;
 
     @JsonProperty(value = "unit_id")
-    private String unitId;
+    private long unitId;
 }

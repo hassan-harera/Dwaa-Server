@@ -1,5 +1,6 @@
 package com.harera.hayatserver.service.donation;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
@@ -8,25 +9,40 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.harera.hayatserver.exception.EntityNotFoundException;
+import com.harera.hayatserver.model.city.City;
 import com.harera.hayatserver.model.donation.Donation;
+import com.harera.hayatserver.model.donation.DonationCategory;
 import com.harera.hayatserver.model.donation.DonationResponse;
 import com.harera.hayatserver.model.donation.food.FoodDonation;
 import com.harera.hayatserver.model.donation.food.FoodDonationRequest;
 import com.harera.hayatserver.model.donation.property.PropertyDonation;
 import com.harera.hayatserver.model.donation.property.PropertyDonationRequest;
+import com.harera.hayatserver.model.food.FoodUnit;
+import com.harera.hayatserver.repository.city.CityRepository;
 import com.harera.hayatserver.repository.donation.DonationRepository;
+import com.harera.hayatserver.repository.donation.FoodDonationRepository;
+import com.harera.hayatserver.repository.food.FoodUnitRepository;
 
 @Service
 public class DonationService {
 
     private final DonationRepository donationRepository;
+    private final FoodDonationRepository foodDonationRepository;
     private final DonationValidation donationValidation;
+    private final CityRepository cityRepository;
+    private final FoodUnitRepository foodUnitRepository;
     private final ModelMapper modelMapper;
 
     public DonationService(DonationRepository donationRepository,
-                    DonationValidation donationValidation, ModelMapper modelMapper) {
+                    FoodDonationRepository foodDonationRepository,
+                    DonationValidation donationValidation, CityRepository cityRepository,
+                    FoodUnitRepository foodUnitRepository, ModelMapper modelMapper) {
         this.donationRepository = donationRepository;
+        this.foodDonationRepository = foodDonationRepository;
         this.donationValidation = donationValidation;
+        this.cityRepository = cityRepository;
+        this.foodUnitRepository = foodUnitRepository;
         this.modelMapper = modelMapper;
     }
 
@@ -55,9 +71,25 @@ public class DonationService {
     public void donateFood(FoodDonationRequest foodDonationRequest) {
         donationValidation.validateDonateFood(foodDonationRequest);
 
+        City city = cityRepository.findById(foodDonationRequest.getCityId())
+                        .orElseThrow(() -> new EntityNotFoundException(City.class,
+                                        foodDonationRequest.getCityId()));
+
+        FoodUnit foodUnit = foodUnitRepository.findById(foodDonationRequest.getUnitId())
+                        .orElseThrow(() -> new EntityNotFoundException(FoodUnit.class,
+                                        foodDonationRequest.getUnitId()));
+
         FoodDonation foodDonation =
                         modelMapper.map(foodDonationRequest, FoodDonation.class);
+        foodDonation.setUnit(foodUnit);
+
         Donation donation = modelMapper.map(foodDonationRequest, Donation.class);
-        donationRepository.save(donation);
+        donation.setCategory(DonationCategory.FOOD);
+        donation.setDonationDate(ZonedDateTime.now());
+        donation.setCity(city);
+
+        Donation save = donationRepository.save(donation);
+        //        foodDonation.setDonation(save);
+        //        foodDonationRepository.save();
     }
 }
