@@ -1,12 +1,12 @@
 package com.harera.hayatserver.model.donation.food;
 
-import lombok.Data;
-
 import java.time.ZonedDateTime;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.harera.hayatserver.model.donation.Donation;
-import com.harera.hayatserver.model.medicine.Medicine;
+import com.harera.hayatserver.model.donation.medicine.Medicine;
+
+import lombok.Data;
 
 @Data
 public class FoodDonationResponse {

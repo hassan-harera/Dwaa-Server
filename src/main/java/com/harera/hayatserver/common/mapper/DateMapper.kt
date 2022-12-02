@@ -1,6 +1,6 @@
 package com.harera.hayatserver.common.mapper
 
-import com.harera.hayatserver.common.utils.CustomPattern
+import com.harera.hayatserver.util.CustomPattern
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -8,7 +8,7 @@ object DateMapper {
 
     private const val DATE_FORMAT = "yyyy-MM-dd"
 
-    fun map(date : String?) : Date? {
+    fun map(date: String?): Date? {
         return if (date.isNullOrBlank() or date!!.matches(CustomPattern.DATE_FORMAT.toRegex()).not()) {
             null
         } else {

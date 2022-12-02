@@ -1,7 +1,6 @@
 package com.harera.hayatserver.model.donation.medicine;
 
-import lombok.Getter;
-import lombok.Setter;
+import java.time.ZonedDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,11 +9,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import java.time.ZonedDateTime;
-
 import com.harera.hayatserver.model.BaseEntity;
 import com.harera.hayatserver.model.donation.Donation;
-import com.harera.hayatserver.model.medicine.Medicine;
+
+import lombok.Getter;
+import lombok.Setter;
 
 @Setter
 @Getter
@@ -27,7 +26,7 @@ public class MedicineDonation extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "unit_id", referencedColumnName = "id")
-    private MedicineDonationUnit medicineUnit;
+    private MedicineUnit medicineUnit;
 
     @Column(name = "medicine_expiration_date")
     private ZonedDateTime medicineExpirationDate;

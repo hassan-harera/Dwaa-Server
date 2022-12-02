@@ -1,4 +1,4 @@
-package com.harera.hayatserver.exception;
+package com.harera.hayatserver.common.exception;
 
 
 import org.springframework.http.HttpStatus;

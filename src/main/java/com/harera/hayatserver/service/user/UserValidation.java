@@ -1,24 +1,5 @@
 package com.harera.hayatserver.service.user;
 
-import lombok.extern.log4j.Log4j2;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
-
-import com.harera.hayatserver.exception.FormatFieldException;
-import com.harera.hayatserver.exception.LoginException;
-import com.harera.hayatserver.exception.MandatoryFieldException;
-import com.harera.hayatserver.exception.UniqueFieldException;
-import com.harera.hayatserver.model.user.LoginRequest;
-import com.harera.hayatserver.model.user.OAuthLoginRequest;
-import com.harera.hayatserver.model.user.SignupRequest;
-import com.harera.hayatserver.repository.UserRepository;
-import com.harera.hayatserver.util.StringRegexUtils;
-import com.harera.hayatserver.util.Subject;
-import com.harera.hayatserver.util.SubjectUtils;
-
 import static com.harera.hayatserver.util.ErrorCode.FORMAT_USER_PASSWORD;
 import static com.harera.hayatserver.util.ErrorCode.INCORRECT_USERNAME_FORMAT;
 import static com.harera.hayatserver.util.ErrorCode.INCORRECT_USERNAME_OR_PASSWORD;
@@ -34,6 +15,25 @@ import static com.harera.hayatserver.util.ErrorCode.UNIQUE_USER_MOBILE;
 import static com.harera.hayatserver.util.ErrorCode.UNIQUE_USER_NAME;
 import static com.harera.hayatserver.util.ErrorMessage.INCORRECT_USERNAME_PASSWORD_MESSAGE;
 import static com.harera.hayatserver.util.FieldName.AR_NAME;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+
+import com.harera.hayatserver.common.exception.FormatFieldException;
+import com.harera.hayatserver.common.exception.LoginException;
+import com.harera.hayatserver.common.exception.MandatoryFieldException;
+import com.harera.hayatserver.common.exception.UniqueFieldException;
+import com.harera.hayatserver.model.user.LoginRequest;
+import com.harera.hayatserver.model.user.OAuthLoginRequest;
+import com.harera.hayatserver.model.user.SignupRequest;
+import com.harera.hayatserver.repository.UserRepository;
+import com.harera.hayatserver.util.StringRegexUtils;
+import com.harera.hayatserver.util.Subject;
+import com.harera.hayatserver.util.SubjectUtils;
+
+import lombok.extern.log4j.Log4j2;
 
 @Log4j2
 @Service

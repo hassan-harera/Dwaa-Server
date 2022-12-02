@@ -1,4 +1,4 @@
-package com.harera.hayatserver.common.utils
+package com.harera.hayatserver.util
 
 object CustomPattern {
 

@@ -17,7 +17,7 @@ internal class ZonedDateTimeUtilsTest {
     }
 
     @Test
-    fun `isValidZonedDateTime() returns true for invalid ZonedDateTime`() {
+    fun `isValidZonedDateTime() returns false for invalid ZonedDateTime`() {
         val zonedDateTime = "2020-01-01T00:00:00.000"
         assertFalse(ZonedDateTimeUtils.isValidZonedDateTime(zonedDateTime))
     }

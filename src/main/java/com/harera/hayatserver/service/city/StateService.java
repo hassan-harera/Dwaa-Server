@@ -1,5 +1,7 @@
 package com.harera.hayatserver.service.city;
 
+import static com.harera.hayatserver.util.ErrorCode.NOT_FOUND_STATE_ID;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -7,12 +9,10 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.harera.hayatserver.exception.EntityNotFoundException;
+import com.harera.hayatserver.common.exception.EntityNotFoundException;
 import com.harera.hayatserver.model.city.State;
 import com.harera.hayatserver.model.city.StateResponse;
 import com.harera.hayatserver.repository.city.StateRepository;
-
-import static com.harera.hayatserver.util.ErrorCode.NOT_FOUND_STATE_ID;
 
 
 @Service

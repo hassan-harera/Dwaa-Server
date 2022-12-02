@@ -1,8 +1,8 @@
 package com.harera.hayatserver.service.announcement
 
+import com.harera.hayatserver.common.exception.EntityNotFoundException
 import com.harera.hayatserver.model.announcement.AnnouncementResponse
 import com.harera.hayatserver.repository.announcement.AnnouncementRepository
-import com.harera.hayatserver.exception.EntityNotFoundException
 import org.modelmapper.ModelMapper
 import org.springframework.stereotype.Service
 

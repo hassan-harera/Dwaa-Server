@@ -1,7 +1,5 @@
 package com.harera.hayatserver.service
 
-import com.harera.hayatserver.data.donationPostRequest
-import com.harera.hayatserver.data.uid
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
@@ -14,6 +12,5 @@ internal class DonationPostServiceTest {
 
     @Test
     fun `test to get donation post`() {
-        donationPostService.insertDonationPost(donationPostRequest, uid)
     }
 }

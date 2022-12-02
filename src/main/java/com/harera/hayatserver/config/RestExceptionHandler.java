@@ -25,12 +25,12 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import com.harera.hayatserver.exception.EntityNotFoundException;
-import com.harera.hayatserver.exception.FieldLimitException;
-import com.harera.hayatserver.exception.FormatFieldException;
-import com.harera.hayatserver.exception.LogicError;
-import com.harera.hayatserver.exception.MandatoryFieldException;
-import com.harera.hayatserver.exception.UniqueFieldException;
+import com.harera.hayatserver.common.exception.EntityNotFoundException;
+import com.harera.hayatserver.common.exception.FieldLimitException;
+import com.harera.hayatserver.common.exception.FormatFieldException;
+import com.harera.hayatserver.common.exception.LogicError;
+import com.harera.hayatserver.common.exception.MandatoryFieldException;
+import com.harera.hayatserver.common.exception.UniqueFieldException;
 import com.harera.hayatserver.model.GlobalMessage;
 import com.harera.hayatserver.model.exception.ApiError;
 import com.harera.hayatserver.repository.GlobalMessageRepository;

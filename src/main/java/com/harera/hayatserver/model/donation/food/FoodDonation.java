@@ -7,9 +7,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.harera.hayatserver.model.BaseEntity;
+import com.harera.hayatserver.model.donation.Donation;
 import com.harera.hayatserver.model.food.FoodUnit;
 
 import lombok.Getter;
@@ -32,4 +34,8 @@ public class FoodDonation extends BaseEntity {
     @Basic
     @Column(name = "amount")
     private double amount;
+
+    @OneToOne
+    @JoinColumn(name = "donation_id", referencedColumnName = "id")
+    private Donation donation;
 }

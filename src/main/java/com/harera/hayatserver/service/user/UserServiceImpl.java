@@ -1,12 +1,13 @@
 package com.harera.hayatserver.service.user;
 
-import lombok.val;
+import static com.harera.hayatserver.util.StringRegexUtils.isEmail;
+import static com.harera.hayatserver.util.StringRegexUtils.isPhoneNumber;
+import static com.harera.hayatserver.util.StringRegexUtils.isUsername;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.harera.security.AuthenticationManager;
 import com.harera.hayatserver.model.user.LoginRequest;
 import com.harera.hayatserver.model.user.LoginResponse;
 import com.harera.hayatserver.model.user.OAuthLoginRequest;
@@ -15,10 +16,9 @@ import com.harera.hayatserver.model.user.SignupResponse;
 import com.harera.hayatserver.model.user.User;
 import com.harera.hayatserver.repository.UserRepository;
 import com.harera.hayatserver.service.firebase.FirebaseService;
+import com.harera.security.AuthenticationManager;
 
-import static com.harera.hayatserver.util.StringRegexUtils.isEmail;
-import static com.harera.hayatserver.util.StringRegexUtils.isPhoneNumber;
-import static com.harera.hayatserver.util.StringRegexUtils.isUsername;
+import lombok.val;
 
 @Service
 class UserServiceImpl implements UserService {

@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.harera.hayatserver.model.donation.DonationResponse;
 import com.harera.hayatserver.model.donation.food.FoodDonationRequest;
 import com.harera.hayatserver.model.donation.food.FoodDonationResponse;
+import com.harera.hayatserver.model.donation.medicine.MedicineDonationRequest;
+import com.harera.hayatserver.model.donation.medicine.MedicineDonationResponse;
 import com.harera.hayatserver.model.donation.property.PropertyDonationRequest;
 import com.harera.hayatserver.service.donation.DonationService;
 
@@ -29,14 +31,19 @@ public class DonationController {
     }
 
     @PostMapping("/foods")
-    public ResponseEntity<FoodDonationResponse> donateFood(@RequestPart(name = "body",
-                    required = true) FoodDonationRequest foodDonationRequest
-    //            ,
-    //            @RequestPart(value = "image_1") MultipartFile image1,
-    //            @RequestPart(value = "image_2", required = false) MultipartFile image2,
+    public ResponseEntity<FoodDonationResponse> donateFood(
+                    @RequestPart(name = "body") FoodDonationRequest foodDonationRequest
     //            @RequestPart(value = "image_3", required = false) MultipartFile image3
     ) {
         donationService.donateFood(foodDonationRequest);
         return ResponseEntity.ok(new FoodDonationResponse());
+    }
+
+    @PostMapping("/medicine")
+    public ResponseEntity<MedicineDonationResponse> donateMedicine(@RequestPart(
+                    name = "body") MedicineDonationRequest medicineDonationRequest) {
+        MedicineDonationResponse donationResponse =
+                        donationService.donateMedicine(medicineDonationRequest);
+        return ResponseEntity.ok(donationResponse);
     }
 }

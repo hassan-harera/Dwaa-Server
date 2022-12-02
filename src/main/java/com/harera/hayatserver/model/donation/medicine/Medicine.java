@@ -1,8 +1,4 @@
-package com.harera.hayatserver.model.medicine;
-
-
-import lombok.Getter;
-import lombok.Setter;
+package com.harera.hayatserver.model.donation.medicine;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,20 +8,22 @@ import javax.persistence.Table;
 
 import com.harera.hayatserver.model.BaseEntity;
 
+import lombok.Getter;
+import lombok.Setter;
+
 @Setter
 @Getter
 @Entity
 @Table(name = "medicine")
 public class Medicine extends BaseEntity {
 
-
     @ManyToOne(optional = false)
     @JoinColumn(name = "category_id", referencedColumnName = "id")
-    private MedicineCategory medicineCategory;
+    private MedicineCategory category;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "unit_id", referencedColumnName = "id")
-    private MedicineUnit medicineUnit;
+    private MedicineUnit unit;
 
     @Column(name = "name")
     private String name;
