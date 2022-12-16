@@ -18,7 +18,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -28,9 +27,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.harera.hayat.filter.AuthFilter;
 import com.harera.hayat.model.exception.ApiError;
 import com.harera.hayat.model.exception.GlobalMessage;
-import com.harera.hayat.repository.exception.GlobalMessageRepository;
+import com.harera.hayat.repository.GlobalMessageRepository;
 import com.harera.hayat.security.JwtRequestFilter;
 import com.harera.hayat.security.JwtService;
+import com.harera.hayat.service.user.UserService;
 
 @EnableWebSecurity
 @Configuration
@@ -53,8 +53,8 @@ public class SecurityConfiguration {
 
     @Bean
     public AuthenticationManager authManager(HttpSecurity http,
-                    PasswordEncoder bCryptPasswordEncoder,
-                    UserDetailsService userDetailService) throws Exception {
+                    PasswordEncoder bCryptPasswordEncoder, UserService userDetailService)
+                    throws Exception {
         return http.getSharedObject(AuthenticationManagerBuilder.class)
                         .userDetailsService(userDetailService)
                         .passwordEncoder(bCryptPasswordEncoder).and().build();
@@ -67,7 +67,7 @@ public class SecurityConfiguration {
 
     @Bean
     public JwtRequestFilter requestFilter(JwtService authManager,
-                    UserDetailsService userDetailService) {
+                    UserService userDetailService) {
         return new JwtRequestFilter(userDetailService, authManager);
     }
 

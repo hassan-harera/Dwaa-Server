@@ -1,4 +1,4 @@
-package com.harera.hayat.repository.exception;
+package com.harera.hayat.repository;
 
 import java.util.Optional;
 

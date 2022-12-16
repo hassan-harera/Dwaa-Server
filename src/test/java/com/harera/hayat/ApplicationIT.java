@@ -1,13 +1,9 @@
 package com.harera.hayat;
 
-import org.junit.jupiter.api.Test;
+import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.DEFINED_PORT;
+
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
-class DwaaServerApplicationTests {
-
-    @Test
-    void contextLoads() {
-    }
-
+@SpringBootTest(webEnvironment = DEFINED_PORT)
+public class ApplicationIT {
 }

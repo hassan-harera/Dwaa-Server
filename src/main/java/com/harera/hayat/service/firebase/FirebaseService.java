@@ -1,52 +1,62 @@
-package com.harera.hayat.service.firebase
+package com.harera.hayat.service.firebase;
 
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseToken
-import com.google.firebase.auth.UserRecord
-import com.harera.hayat.common.exception.LoginException
-import com.harera.hayat.model.user.auth.SignupRequest
-import com.harera.hayat.util.ErrorCode
-import org.springframework.stereotype.Service
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import org.springframework.stereotype.Service;
 
-interface FirebaseService {
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.FirebaseToken;
+import com.google.firebase.auth.UserRecord;
+import com.harera.hayat.common.exception.LoginException;
+import com.harera.hayat.model.user.auth.SignupRequest;
+import com.harera.hayat.util.ErrorCode;
 
-    fun verifyToken(token: String?): FirebaseToken
-    fun getUser(firebaseToken: FirebaseToken?): UserRecord
-    fun createUser(signupRequest: SignupRequest): UserRecord?
-}
+import kotlin.jvm.internal.Intrinsics;
 
 @Service
-class FirebaseServiceImpl(
-    private val firebaseAuth: FirebaseAuth
-) : FirebaseService {
+public final class FirebaseService {
 
+    private final FirebaseAuth firebaseAuth;
 
-    override fun verifyToken(token: String?): FirebaseToken {
-        return firebaseAuth.verifyIdToken(token, true)
-            ?: throw LoginException(
-                ErrorCode.INVALID_FIREBASE_TOKEN,
-                "Invalid token"
-            )
+    public FirebaseService(FirebaseAuth firebaseAuth) {
+        this.firebaseAuth = firebaseAuth;
     }
 
-    override fun getUser(firebaseToken: FirebaseToken?): UserRecord {
-        return FirebaseAuth.getInstance().getUser(firebaseToken?.uid)
-            ?: throw LoginException(
-                ErrorCode.INVALID_FIREBASE_TOKEN,
-                "Invalid token"
-            )
+    @NotNull
+    public FirebaseToken verifyToken(String token) {
+        try {
+            return this.firebaseAuth.verifyIdToken(token, true);
+        } catch (FirebaseAuthException e) {
+            throw new LoginException(ErrorCode.INVALID_FIREBASE_TOKEN, "Invalid token");
+        }
     }
 
-    override fun createUser(signupRequest: SignupRequest): UserRecord? {
-        val userRecord = UserRecord.CreateRequest()
-            .setPhoneNumber(signupRequest.mobile)
-            .setEmail(signupRequest.email)
-            .setEmailVerified(false)
-            .setPassword(signupRequest.password)
-            .setDisplayName(signupRequest.firstName + " " + signupRequest.lastName)
-            .setPassword(signupRequest.password)
-            .setDisabled(false)
+    @NotNull
+    public UserRecord getUser(FirebaseToken firebaseToken) {
+        try {
+            return firebaseAuth.getUser(
+                            firebaseToken != null ? firebaseToken.getUid() : null);
+        } catch (FirebaseAuthException e) {
+            throw new LoginException(ErrorCode.INVALID_FIREBASE_TOKEN, "Invalid token");
+        }
+    }
 
-        return firebaseAuth.createUser(userRecord)
+    @Nullable
+    public UserRecord createUser(@NotNull SignupRequest signupRequest) {
+        Intrinsics.checkNotNullParameter(signupRequest, "signupRequest");
+        UserRecord.CreateRequest userRecord = (new UserRecord.CreateRequest())
+                        .setPhoneNumber(signupRequest.getMobile())
+                        .setEmail(signupRequest.getEmail()).setEmailVerified(false)
+                        .setPassword(signupRequest.getPassword())
+                        .setDisplayName(signupRequest.getFirstName() + " "
+                                        + signupRequest.getLastName())
+                        .setPassword(signupRequest.getPassword()).setDisabled(false);
+
+        try {
+            return this.firebaseAuth.createUser(userRecord);
+        } catch (FirebaseAuthException e) {
+            throw new LoginException(ErrorCode.INVALID_FIREBASE_TOKEN, "Invalid token");
+        }
     }
 }

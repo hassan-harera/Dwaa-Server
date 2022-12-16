@@ -2,7 +2,6 @@ package com.harera.hayat.model.announcement
 
 import com.harera.hayat.model.BaseEntity
 import java.time.ZonedDateTime
-import java.util.*
 import javax.persistence.Basic
 import javax.persistence.Column
 import javax.persistence.Entity

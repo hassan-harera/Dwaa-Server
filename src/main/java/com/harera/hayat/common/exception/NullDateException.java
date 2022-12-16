@@ -1,11 +1,5 @@
-package com.harera.hayat.common.exception
+package com.harera.hayat.common.exception;
 
-import org.springframework.http.ResponseEntity
+public final class NullDateException extends NullPointerException {
 
-class NullDateException : NullPointerException() {
-
-    fun getResponseEntity(): ResponseEntity<String> {
-        return ResponseEntity.badRequest().body("invalid date")
-    }
 }
-

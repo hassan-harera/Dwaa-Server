@@ -9,7 +9,6 @@ import org.springframework.util.StringUtils;
 import com.harera.hayat.common.exception.EntityNotFoundException;
 import com.harera.hayat.common.exception.FieldFormatException;
 import com.harera.hayat.common.exception.FieldLimitException;
-import com.harera.hayat.common.exception.FormatFieldException;
 import com.harera.hayat.common.exception.MandatoryFieldException;
 import com.harera.hayat.model.donation.food.FoodDonationRequest;
 import com.harera.hayat.model.donation.medicine.MedicineDonationRequest;
@@ -147,7 +146,7 @@ public class DonationValidation {
         }
         if (!ZonedDateTimeUtils.INSTANCE.isValidZonedDateTime(
                         foodDonationRequest.getFoodExpirationDate())) {
-            throw new FormatFieldException(ErrorCode.FORMAT_EXPIRATION_DATE,
+            throw new FieldFormatException(ErrorCode.FORMAT_EXPIRATION_DATE,
                             "expiration_date",
                             foodDonationRequest.getFoodExpirationDate());
         }

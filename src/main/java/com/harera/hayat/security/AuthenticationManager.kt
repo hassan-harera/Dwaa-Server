@@ -1,4 +1,4 @@
-package com.harera.security
+package com.harera.hayat.security
 
 import io.jsonwebtoken.Claims
 import org.springframework.security.core.userdetails.UserDetails

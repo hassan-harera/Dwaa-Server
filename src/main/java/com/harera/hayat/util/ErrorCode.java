@@ -7,8 +7,10 @@ public final class ErrorCode {
     public static final String MANDATORY_UID = "uid_001";
 
     public static final String MANDATORY_FIRST_NAME = "first_name_001";
+    public static final String FORMAT_FIRST_NAME = "first_name_002";
 
     public static final String MANDATORY_LAST_NAME = "last_name_001";
+    public static final String FORMAT_LAST_NAME = "last_name_002";
 
     public static final String MANDATORY_TOKEN = "token_001";
 
@@ -20,19 +22,21 @@ public final class ErrorCode {
 
     public static final String INCORRECT_USERNAME_OR_PASSWORD = "login_001";
 
-    public static final String INVALID_TOKEN = "signup_001";
+    public static final String INVALID_FIREBASE_TOKEN = "signup_001";
     public static final String INCORRECT_USERNAME_FORMAT = "login_002";
     public static final String UNIQUE_EMAIL = "email_001";
+
+    /**
+     * Mobile
+     */
     public static final String UNIQUE_USER_MOBILE = "mobile_001";
+    public static final String FORMAT_USER_MOBILE = "mobile_002";
+    public static final String MANDATORY_USER_MOBILE = "mobile_003";
 
     public static final String FORMAT_USER_NAME_MINIMUM = "username_002";
     public static final String FORMAT_USER_NAME_LENGTH = "username_003";
     public static final String FORMAT_USER_NAME_INVALID_CHARS = "username_004";
-    public static final String FORMAT_USER_MOBILE = "mobile_002";
-    public static final String MANDATORY_MOBILE = "mobile_006";
     public static final String FORMAT_USER_PASSWORD = "password_002";
-    public static final String UNIQUE_CLINIC_MOBILE = "mobile_003";
-    public static final String FORMAT_CLINIC_MOBILE = "mobile_004";
     public static final String NOT_FOUND_CITY_ID = "city_001";
     public static final String NOT_FOUND_STATE_ID = "state_001";
     public static final String MANDATORY_MEDICINE_UNIT_ID = "medicine_unit_001";

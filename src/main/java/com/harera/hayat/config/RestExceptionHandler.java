@@ -26,13 +26,13 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import com.harera.hayat.common.exception.EntityNotFoundException;
+import com.harera.hayat.common.exception.FieldFormatException;
 import com.harera.hayat.common.exception.FieldLimitException;
-import com.harera.hayat.common.exception.FormatFieldException;
 import com.harera.hayat.common.exception.LogicError;
 import com.harera.hayat.common.exception.MandatoryFieldException;
 import com.harera.hayat.common.exception.UniqueFieldException;
-import com.harera.hayat.model.exception.GlobalMessage;
 import com.harera.hayat.model.exception.ApiError;
+import com.harera.hayat.model.exception.GlobalMessage;
 import com.harera.hayat.repository.GlobalMessageRepository;
 
 import io.jsonwebtoken.ExpiredJwtException;
@@ -190,11 +190,11 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
      * Handles FormatException. Created to encapsulate errors with more detail
      * than FormatException
      *
-     * @param ex the FormatFieldException
+     * @param ex the FieldFormatException
      * @return the ApiError object
      */
-    @ExceptionHandler(FormatFieldException.class)
-    protected ResponseEntity<Object> handleFormatFieldException(FormatFieldException ex,
+    @ExceptionHandler(FieldFormatException.class)
+    protected ResponseEntity<Object> handleFieldFormatException(FieldFormatException ex,
                     WebRequest request) {
         log.error(ex);
         ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST);

@@ -11,7 +11,7 @@ public class UserDto extends BaseEntityDto {
 
     private String firstName;
     private String lastName;
-    private String phoneNumber;
+    private String mobile;
     private String email;
     private String password;
     private String username;
