@@ -21,7 +21,7 @@ import lombok.Setter;
 @Setter
 @Getter
 @Entity
-@Table(name = "user")
+@Table(name = "user_")
 public class User extends BaseEntity implements UserDetails {
 
     @Basic
@@ -54,10 +54,6 @@ public class User extends BaseEntity implements UserDetails {
 
     @Column(name = "device_token")
     private String deviceToken;
-
-    @Basic
-    @Column(name = "user_state_id")
-    private int userStateId;
 
     @OneToMany(mappedBy = "user")
     private List<UserAuthority> authorities;

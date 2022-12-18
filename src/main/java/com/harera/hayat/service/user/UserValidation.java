@@ -64,7 +64,7 @@ public class UserValidation {
 
     public void validate(LoginRequest loginRequest) {
         validateMandatory(loginRequest);
-        validateLoginExisting(loginRequest);
+        validateExisting(loginRequest);
         validatePassword(loginRequest);
     }
 
@@ -105,7 +105,7 @@ public class UserValidation {
         }
     }
 
-    private void validateLoginExisting(LoginRequest loginRequest) {
+    private void validateExisting(LoginRequest loginRequest) {
         validateSubjectExisted(loginRequest.getSubject());
     }
 

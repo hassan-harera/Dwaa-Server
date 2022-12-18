@@ -14,9 +14,6 @@ import com.harera.hayat.model.user.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    @Query("select u from User u where u.username = ?1")
-    Optional<User> getUserWithUsername(@NonNull String username);
-
     @Query("select u from User u where u.id = ?1")
     Optional<User> getUserWithUid(@NonNull Integer uid);
 

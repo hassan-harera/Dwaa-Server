@@ -1,9 +1,10 @@
 package com.harera.hayat.common.exception;
 
-
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+@ResponseBody
 @ResponseStatus(HttpStatus.FORBIDDEN)
 public class LoginException extends RuntimeException {
 
@@ -15,8 +16,7 @@ public class LoginException extends RuntimeException {
 
     @Override
     public String toString() {
-        return "LogicError {" +
-                "code='" + code + '\'' +
-                ", message='" + getMessage() + '\'';
+        return "LogicError {" + "code='" + code + '\'' + ", message='" + getMessage()
+                        + '\'';
     }
 }

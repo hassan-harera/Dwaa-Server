@@ -11,6 +11,7 @@ import javax.persistence.Table;
 
 import com.harera.hayat.model.BaseEntity;
 import com.harera.hayat.model.city.City;
+import com.harera.hayat.model.user.User;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -50,7 +51,7 @@ public class Donation extends BaseEntity {
     @JoinColumn(name = "city_id", referencedColumnName = "id")
     private City city;
 
-    //    @ManyToOne(targetEntity = User.class)
-    //    @JoinColumn(name = "uid", referencedColumnName = "id")
-    //    private User user;
+    @ManyToOne(targetEntity = User.class)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
 }

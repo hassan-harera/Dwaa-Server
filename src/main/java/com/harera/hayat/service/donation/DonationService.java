@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.harera.hayat.common.exception.EntityNotFoundException;
 import com.harera.hayat.model.city.City;
@@ -27,6 +28,7 @@ import com.harera.hayat.model.donation.medicine.MedicineUnit;
 import com.harera.hayat.model.donation.property.PropertyDonation;
 import com.harera.hayat.model.donation.property.PropertyDonationRequest;
 import com.harera.hayat.model.food.FoodUnit;
+import com.harera.hayat.model.user.User;
 import com.harera.hayat.repository.city.CityRepository;
 import com.harera.hayat.repository.donation.DonationRepository;
 import com.harera.hayat.repository.donation.FoodDonationRepository;
@@ -91,31 +93,35 @@ public class DonationService {
         return ResponseEntity.ok(donationResponse);
     }
 
-    public void donateFood(FoodDonationRequest foodDonationRequest) {
+    public FoodDonationResponse donateFood(FoodDonationRequest foodDonationRequest,
+                    MultipartFile image, String token) {
         donationValidation.validateDonateFood(foodDonationRequest);
+
+        User user = authService.getUserForAuthorization(token);
 
         City city = cityRepository.findById(foodDonationRequest.getCityId())
                         .orElseThrow(() -> new EntityNotFoundException(City.class,
                                         foodDonationRequest.getCityId()));
 
-        FoodUnit foodUnit = foodUnitRepository.findById(foodDonationRequest.getUnitId())
-                        .orElseThrow(() -> new EntityNotFoundException(FoodUnit.class,
-                                        foodDonationRequest.getUnitId()));
-
-        FoodDonation foodDonation =
-                        modelMapper.map(foodDonationRequest, FoodDonation.class);
-        foodDonation.setUnit(foodUnit);
-
-        //TODO : set user
         Donation donation = modelMapper.map(foodDonationRequest, Donation.class);
         donation.setCategory(DonationCategory.FOOD);
         donation.setDonationDate(ZonedDateTime.now());
         donation.setCity(city);
-        //        donation.setUser(authService.getCurrentUser());
+        donation.setUser(user);
         Donation savedDonation = donationRepository.save(donation);
 
+        FoodDonation foodDonation =
+                        modelMapper.map(foodDonationRequest, FoodDonation.class);
+
+        FoodUnit foodUnit = foodUnitRepository.findById(foodDonationRequest.getUnitId())
+                        .orElseThrow(() -> new EntityNotFoundException(FoodUnit.class,
+                                        foodDonationRequest.getUnitId()));
+        foodDonation.setUnit(foodUnit);
+
         foodDonation.setDonation(savedDonation);
-        foodDonationRepository.save(foodDonation);
+
+        FoodDonation saved = foodDonationRepository.save(foodDonation);
+        return modelMapper.map(saved, FoodDonationResponse.class);
     }
 
     public MedicineDonationResponse donateMedicine(

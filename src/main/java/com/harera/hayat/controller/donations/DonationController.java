@@ -5,9 +5,11 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.harera.hayat.model.donation.DonationResponse;
 import com.harera.hayat.model.donation.food.FoodDonationRequest;
@@ -33,16 +35,16 @@ public class DonationController {
         return donationService.donateProperty(propertyDonationRequest);
     }
 
-    @PostMapping("/foods")
+    @PostMapping("/food")
     public ResponseEntity<FoodDonationResponse> donateFood(
-                    @RequestPart(name = "body") FoodDonationRequest foodDonationRequest
-    //            @RequestPart(value = "image_3", required = false) MultipartFile image3
-    ) {
-        donationService.donateFood(foodDonationRequest);
-        return ResponseEntity.ok(new FoodDonationResponse());
+                    @RequestPart(name = "body") FoodDonationRequest foodDonationRequest,
+                    @RequestPart(value = "image", required = false) MultipartFile image,
+                    @RequestHeader("Authorization") String token) {
+        return ResponseEntity.ok(
+                        donationService.donateFood(foodDonationRequest, image, token));
     }
 
-    @GetMapping("/foods")
+    @GetMapping("/food")
     public ResponseEntity<List<FoodDonationResponse>> listFoodDonations() {
         List<FoodDonationResponse> foodDonationResponses =
                         donationService.listFoodDonations();

@@ -29,6 +29,7 @@ import com.harera.hayat.common.exception.EntityNotFoundException;
 import com.harera.hayat.common.exception.FieldFormatException;
 import com.harera.hayat.common.exception.FieldLimitException;
 import com.harera.hayat.common.exception.LogicError;
+import com.harera.hayat.common.exception.LoginException;
 import com.harera.hayat.common.exception.MandatoryFieldException;
 import com.harera.hayat.common.exception.UniqueFieldException;
 import com.harera.hayat.model.exception.ApiError;
@@ -313,6 +314,16 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         } else if (ex instanceof MalformedJwtException) {
             apiError.setMessage("Token is Malformed");
         }
+        apiError.setDebugMessage(ex.getMessage());
+        return buildResponseEntity(apiError);
+    }
+
+    @ExceptionHandler({ LoginException.class })
+    protected ResponseEntity<Object> loginException(LoginException ex) {
+        log.error(ex);
+        ApiError apiError = new ApiError(HttpStatus.UNAUTHORIZED);
+        apiError.setMessage("Invalid Username or Password");
+        apiError.setDisplayMessage("Invalid Username or Password");
         apiError.setDebugMessage(ex.getMessage());
         return buildResponseEntity(apiError);
     }

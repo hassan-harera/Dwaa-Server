@@ -4,88 +4,59 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Optional;
 
+import javax.naming.AuthenticationException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.harera.hayat.filter.AuthFilter;
 import com.harera.hayat.model.exception.ApiError;
 import com.harera.hayat.model.exception.GlobalMessage;
 import com.harera.hayat.repository.GlobalMessageRepository;
-import com.harera.hayat.security.JwtRequestFilter;
-import com.harera.hayat.security.JwtService;
 import com.harera.hayat.service.user.UserService;
 
 @EnableWebSecurity
 @Configuration
-@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true,
-                jsr250Enabled = true)
-public class SecurityConfiguration {
+public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    private final AuthFilter authFilter;
     private final GlobalMessageRepository globalMessageRepository;
     private final ObjectMapper mapper;
     private final String UNAUTHORIZED = "unauthorized";
+    private final UserService userService;
+    private final PasswordEncoder passwordEncoder;
 
-    public SecurityConfiguration(AuthFilter authFilter,
-                    GlobalMessageRepository globalMessageRepository,
-                    ObjectMapper mapper) {
-        this.authFilter = authFilter;
+    public SecurityConfiguration(GlobalMessageRepository globalMessageRepository,
+                    ObjectMapper mapper, UserService userService,
+                    PasswordEncoder passwordEncoder) {
         this.globalMessageRepository = globalMessageRepository;
         this.mapper = mapper;
+        this.userService = userService;
+        this.passwordEncoder = passwordEncoder;
     }
 
-    @Bean
-    public AuthenticationManager authManager(HttpSecurity http,
-                    PasswordEncoder bCryptPasswordEncoder, UserService userDetailService)
-                    throws Exception {
-        return http.getSharedObject(AuthenticationManagerBuilder.class)
-                        .userDetailsService(userDetailService)
-                        .passwordEncoder(bCryptPasswordEncoder).and().build();
-    }
-
-    @Bean
-    public PasswordEncoder bCryptPasswordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-    @Bean
-    public JwtRequestFilter requestFilter(JwtService authManager,
-                    UserService userDetailService) {
-        return new JwtRequestFilter(userDetailService, authManager);
-    }
-
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity httpSecurity,
-                    JwtRequestFilter jwtRequestFilter) throws Exception {
-        final String[] publicUris = { "/api/v1/login/**", "/api/v1/oauth/**",
+    @Override
+    protected void configure(HttpSecurity httpSecurity) throws Exception {
+        final String[] publicUris = { "/api/v1/login", "/api/v1/oauth/**",
                 "/api/v1/signup/**", "/api/v1/cities/**", "/api/v1/states/**",
                 "/api/v1/notifications/**", };
+
         httpSecurity.csrf().disable().authorizeRequests().antMatchers(publicUris)
-                        .permitAll().antMatchers("/**").hasAnyAuthority("USER_ROLE").and()
-                        .exceptionHandling()
-                        .authenticationEntryPoint(this::authenticateExceptionHandler)
-                        .and().sessionManagement()
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                        .addFilterBefore(authFilter,
-                                        UsernamePasswordAuthenticationFilter.class);
-        return httpSecurity.build();
+                        .permitAll().anyRequest().authenticated().and().httpBasic();
+    }
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        // permit all
+        auth.inMemoryAuthentication().withUser("admin")
+                        .password(passwordEncoder.encode("admin")).roles("ADMIN");
     }
 
     private void authenticateExceptionHandler(HttpServletRequest httpServletRequest,

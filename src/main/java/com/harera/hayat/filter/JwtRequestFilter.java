@@ -12,7 +12,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
-import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.harera.hayat.model.user.User;
@@ -22,15 +21,15 @@ import com.harera.hayat.service.user.auth.JwtUtils;
 import io.jsonwebtoken.JwtException;
 import lombok.extern.log4j.Log4j2;
 
-@Component
+//@Component
 @Log4j2
-public class AuthFilter extends OncePerRequestFilter {
+public class JwtRequestFilter extends OncePerRequestFilter {
 
     private final UserRepository userRepository;
     private final JwtUtils jwtUtils;
 
     @Autowired
-    public AuthFilter(UserRepository userRepository, JwtUtils jwtUtils) {
+    public JwtRequestFilter(UserRepository userRepository, JwtUtils jwtUtils) {
         this.userRepository = userRepository;
         this.jwtUtils = jwtUtils;
     }
