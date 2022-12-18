@@ -72,7 +72,7 @@ class UserServiceImpl implements UserService {
 
         LoginResponse loginResponse = new LoginResponse();
         loginResponse.setToken(authService.generateToken(user));
-        loginResponse.setToken(authService.generateRefreshToken(user));
+        loginResponse.setRefreshToken(authService.generateRefreshToken(user));
 
         return loginResponse;
     }
