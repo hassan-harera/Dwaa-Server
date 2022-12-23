@@ -33,6 +33,7 @@ import com.harera.hayat.model.user.auth.OAuthLoginRequest;
 import com.harera.hayat.model.user.auth.SignupRequest;
 import com.harera.hayat.repository.UserRepository;
 import com.harera.hayat.service.firebase.FirebaseService;
+import com.harera.hayat.util.ErrorCode;
 import com.harera.hayat.util.HayatStringUtils;
 import com.harera.hayat.util.StringRegexUtils;
 import com.harera.hayat.util.Subject;
@@ -95,12 +96,12 @@ public class UserValidation {
             throw new FieldFormatException(FORMAT_LAST_NAME, MANDATORY_LAST_NAME);
         }
         if (!HayatStringUtils.isValidPassword(signupRequest.getPassword())) {
-            throw new FieldFormatException(INCORRECT_USERNAME_FORMAT,
+            throw new FieldFormatException(ErrorCode.FORMAT_SIGNUP_PASSWORD,
                             MANDATORY_LAST_NAME);
         }
         if (signupRequest.getEmail() != null
                         && !HayatStringUtils.isValidEmail(signupRequest.getEmail())) {
-            throw new FieldFormatException(INCORRECT_USERNAME_FORMAT,
+            throw new FieldFormatException(ErrorCode.FORMAT_SIGNUP_EMAIL,
                             MANDATORY_LAST_NAME);
         }
     }

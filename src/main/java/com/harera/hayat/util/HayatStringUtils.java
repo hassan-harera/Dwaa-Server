@@ -3,7 +3,9 @@ package com.harera.hayat.util;
 public class HayatStringUtils {
 
     public static boolean isValidMobile(String mobile) {
-        return mobile.matches("[0-9]+") && mobile.length() == 10;
+        return (mobile.matches("^010[0-9]{8}$")) || (mobile.matches(("^011[0-9]{8}$")))
+                        || (mobile.matches(("^012[0-9]{8}$")))
+                        || (mobile.matches(("^015[0-9]{8}$")));
     }
 
     public static boolean isValidPassword(String password) {

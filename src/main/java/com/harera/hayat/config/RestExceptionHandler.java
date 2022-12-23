@@ -19,6 +19,7 @@ import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
@@ -351,4 +352,13 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return displayMessage;
     }
 
+    @ExceptionHandler({ HttpServerErrorException.InternalServerError.class })
+    public ResponseEntity<Object> handleInternalServerError(
+                    HttpServerErrorException.InternalServerError ex, HttpHeaders headers,
+                    HttpStatus status, WebRequest request) {
+        log.error(ex);
+        String error = "Error writing JSON output";
+        return buildResponseEntity(
+                        new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, error, ex));
+    }
 }

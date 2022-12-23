@@ -52,6 +52,8 @@ public final class ErrorCode {
     public static String MANDATORY_AMOUNT = "amount_002";
     public static String MANDATORY_COMMUNICATION = "communication_001";
     public static String MANDATORY_TITLE = "title_001";
+    public static String FORMAT_SIGNUP_EMAIL = "signup_002";
+    public static String FORMAT_SIGNUP_PASSWORD = "signup_003";
 
     private ErrorCode() {
     }

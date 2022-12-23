@@ -13,8 +13,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.google.firebase.auth.UserRecord;
 import com.harera.hayat.common.exception.SignupException;
+import com.harera.hayat.model.user.FirebaseUser;
 import com.harera.hayat.model.user.User;
 import com.harera.hayat.model.user.auth.InvalidateLoginRequest;
 import com.harera.hayat.model.user.auth.LoginRequest;
@@ -24,7 +24,6 @@ import com.harera.hayat.model.user.auth.SignupRequest;
 import com.harera.hayat.model.user.auth.SignupResponse;
 import com.harera.hayat.repository.UserRepository;
 import com.harera.hayat.repository.user.auth.TokenRepository;
-import com.harera.hayat.security.AuthenticationManager;
 import com.harera.hayat.service.firebase.FirebaseService;
 import com.harera.hayat.service.user.auth.AuthService;
 import com.harera.hayat.service.user.auth.JwtUtils;
@@ -36,7 +35,6 @@ class UserServiceImpl implements UserService {
     private final AuthService authService;
     private final PasswordEncoder passwordEncoder;
     private final UserValidation userValidation;
-    private final AuthenticationManager authenticationManager;
     private final TokenRepository tokenRepository;
     private final FirebaseService firebaseService;
     private final ModelMapper modelMapper;
@@ -44,14 +42,12 @@ class UserServiceImpl implements UserService {
 
     UserServiceImpl(UserRepository userRepository, AuthService authService,
                     PasswordEncoder passwordEncoder, UserValidation userValidation,
-                    AuthenticationManager authenticationManager,
                     TokenRepository tokenRepository, FirebaseService firebaseService,
                     ModelMapper modelMapper, JwtUtils jwtUtils) {
         this.userRepository = userRepository;
         this.authService = authService;
         this.passwordEncoder = passwordEncoder;
         this.userValidation = userValidation;
-        this.authenticationManager = authenticationManager;
         this.tokenRepository = tokenRepository;
         this.firebaseService = firebaseService;
         this.modelMapper = modelMapper;
@@ -85,15 +81,15 @@ class UserServiceImpl implements UserService {
 
     public SignupResponse signup(SignupRequest signupRequest) {
         userValidation.validate(signupRequest);
-        UserRecord userRecord = firebaseService.createUser(signupRequest);
-        if (userRecord == null) {
+        FirebaseUser firebaseUser = firebaseService.createUser(signupRequest);
+        if (firebaseUser == null) {
             throw new SignupException("User creation failed");
         }
 
         User user = modelMapper.map(signupRequest, User.class);
         user.setPassword(passwordEncoder.encode(signupRequest.getPassword()));
-        user.setUid(userRecord.getUid());
-        user.setUsername(userRecord.getUid());
+        user.setUid(firebaseUser.getUid());
+        user.setUsername(firebaseUser.getUid());
 
         userRepository.save(user);
         return modelMapper.map(user, SignupResponse.class);

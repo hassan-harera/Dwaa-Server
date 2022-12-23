@@ -1,8 +1,6 @@
 package com.harera.hayat.controller.user
 
-import com.harera.hayat.model.user.auth.LoginRequest
-import com.harera.hayat.model.user.auth.LoginResponse
-import com.harera.hayat.model.user.auth.OAuthLoginRequest
+import com.harera.hayat.model.user.auth.*
 import com.harera.hayat.service.user.UserService
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.responses.ApiResponse
@@ -38,5 +36,19 @@ class AuthenticateController(
     @PostMapping("/oauth/login")
     fun login(@RequestBody loginRequest: OAuthLoginRequest): ResponseEntity<LoginResponse> {
         return userService.login(loginRequest).let { ResponseEntity.ok(it) }
+    }
+
+
+    @PostMapping("/signup")
+    @Operation(
+        summary = "Signup",
+        description = "signup with form data",
+        tags = ["Authentication"],
+        responses = [ApiResponse(responseCode = "200", description = "success|OK")]
+    )
+    fun signup(@RequestBody signupRequest: SignupRequest): ResponseEntity<SignupResponse> {
+        return userService.signup(signupRequest).let {
+            ResponseEntity.ok(it)
+        }
     }
 }
