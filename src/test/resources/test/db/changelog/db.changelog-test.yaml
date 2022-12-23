@@ -1,3 +1,0 @@
-databaseChangeLog:
-  - includeAll:
-      path: test/db/changelog/scripts
