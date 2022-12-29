@@ -10,7 +10,7 @@ import lombok.Data;
 @Data
 public class MedicineDonationDto extends DonationDto {
 
-    private Float amount;
+    private float amount;
     private MedicineUnitDto unit;
     @JsonProperty("medicine_expiration_date")
     private ZonedDateTime medicineExpirationDate;

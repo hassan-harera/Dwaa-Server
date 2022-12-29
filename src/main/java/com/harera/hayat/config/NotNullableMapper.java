@@ -67,7 +67,7 @@ public class NotNullableMapper extends ModelMapper {
             @Override
             protected LocalDate convert(String source) {
                 if (isNotBlank(source)) {
-                    DateTimeFormatter format = DateTimeFormatter.ofPattern(DateFormat.getDATE_FORMAT());
+                    DateTimeFormatter format = DateTimeFormatter.ofPattern(DateFormat.DATE_FORMAT);
                     return parse(source, format);
                 }
                 return null;

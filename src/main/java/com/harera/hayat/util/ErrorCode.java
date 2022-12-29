@@ -40,20 +40,25 @@ public final class ErrorCode {
     public static final String NOT_FOUND_CITY_ID = "city_001";
     public static final String NOT_FOUND_STATE_ID = "state_001";
     public static final String MANDATORY_MEDICINE_UNIT_ID = "medicine_unit_001";
-    public static final String MANDATORY_MEDICINE_ID = "medicine_001";
-    public static final String FORMAT_TITLE = "title_002";
-    public static final String FORMAT_MEDICINE_EXPIRATION_DATE =
-                    "medicine_expiration_002";
-    public static String MANDATORY_CITY_ID = "city_002";
-    public static String MANDATORY_EXPIRATION_DATE = "expiration_date_001";
-    public static String FORMAT_EXPIRATION_DATE = "expiration_date_002";
-    public static String FORMAT_UNIT = "unit_001";
-    public static String FORMAT_AMOUNT = "amount_001";
-    public static String MANDATORY_AMOUNT = "amount_002";
-    public static String MANDATORY_COMMUNICATION = "communication_001";
-    public static String MANDATORY_TITLE = "title_001";
-    public static String FORMAT_SIGNUP_EMAIL = "signup_002";
-    public static String FORMAT_SIGNUP_PASSWORD = "signup_003";
+    public static final String MANDATORY_CITY_ID = "city_002";
+    public static final String FORMAT_EXPIRATION_DATE = "expiration_date_002";
+    public static final String FORMAT_UNIT = "unit_001";
+    public static final String MANDATORY_COMMUNICATION = "communication_001";
+    public static final String FORMAT_SIGNUP_EMAIL = "signup_002";
+    public static final String FORMAT_SIGNUP_PASSWORD = "signup_003";
+
+    public static final String NOT_FOUND_DONATION_UNIT = "donation_001";
+    public static final String NOT_FOUND_DONATION_CITY = "donation_002";
+    public static final String NOT_FOUND_DONATION_MEDICINE = "donation_003";
+
+    public static final String MANDATORY_DONATION_COMMUNICATION_METHOD = "donation_004";
+    public static final String MANDATORY_DONATION_EXPIRATION_DATE = "donation_005";
+    public static final String MANDATORY_DONATION_TITLE = "donation_006";
+    public static final String MANDATORY_DONATION_AMOUNT = "donation_007";
+
+    public static final String FORMAT_DONATION_TITLE = "donation_008";
+    public static final String FORMAT_DONATION_EXPIRATION_DATE = "donation_009";
+    public static final String FORMAT_DONATION_AMOUNT = "donation_010";
 
     private ErrorCode() {
     }

@@ -39,3 +39,9 @@ public class MedicineDonation extends BaseEntity {
     @JoinColumn(name = "medicine_id", referencedColumnName = "id")
     private Medicine medicine;
 }
+
+/*
+
+
+
+ */

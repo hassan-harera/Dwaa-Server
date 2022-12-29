@@ -64,22 +64,7 @@ create table city
 alter table city
     owner to postgres;
 
-create table user_authorities
-(
-    uid          integer not null,
-    authority_id integer not null
-);
 
-alter table user_authorities
-    owner to postgres;
-
-create table authority
-(
-    authority_id   integer not null
-        constraint authority_pk
-            primary key,
-    authority_name text    not null
-);
 
 alter table authority
     owner to postgres;

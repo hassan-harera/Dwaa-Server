@@ -1,9 +1,5 @@
 package com.harera.hayat.controller.city;
 
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.tags.Tag;
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,25 +15,25 @@ import com.harera.hayat.service.city.StateService;
 
 @RestController
 @RequestMapping("/api/v1/states")
-@Tag(name = "State")
+//@Tag(name = "State")
 public class StateController {
 
     @Autowired
     private StateService stateService;
 
     @GetMapping
-    @Operation(summary = "List", description = "list all states",
-            tags = "State", responses = {@ApiResponse(responseCode = "200",
-            description = "success|Ok")})
+//    @Operation(summary = "List", description = "list all states",
+//            tags = "State", responses = {@ApiResponse(responseCode = "200",
+//            description = "success|Ok")})
     public ResponseEntity<List<StateResponse>> list() {
         List<StateResponse> list = stateService.list();
         return ResponseEntity.ok(list);
     }
 
     @GetMapping("/{id}")
-    @Operation(summary = "Get", description = "Get state data", tags =
-            "State", responses = {@ApiResponse(responseCode = "200",
-            description = "success|Ok")})
+//    @Operation(summary = "Get", description = "Get state data", tags =
+//            "State", responses = {@ApiResponse(responseCode = "200",
+//            description = "success|Ok")})
     public ResponseEntity<StateResponse> get(@PathVariable("id") int id) {
         StateResponse stateResponse = stateService.get(id);
         return ResponseEntity.ok(stateResponse);

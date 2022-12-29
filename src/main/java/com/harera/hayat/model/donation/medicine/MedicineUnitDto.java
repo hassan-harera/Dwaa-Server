@@ -7,5 +7,5 @@ import lombok.Data;
 @Data
 public class MedicineUnitDto extends BaseEntityDto {
 
-    private String name;
+    private String arabicName;
 }

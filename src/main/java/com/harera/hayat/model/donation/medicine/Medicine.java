@@ -25,6 +25,9 @@ public class Medicine extends BaseEntity {
     @JoinColumn(name = "unit_id", referencedColumnName = "id")
     private MedicineUnit unit;
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "arabic_name")
+    private String arabicName;
+
+    @Column(name = "english_name")
+    private String englishName;
 }

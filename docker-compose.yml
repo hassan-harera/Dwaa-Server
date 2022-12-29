@@ -2,54 +2,34 @@ version: "3.8"
 
 services:
   redis:
-    container_name: "hayat_redis_local"
+    container_name: "hayat_redis"
     image: redis:latest
     ports:
       - "6379:6379"
     networks:
-      - hayat_redis_network
+      - hayat_network
+  app:
+    container_name: hayat_spring
+    build: ./Dockerfile
+    env_file: ./.env
+    ports:
+      - ${SPRING_LOCAL_PORT}:${SPRING_DOCKER_PORT}
+    networks:
+      - hayat_network
+    depends_on:
+      - redis
+      - postgres
+  postgres:
+    image: postgres
+    container_name: "hayat_postgres"
+    restart: unless-stopped
+    env_file: ./.env
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_DATABASE}
+    ports:
+      - ${DB_LOCAL_PORT}:${DB_DOCKER_PORT}
 networks:
-  hayat_redis_network:
+  hayat_network:
     driver: bridge
-
-#          postgresdb:
-#    image: postgres
-#    restart: unless-stopped
-#    env_file: ./.env
-#    environment:
-#      - POSTGRES_PASSWORD=$POSTGRES_ROOT_PASSWORD
-#    ports:
-#      - $POSTGRES_LOCAL_PORT:$POSTGRES_DOCKER_PORT
-#    volumes:
-#      - db:/var/lib/mysql
-#  mysqldb:
-#    image: postgres
-#    restart: unless-stopped
-#    env_file: ./.env
-#    environment:
-#      - MYSQL_ROOT_PASSWORD=$POSTGRES_ROOT_PASSWORD
-#      - MYSQL_DATABASE=$POSTGRES_DATABASE
-#    ports:
-#      - $POSTGRES_LOCAL_PORT:$POSTGRES_DOCKER_PORT
-#    volumes:
-#      - db:/var/lib/mysql
-#  app:
-#    depends_on:
-#      - mysqldb
-#    build: ./Dockerfile
-#    restart: on-failure
-#    env_file: ./.env
-#    ports:
-#      - $SPRING_LOCAL_PORT:$SPRING_DOCKER_PORT
-#    environment:
-#      SPRING_APPLICATION_JSON: '{
-#        "spring.datasource.url"  : "jdbc:mysql://mysqldb:$MYSQLDB_DOCKER_PORT/$MYSQLDB_DATABASE?useSSL=false",
-#        "spring.datasource.username" : "$MYSQLDB_USER",
-#        "spring.datasource.password" : "$MYSQLDB_ROOT_PASSWORD",
-#        "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQL5InnoDBDialect",
-#        "spring.jpa.hibernate.ddl-auto" : "update"
-#      }'
-#    volumes:
-#      - .m2:/root/.m2
-#    stdin_open: true
-#    tty: true

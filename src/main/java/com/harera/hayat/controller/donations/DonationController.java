@@ -14,8 +14,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.harera.hayat.model.donation.DonationResponse;
 import com.harera.hayat.model.donation.food.FoodDonationRequest;
 import com.harera.hayat.model.donation.food.FoodDonationResponse;
-import com.harera.hayat.model.donation.medicine.MedicineDonationRequest;
-import com.harera.hayat.model.donation.medicine.MedicineDonationResponse;
 import com.harera.hayat.model.donation.property.PropertyDonationRequest;
 import com.harera.hayat.service.donation.DonationService;
 
@@ -51,11 +49,4 @@ public class DonationController {
         return ResponseEntity.ok(foodDonationResponses);
     }
 
-    @PostMapping("/medicine")
-    public ResponseEntity<MedicineDonationResponse> donateMedicine(@RequestPart(
-                    name = "body") MedicineDonationRequest medicineDonationRequest) {
-        MedicineDonationResponse donationResponse =
-                        donationService.donateMedicine(medicineDonationRequest);
-        return ResponseEntity.ok(donationResponse);
-    }
 }

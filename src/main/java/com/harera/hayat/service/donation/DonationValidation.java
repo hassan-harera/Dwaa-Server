@@ -133,11 +133,11 @@ public class DonationValidation {
 
     private void validateFieldsFormat(FoodDonationRequest foodDonationRequest) {
         if (foodDonationRequest.getAmount() < 0) {
-            throw new FieldLimitException(ErrorCode.FORMAT_AMOUNT, "amount",
+            throw new FieldLimitException(ErrorCode.FORMAT_DONATION_AMOUNT, "amount",
                             foodDonationRequest.getAmount().toString());
         }
         if (foodDonationRequest.getAmount() > 100000) {
-            throw new FieldLimitException(ErrorCode.FORMAT_AMOUNT, "amount",
+            throw new FieldLimitException(ErrorCode.FORMAT_DONATION_AMOUNT, "amount",
                             foodDonationRequest.getAmount().toString());
         }
         if (foodDonationRequest.getUnitId() < 0) {
@@ -155,20 +155,24 @@ public class DonationValidation {
     private void validateMandatoryFields(FoodDonationRequest foodDonationRequest) {
         if (foodDonationRequest.getTitle() == null
                         || !StringUtils.hasText(foodDonationRequest.getTitle())) {
-            throw new MandatoryFieldException(ErrorCode.MANDATORY_TITLE, "title");
+            throw new MandatoryFieldException(ErrorCode.MANDATORY_DONATION_TITLE,
+                            "title");
         }
         if (foodDonationRequest.getAmount() == 0) {
-            throw new MandatoryFieldException(ErrorCode.MANDATORY_AMOUNT, "amount");
+            throw new MandatoryFieldException(ErrorCode.MANDATORY_DONATION_AMOUNT,
+                            "amount");
         }
         if (foodDonationRequest.getUnitId() == 0) {
-            throw new MandatoryFieldException(ErrorCode.MANDATORY_AMOUNT, "Unit");
+            throw new MandatoryFieldException(ErrorCode.MANDATORY_DONATION_AMOUNT,
+                            "Unit");
         }
         if (foodDonationRequest.getCommunicationMethod() == null) {
             throw new MandatoryFieldException(ErrorCode.MANDATORY_COMMUNICATION,
                             "communication_method");
         }
         if (foodDonationRequest.getFoodExpirationDate() == null) {
-            throw new MandatoryFieldException(ErrorCode.MANDATORY_EXPIRATION_DATE,
+            throw new MandatoryFieldException(
+                            ErrorCode.MANDATORY_DONATION_EXPIRATION_DATE,
                             "expiration_date");
         }
     }
@@ -188,17 +192,17 @@ public class DonationValidation {
         //format validation: title (4, 100), amount (1, 100000), medicineExpirationDate (must be after now)
         if (medicineDonationRequest.getTitle().length() < 4
                         || medicineDonationRequest.getTitle().length() > 100) {
-            throw new FieldFormatException(ErrorCode.FORMAT_TITLE, "title",
+            throw new FieldFormatException(ErrorCode.FORMAT_DONATION_TITLE, "title",
                             FieldFormat.TITLE_PATTERN);
         }
         if (medicineDonationRequest.getAmount() < 0
                         || medicineDonationRequest.getAmount() > 100000) {
-            throw new FieldLimitException(ErrorCode.FORMAT_AMOUNT, "amount",
-                            medicineDonationRequest.getAmount().toString());
+            throw new FieldLimitException(ErrorCode.FORMAT_DONATION_AMOUNT, "amount",
+                            String.valueOf(medicineDonationRequest.getAmount()));
         }
         if (medicineDonationRequest.getMedicineExpirationDate()
                         .isBefore(ZonedDateTime.now())) {
-            throw new FieldLimitException(ErrorCode.FORMAT_MEDICINE_EXPIRATION_DATE,
+            throw new FieldLimitException(ErrorCode.FORMAT_DONATION_EXPIRATION_DATE,
                             "medicine_expiration_date", medicineDonationRequest
                                             .getMedicineExpirationDate().toString());
         }
@@ -210,22 +214,25 @@ public class DonationValidation {
         // unitId, amount, medicineExpirationDate, medicineId
         if (medicineDonationRequest.getTitle() == null
                         || !StringUtils.hasText(medicineDonationRequest.getTitle())) {
-            throw new MandatoryFieldException(ErrorCode.MANDATORY_TITLE, "title");
+            throw new MandatoryFieldException(ErrorCode.MANDATORY_DONATION_TITLE,
+                            "title");
         }
         if (medicineDonationRequest.getCommunicationMethod() == null) {
             throw new MandatoryFieldException(ErrorCode.MANDATORY_COMMUNICATION,
                             "communication_method");
         }
         if (medicineDonationRequest.getAmount() == 0) {
-            throw new MandatoryFieldException(ErrorCode.MANDATORY_AMOUNT, "amount");
+            throw new MandatoryFieldException(ErrorCode.MANDATORY_DONATION_AMOUNT,
+                            "amount");
         }
         if (medicineDonationRequest.getMedicineExpirationDate() == null) {
-            throw new MandatoryFieldException(ErrorCode.MANDATORY_EXPIRATION_DATE,
+            throw new MandatoryFieldException(
+                            ErrorCode.MANDATORY_DONATION_EXPIRATION_DATE,
                             "expiration_date");
         }
         if (medicineDonationRequest.getMedicineId() == 0) {
-            throw new MandatoryFieldException(ErrorCode.MANDATORY_MEDICINE_ID,
-                            "medicine_id");
+            throw new MandatoryFieldException(
+                            ErrorCode.MANDATORY_DONATION_EXPIRATION_DATE, "medicine_id");
         }
     }
 }

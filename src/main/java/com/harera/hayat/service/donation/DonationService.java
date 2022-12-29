@@ -20,11 +20,6 @@ import com.harera.hayat.model.donation.DonationResponse;
 import com.harera.hayat.model.donation.food.FoodDonation;
 import com.harera.hayat.model.donation.food.FoodDonationRequest;
 import com.harera.hayat.model.donation.food.FoodDonationResponse;
-import com.harera.hayat.model.donation.medicine.Medicine;
-import com.harera.hayat.model.donation.medicine.MedicineDonation;
-import com.harera.hayat.model.donation.medicine.MedicineDonationRequest;
-import com.harera.hayat.model.donation.medicine.MedicineDonationResponse;
-import com.harera.hayat.model.donation.medicine.MedicineUnit;
 import com.harera.hayat.model.donation.property.PropertyDonation;
 import com.harera.hayat.model.donation.property.PropertyDonationRequest;
 import com.harera.hayat.model.food.FoodUnit;
@@ -122,43 +117,6 @@ public class DonationService {
 
         FoodDonation saved = foodDonationRepository.save(foodDonation);
         return modelMapper.map(saved, FoodDonationResponse.class);
-    }
-
-    public MedicineDonationResponse donateMedicine(
-                    MedicineDonationRequest medicineDonationRequest) {
-        donationValidation.validateDonateMedicine(medicineDonationRequest);
-
-        Donation donation = modelMapper.map(medicineDonationRequest, Donation.class);
-        donation.setCategory(DonationCategory.MEDICINE);
-        donation.setCity(getCity(medicineDonationRequest.getCityId()));
-        donation.setDonationDate(ZonedDateTime.now());
-
-        Donation savedDonation = donationRepository.save(donation);
-
-        MedicineDonation medicineDonation =
-                        modelMapper.map(medicineDonationRequest, MedicineDonation.class);
-        medicineDonation.setMedicineUnit(getUnit(medicineDonationRequest.getUnitId()));
-        medicineDonation.setDonation(savedDonation);
-        medicineDonation.setMedicine(
-                        getMedicine(medicineDonationRequest.getMedicineId()));
-        MedicineDonation savedMedicine =
-                        medicineDonationRepository.save(medicineDonation);
-        return modelMapper.map(savedMedicine, MedicineDonationResponse.class);
-    }
-
-    private Medicine getMedicine(long medicineId) {
-        return medicineRepository.findById(medicineId).orElseThrow(
-                        () -> new EntityNotFoundException(Medicine.class, medicineId));
-    }
-
-    private MedicineUnit getUnit(long unitId) {
-        return medicineUnitRepository.findById(unitId).orElseThrow(
-                        () -> new EntityNotFoundException(MedicineUnit.class, unitId));
-    }
-
-    private City getCity(long cityId) {
-        return cityRepository.findById(cityId).orElseThrow(
-                        () -> new EntityNotFoundException(City.class, cityId));
     }
 
     public List<FoodDonationResponse> listFoodDonations() {

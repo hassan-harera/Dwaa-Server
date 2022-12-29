@@ -9,5 +9,5 @@ public class MedicineDto extends BaseEntityDto {
 
     private MedicineCategoryDto category;
     private MedicineUnit unit;
-    private String name;
+    private String arabicName;
 }

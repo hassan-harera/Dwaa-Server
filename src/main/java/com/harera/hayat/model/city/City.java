@@ -1,8 +1,5 @@
 package com.harera.hayat.model.city;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,6 +8,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.harera.hayat.model.BaseEntity;
+
+import lombok.Getter;
+import lombok.Setter;
 
 @Setter
 @Getter
@@ -24,6 +24,7 @@ public class City extends BaseEntity {
     @Basic
     @Column(name = "english_name")
     private String englishName;
+
     @ManyToOne
     @JoinColumn(name = "state_id", referencedColumnName = "id")
     private State state;

@@ -18,7 +18,7 @@ import com.harera.hayat.model.user.auth.LoginResponse;
 import com.harera.hayat.model.user.auth.SignupRequest;
 import com.harera.hayat.model.user.auth.SignupResponse;
 import com.harera.hayat.service.firebase.FirebaseService;
-import com.harera.hayat.stub.UserStubs;
+import com.harera.hayat.stub.user.UserStubs;
 import com.harera.hayat.util.DataUtil;
 import com.harera.hayat.util.RequestUtil;
 

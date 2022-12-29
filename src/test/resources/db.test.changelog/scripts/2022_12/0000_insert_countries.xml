@@ -5,16 +5,7 @@
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.7.xsd">
     <changeSet id="20221124_1600" author="hharera@pocketsolutions.net">
         <sql>
-            create table state
-            (
-            id integer not null
-            constraint state_pk
-            primary key,
-            arabic_name text not null,
-            english_name text not null,
-            country_id integer not null,
-            active boolean default true not null
-            );
+            INSERT INTO country(id,arabic_name,english_name,active) VALUES (1,'مصر','Egypt',1);
         </sql>
     </changeSet>
 </databaseChangeLog>
