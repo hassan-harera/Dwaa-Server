@@ -13,7 +13,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.harera.hayat.common.exception.SignupException;
+import com.harera.hayat.exception.SignupException;
 import com.harera.hayat.model.user.FirebaseUser;
 import com.harera.hayat.model.user.User;
 import com.harera.hayat.model.user.auth.InvalidateLoginRequest;

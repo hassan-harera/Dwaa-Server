@@ -24,10 +24,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import com.google.firebase.auth.FirebaseToken;
-import com.harera.hayat.common.exception.FieldFormatException;
-import com.harera.hayat.common.exception.LoginException;
-import com.harera.hayat.common.exception.MandatoryFieldException;
-import com.harera.hayat.common.exception.UniqueFieldException;
+import com.harera.hayat.exception.FieldFormatException;
+import com.harera.hayat.exception.LoginException;
+import com.harera.hayat.exception.MandatoryFieldException;
+import com.harera.hayat.exception.UniqueFieldException;
 import com.harera.hayat.model.user.auth.LoginRequest;
 import com.harera.hayat.model.user.auth.OAuthLoginRequest;
 import com.harera.hayat.model.user.auth.SignupRequest;

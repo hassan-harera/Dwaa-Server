@@ -1,9 +1,5 @@
 package com.harera.hayat.service.donation.medicine;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
-
 import java.time.ZonedDateTime;
 import java.util.Optional;
 
@@ -14,6 +10,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 
+import com.harera.hayat.exception.EntityNotFoundException;
 import com.harera.hayat.config.NotNullableMapper;
 import com.harera.hayat.model.city.City;
 import com.harera.hayat.model.donation.CommunicationMethod;
@@ -27,6 +24,11 @@ import com.harera.hayat.repository.donation.medicine.MedicineDonationRepository;
 import com.harera.hayat.repository.medicine.MedicineRepository;
 import com.harera.hayat.repository.medicine.MedicineUnitRepository;
 import com.harera.hayat.service.user.auth.AuthService;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class MedicineDonationServiceTest {
@@ -95,6 +97,101 @@ class MedicineDonationServiceTest {
 
         assertEquals(request.getTitle(), response.getTitle());
         assertEquals(request.getDescription(), response.getDescription());
+    }
+
+    @Test
+    void create_withNotFoundUnit_thenEntityNotFoundException() {
+        // given
+        MedicineDonationRequest request = new MedicineDonationRequest();
+        request.setCityId(1L);
+        request.setDonationDate(ZonedDateTime.now());
+        request.setMedicineId(1L);
+        request.setUnitId(1L);
+        request.setAmount(1F);
+        request.setTitle("title");
+        request.setDescription("description");
+        request.setCommunicationMethod(CommunicationMethod.CHAT);
+        request.setExpirationDate(ZonedDateTime.now().plusMonths(1));
+        request.setMedicineExpirationDate(ZonedDateTime.now().plusMonths(1));
+
+        // when
+        when(cityRepository.findById(1L)).thenReturn(Optional.of(new City()));
+        when(medicineUnitRepository.findById(1L)).thenReturn(Optional.empty());
+
+        Exception ex = null;
+        try {
+            medicineDonationService.create(request);
+        } catch (Exception e) {
+            ex = e;
+        }
+
+        // then
+        assertNotNull(ex);
+        assertEquals(EntityNotFoundException.class, ex.getClass());
+    }
+
+    @Test
+    void create_withNotFoundMedicine_thenEntityNotFoundException() {
+        // given
+        MedicineDonationRequest request = new MedicineDonationRequest();
+        request.setCityId(1L);
+        request.setDonationDate(ZonedDateTime.now());
+        request.setMedicineId(1L);
+        request.setUnitId(1L);
+        request.setAmount(1F);
+        request.setTitle("title");
+        request.setDescription("description");
+        request.setCommunicationMethod(CommunicationMethod.CHAT);
+        request.setExpirationDate(ZonedDateTime.now().plusMonths(1));
+        request.setMedicineExpirationDate(ZonedDateTime.now().plusMonths(1));
+
+        // when
+        when(cityRepository.findById(1L)).thenReturn(Optional.of(new City()));
+        when(medicineRepository.findById(1L)).thenReturn(Optional.empty());
+        when(medicineUnitRepository.findById(1L)).thenReturn(Optional.of(new MedicineUnit()));
+
+        Exception ex = null;
+        try {
+            medicineDonationService.create(request);
+        } catch (Exception e) {
+            ex = e;
+            
+        }
+
+        // then
+        assertNotNull(ex);
+        assertEquals(EntityNotFoundException.class, ex.getClass());
+    }
+
+    @Test
+    void create_withNotFoundCity_thenEntityNotFoundException() {
+        // given
+        MedicineDonationRequest request = new MedicineDonationRequest();
+        request.setCityId(1L);
+        request.setDonationDate(ZonedDateTime.now());
+        request.setMedicineId(1L);
+        request.setUnitId(1L);
+        request.setAmount(1F);
+        request.setTitle("title");
+        request.setDescription("description");
+        request.setCommunicationMethod(CommunicationMethod.CHAT);
+        request.setExpirationDate(ZonedDateTime.now().plusMonths(1));
+        request.setMedicineExpirationDate(ZonedDateTime.now().plusMonths(1));
+
+        // when
+        when(cityRepository.findById(1L)).thenReturn(Optional.empty());
+
+        Exception ex = null;
+        try {
+            medicineDonationService.create(request);
+        } catch (Exception e) {
+            ex = e;
+            
+        }
+
+        // then
+        assertNotNull(ex);
+        assertEquals(EntityNotFoundException.class, ex.getClass());
     }
 
     @Test

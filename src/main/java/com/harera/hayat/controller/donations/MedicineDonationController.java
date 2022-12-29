@@ -2,8 +2,8 @@ package com.harera.hayat.controller.donations;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.harera.hayat.model.donation.medicine.MedicineDonationRequest;
@@ -21,8 +21,8 @@ public class MedicineDonationController {
     }
 
     @PostMapping
-    public ResponseEntity<MedicineDonationResponse> donateMedicine(@RequestPart(
-                    name = "body") MedicineDonationRequest medicineDonationRequest) {
+    public ResponseEntity<MedicineDonationResponse> donateMedicine(
+                    @RequestBody MedicineDonationRequest medicineDonationRequest) {
         MedicineDonationResponse donationResponse =
                         donationService.create(medicineDonationRequest);
         return ResponseEntity.ok(donationResponse);

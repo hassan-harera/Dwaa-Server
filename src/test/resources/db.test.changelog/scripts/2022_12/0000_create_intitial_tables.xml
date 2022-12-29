@@ -5,6 +5,15 @@
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.7.xsd">
     <changeSet id="0000" author="hharera@pocketsolutions.net">
         <sql>
+            create table global_message
+            (
+            id bigint primary key auto_increment,
+            active bit ,
+            code_ varchar(200),
+            language_ varchar(10),
+            message_ varchar(255)
+            );
+
             create table country
             (
             id bigint primary key auto_increment,
@@ -19,8 +28,7 @@
             active boolean default 1,
             arabic_name varchar(100),
             english_name varchar(100),
-            country_id bigint,
-            foreign key (country_id) references country (id)
+            country_id bigint
             );
 
             create table city
@@ -29,8 +37,7 @@
             active boolean default 1,
             arabic_name varchar(100),
             english_name varchar(100),
-            state_id bigint,
-            foreign key (state_id) references state (id) on delete cascade
+            state_id bigint
             );
 
             create table user_
@@ -43,15 +50,15 @@
             email varchar(255),
             password varchar(255),
             uid varchar(100),
-            username varchar(100)
+            username varchar(100),
+            device_token varchar(500)
             );
 
             create table user_authorities
             (
             user_id bigint,
             authority varchar(100),
-            primary key (user_id, authority),
-            foreign key (user_id) references user_ (id) on delete cascade
+            primary key (user_id, authority)
             );
 
             create table donation
@@ -66,9 +73,7 @@
             communication_method varchar(100),
             state varchar(100),
             city_id bigint,
-            user_id bigint,
-            foreign key (city_id) references city (id) on delete cascade,
-            foreign key (user_id) references user_ (id) on delete cascade
+            user_id bigint
             );
 
             create table medicine_unit
@@ -89,15 +94,13 @@
 
             create table medicine
             (
-            id bigint primary key,
+            id bigint primary key auto_increment,
             active boolean default 1,
             arabic_name varchar(255),
             english_name varchar(255),
             category_id bigint,
             unit_id bigint,
-            info varchar(100),
-            foreign key (category_id) references medicine_category (id) on delete cascade,
-            foreign key (unit_id) references medicine_unit (id) on delete cascade
+            info varchar(100)
             );
 
             create table medicine_donation
@@ -108,10 +111,7 @@
             amount double precision,
             unit_id bigint,
             donation_id bigint,
-            medicine_id bigint,
-            foreign key (medicine_id) references medicine (id) on delete cascade,
-            foreign key (donation_id) references donation (id) on delete cascade,
-            foreign key (unit_id) references medicine_unit (id) on delete cascade
+            medicine_id bigint
             );
         </sql>
     </changeSet>

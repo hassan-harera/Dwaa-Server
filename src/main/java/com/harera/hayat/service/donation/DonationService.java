@@ -11,7 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.harera.hayat.common.exception.EntityNotFoundException;
+import com.harera.hayat.exception.EntityNotFoundException;
 import com.harera.hayat.model.city.City;
 import com.harera.hayat.model.donation.Donation;
 import com.harera.hayat.model.donation.DonationCategory;

@@ -14,8 +14,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.harera.hayat.common.exception.FieldFormatException;
-import com.harera.hayat.common.exception.UniqueFieldException;
+import com.harera.hayat.exception.FieldFormatException;
+import com.harera.hayat.exception.UniqueFieldException;
 import com.harera.hayat.model.user.FirebaseUser;
 import com.harera.hayat.model.user.User;
 import com.harera.hayat.model.user.auth.SignupRequest;

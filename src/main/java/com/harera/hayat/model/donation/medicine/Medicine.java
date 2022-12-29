@@ -17,11 +17,11 @@ import lombok.Setter;
 @Table(name = "medicine")
 public class Medicine extends BaseEntity {
 
-    @ManyToOne(optional = false)
+    @ManyToOne
     @JoinColumn(name = "category_id", referencedColumnName = "id")
     private MedicineCategory category;
 
-    @ManyToOne(optional = false)
+    @ManyToOne
     @JoinColumn(name = "unit_id", referencedColumnName = "id")
     private MedicineUnit unit;
 

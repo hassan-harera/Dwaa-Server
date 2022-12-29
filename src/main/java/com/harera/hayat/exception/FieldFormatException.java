@@ -1,4 +1,4 @@
-package com.harera.hayat.common.exception;
+package com.harera.hayat.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

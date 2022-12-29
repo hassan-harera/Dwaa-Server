@@ -9,7 +9,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.harera.hayat.common.exception.EntityNotFoundException;
+import com.harera.hayat.exception.EntityNotFoundException;
 import com.harera.hayat.model.city.State;
 import com.harera.hayat.model.city.StateResponse;
 import com.harera.hayat.repository.city.StateRepository;

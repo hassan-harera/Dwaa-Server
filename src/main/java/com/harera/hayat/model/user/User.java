@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -25,7 +26,7 @@ import lombok.Setter;
 public class User extends BaseEntity implements UserDetails {
 
     @Basic
-    @Column(name = "mobile")
+    @Column(name = "phone_number")
     private String mobile;
 
     @Basic
@@ -55,7 +56,7 @@ public class User extends BaseEntity implements UserDetails {
     @Column(name = "device_token")
     private String deviceToken;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<UserAuthority> authorities;
 
     @Override
@@ -65,21 +66,21 @@ public class User extends BaseEntity implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return true;
     }
 }

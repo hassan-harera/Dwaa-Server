@@ -31,7 +31,7 @@ public class Donation extends BaseEntity {
     private String description;
 
     @Basic
-    @Column(name = "date")
+    @Column(name = "donation_date")
     private ZonedDateTime donationDate;
 
     @Basic

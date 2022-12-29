@@ -36,8 +36,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.harera.hayat.model.user.Role;
-import com.harera.hayat.model.user.User;
+import com.harera.hayat.model.user.auth.LoginRequest;
 import com.harera.hayat.model.user.auth.LoginResponse;
+import com.harera.hayat.service.user.UserService;
 import com.harera.hayat.service.user.auth.AuthService;
 
 import lombok.extern.log4j.Log4j2;
@@ -48,6 +49,8 @@ public class RequestUtil {
 
     @Autowired
     private AuthService authService;
+    @Autowired
+    private UserService userService;
     private RestTemplate restTemplate;
     @Value("${server.port}")
     private String serverPort;
@@ -178,18 +181,10 @@ public class RequestUtil {
     }
 
     private LoginResponse getAuthResponse(Role roleType) {
-        String mobile = null;
-        switch (roleType) {
-            case SYS_ADMIN:
-                mobile = "01000000001";
-                break;
-        }
-        User user = new User();
-        user.setMobile(mobile);
-
-        LoginResponse loginResponse = new LoginResponse();
-        loginResponse.setToken(authService.generateToken(user));
-        loginResponse.setRefreshToken(authService.generateRefreshToken(user));
+        LoginRequest authCredentialsRequest = new LoginRequest();
+        authCredentialsRequest.setSubject("01000000001");
+        authCredentialsRequest.setPassword("admin");
+        LoginResponse loginResponse = userService.login(authCredentialsRequest);
         return loginResponse;
     }
 }

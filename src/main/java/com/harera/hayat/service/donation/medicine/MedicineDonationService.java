@@ -5,7 +5,7 @@ import java.time.ZonedDateTime;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import com.harera.hayat.common.exception.EntityNotFoundException;
+import com.harera.hayat.exception.EntityNotFoundException;
 import com.harera.hayat.model.city.City;
 import com.harera.hayat.model.donation.Donation;
 import com.harera.hayat.model.donation.DonationCategory;

@@ -18,7 +18,7 @@ import lombok.Setter;
 @Setter
 @Getter
 @Entity
-@Table(name = "donation_medicine")
+@Table(name = "medicine_donation")
 public class MedicineDonation extends BaseEntity {
 
     @Column(name = "amount")
@@ -39,9 +39,3 @@ public class MedicineDonation extends BaseEntity {
     @JoinColumn(name = "medicine_id", referencedColumnName = "id")
     private Medicine medicine;
 }
-
-/*
-
-
-
- */

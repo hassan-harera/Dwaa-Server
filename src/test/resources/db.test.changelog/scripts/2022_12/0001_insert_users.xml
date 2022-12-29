@@ -1,0 +1,25 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.7"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.7
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.7.xsd">
+    <changeSet id="20221124_1600" author="hharera@pocketsolutions.net">
+        <sql>
+            insert into user_ (id, email, password, phone_number)
+            values (1, 'admin@admin.com',
+            '$2a$10$FBmKKPe3T49eySwgfRBWxurwdsMLPe91cQTgo7BA/DEDWl1fKeQT2', '01000000001');
+            insert into user_ (id, email, password, phone_number)
+            values (2, 'doctor@clinico.com',
+            '$2a$10$FBmKKPe3T49eySwgfRBWxurwdsMLPe91cQTgo7BA/DEDWl1fKeQT2', '01000000002');
+            insert into user_ (id, email, password, phone_number)
+            values (3, 'patient@clinico.com',
+            '$2a$10$FBmKKPe3T49eySwgfRBWxurwdsMLPe91cQTgo7BA/DEDWl1fKeQT2', '01000000003');
+            insert into user_ (id, email, password, phone_number)
+            values (4, 'clinicadmin@clinico.com',
+            '$2a$10$FBmKKPe3T49eySwgfRBWxurwdsMLPe91cQTgo7BA/DEDWl1fKeQT2', '01000000004');
+
+            insert into user_authorities (user_id, authority)
+            values (1, 'ROLE_SYS_ADMIN');
+        </sql>
+    </changeSet>
+</databaseChangeLog>

@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -73,8 +72,7 @@ public class AuthService {
     }
 
     public String generateToken(User user) {
-        final String userSubject = StringUtils.isNotEmpty(user.getUsername())
-                        ? user.getUsername() : user.getMobile();
+        final String userSubject = String.valueOf(user.getId());
         final String token = createToken(userSubject, Long.valueOf(tokenExpire),
                         getClaims(user));
         tokenRepository.addToken(user.getId(), token);

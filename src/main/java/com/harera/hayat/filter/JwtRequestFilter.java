@@ -12,6 +12,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.harera.hayat.model.user.User;
@@ -21,8 +22,8 @@ import com.harera.hayat.service.user.auth.JwtUtils;
 import io.jsonwebtoken.JwtException;
 import lombok.extern.log4j.Log4j2;
 
-//@Component
 @Log4j2
+@Component
 public class JwtRequestFilter extends OncePerRequestFilter {
 
     private final UserRepository userRepository;
@@ -64,6 +65,10 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             }
 
             User user = userRepository.findById(userId).orElse(null);
+            if (user == null) {
+                throw new JwtException("User not found");
+            }
+
             UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
                             new UsernamePasswordAuthenticationToken(user, null,
                                             user.getAuthorities());

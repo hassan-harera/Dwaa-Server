@@ -16,12 +16,13 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.harera.hayat.filter.JwtRequestFilter;
 import com.harera.hayat.model.exception.ApiError;
 import com.harera.hayat.model.exception.GlobalMessage;
 import com.harera.hayat.repository.GlobalMessageRepository;
-import com.harera.hayat.service.user.UserService;
 
 @EnableWebSecurity
 @Configuration
@@ -30,15 +31,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private final GlobalMessageRepository globalMessageRepository;
     private final ObjectMapper mapper;
     private final String UNAUTHORIZED = "unauthorized";
-    private final UserService userService;
+    private final JwtRequestFilter jwtRequestFilter;
     private final PasswordEncoder passwordEncoder;
 
     public SecurityConfiguration(GlobalMessageRepository globalMessageRepository,
-                    ObjectMapper mapper, UserService userService,
+                    ObjectMapper mapper, JwtRequestFilter jwtRequestFilter,
                     PasswordEncoder passwordEncoder) {
         this.globalMessageRepository = globalMessageRepository;
         this.mapper = mapper;
-        this.userService = userService;
+        this.jwtRequestFilter = jwtRequestFilter;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -49,7 +50,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 "/api/v1/notifications/**", };
 
         httpSecurity.csrf().disable().authorizeRequests().antMatchers(publicUris)
-                        .permitAll().anyRequest().authenticated().and().httpBasic();
+                        .permitAll().anyRequest().authenticated().and()
+                        .addFilterBefore(jwtRequestFilter,
+                                        UsernamePasswordAuthenticationFilter.class)
+                        .httpBasic();
     }
 
     @Override

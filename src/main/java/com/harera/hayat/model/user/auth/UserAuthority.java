@@ -2,13 +2,14 @@ package com.harera.hayat.model.user.auth;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.springframework.security.core.GrantedAuthority;
 
-import com.harera.hayat.model.BaseEntity;
 import com.harera.hayat.model.user.User;
 
 import lombok.Getter;
@@ -18,10 +19,16 @@ import lombok.Setter;
 @Getter
 @Entity
 @Table(name = "user_authorities")
-public class UserAuthority extends BaseEntity implements GrantedAuthority {
+@IdClass(UserAuthorityId.class)
+public class UserAuthority implements GrantedAuthority {
 
+    @Id
     @Column(name = "authority")
     private String authority;
+
+    @Id
+    @Column(name = "user_id", insertable = false, updatable = false)
+    private Long userId;
 
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")

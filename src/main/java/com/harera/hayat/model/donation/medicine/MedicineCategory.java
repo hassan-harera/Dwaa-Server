@@ -17,6 +17,10 @@ import lombok.Setter;
 public class MedicineCategory extends BaseEntity {
 
     @Basic
-    @Column(name = "name")
-    private String category;
+    @Column(name = "arabic_name")
+    private String arabicName;
+
+    @Basic
+    @Column(name = "english_name")
+    private String englishName;
 }

@@ -9,7 +9,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseToken;
 import com.google.firebase.auth.UserRecord;
-import com.harera.hayat.common.exception.LoginException;
+import com.harera.hayat.exception.LoginException;
 import com.harera.hayat.model.user.FirebaseUser;
 import com.harera.hayat.model.user.auth.SignupRequest;
 import com.harera.hayat.util.ErrorCode;
