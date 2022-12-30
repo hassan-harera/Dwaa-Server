@@ -6,11 +6,9 @@ import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Import;
 import org.springframework.http.ResponseEntity;
 
 import com.harera.hayat.ApplicationIT;
-import com.harera.hayat.config.FirebaseServiceConfig;
 import com.harera.hayat.model.user.FirebaseUser;
 import com.harera.hayat.model.user.User;
 import com.harera.hayat.model.user.auth.LoginRequest;
@@ -25,7 +23,6 @@ import com.harera.hayat.util.RequestUtil;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-@Import(FirebaseServiceConfig.class)
 class AuthenticationControllerIT extends ApplicationIT {
 
     private final RequestUtil requestUtil;
@@ -59,6 +56,9 @@ class AuthenticationControllerIT extends ApplicationIT {
         assertNotNull(response.getBody());
         assertNotNull(response.getBody().getToken());
         assertNotNull(response.getBody().getRefreshToken());
+
+        // Cleanup
+        dataUtil.delete(userStubs.get(mobile));
     }
 
     @Test
