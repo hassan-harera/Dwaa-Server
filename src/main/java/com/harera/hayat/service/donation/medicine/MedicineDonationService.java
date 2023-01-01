@@ -3,6 +3,7 @@ package com.harera.hayat.service.donation.medicine;
 import java.time.ZonedDateTime;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.harera.hayat.exception.EntityNotFoundException;
@@ -14,12 +15,15 @@ import com.harera.hayat.model.donation.medicine.MedicineDonation;
 import com.harera.hayat.model.donation.medicine.MedicineDonationRequest;
 import com.harera.hayat.model.donation.medicine.MedicineDonationResponse;
 import com.harera.hayat.model.donation.medicine.MedicineUnit;
+import com.harera.hayat.model.user.User;
 import com.harera.hayat.repository.city.CityRepository;
 import com.harera.hayat.repository.donation.DonationRepository;
 import com.harera.hayat.repository.donation.medicine.MedicineDonationRepository;
 import com.harera.hayat.repository.medicine.MedicineRepository;
 import com.harera.hayat.repository.medicine.MedicineUnitRepository;
 import com.harera.hayat.service.user.auth.AuthService;
+
+import io.jsonwebtoken.JwtException;
 
 @Service
 public class MedicineDonationService {
@@ -56,6 +60,7 @@ public class MedicineDonationService {
         donation.setCategory(DonationCategory.MEDICINE);
         donation.setCity(getCity(medicineDonationRequest.getCityId()));
         donation.setDonationDate(ZonedDateTime.now());
+        donation.setUser(getUser());
 
         Donation savedDonation = donationRepository.save(donation);
 
@@ -85,5 +90,13 @@ public class MedicineDonationService {
     private City getCity(long cityId) {
         return cityRepository.findById(cityId).orElseThrow(
                         () -> new EntityNotFoundException(City.class, cityId));
+    }
+
+    private User getUser() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication()
+                        .getPrincipal();
+        if (principal instanceof User user)
+            return user;
+        throw new JwtException("Invalid token");
     }
 }

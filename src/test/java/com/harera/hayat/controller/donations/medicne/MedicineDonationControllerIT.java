@@ -1,4 +1,4 @@
-package com.harera.hayat.controller.donations;
+package com.harera.hayat.controller.donations.medicne;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -52,8 +52,8 @@ class MedicineDonationControllerIT extends ApplicationIT {
         request.setMedicineId(medicine.getId());
         request.setUnitId(unit.getId());
         request.setCityId(city.getId());
-        request.setExpirationDate(ZonedDateTime.now().plusMonths(1));
         request.setMedicineExpirationDate(ZonedDateTime.now().plusMonths(1));
+        request.setDonationExpirationDate(ZonedDateTime.now().plusMonths(1));
 
         try {
             // When

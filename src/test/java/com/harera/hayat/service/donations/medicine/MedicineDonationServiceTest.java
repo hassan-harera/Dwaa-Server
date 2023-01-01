@@ -1,4 +1,11 @@
-package com.harera.hayat.service.donation.medicine;
+package com.harera.hayat.service.donations.medicine;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.time.ZonedDateTime;
 import java.util.Optional;
@@ -10,8 +17,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 
-import com.harera.hayat.exception.EntityNotFoundException;
 import com.harera.hayat.config.NotNullableMapper;
+import com.harera.hayat.exception.EntityNotFoundException;
 import com.harera.hayat.model.city.City;
 import com.harera.hayat.model.donation.CommunicationMethod;
 import com.harera.hayat.model.donation.medicine.Medicine;
@@ -23,12 +30,10 @@ import com.harera.hayat.repository.donation.DonationRepository;
 import com.harera.hayat.repository.donation.medicine.MedicineDonationRepository;
 import com.harera.hayat.repository.medicine.MedicineRepository;
 import com.harera.hayat.repository.medicine.MedicineUnitRepository;
+import com.harera.hayat.service.donation.DonationValidation;
+import com.harera.hayat.service.donation.medicine.MedicineDonationService;
+import com.harera.hayat.service.donation.medicine.MedicineDonationValidation;
 import com.harera.hayat.service.user.auth.AuthService;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class MedicineDonationServiceTest {
@@ -37,7 +42,7 @@ class MedicineDonationServiceTest {
     private ModelMapper modelMapper;
 
     @Mock
-    private DonationRepository donationRepository;
+    private DonationValidation donationValidation;
     @Mock
     private CityRepository cityRepository;
     @Mock
@@ -48,14 +53,17 @@ class MedicineDonationServiceTest {
     private MedicineRepository medicineRepository;;
     @Mock
     private AuthService authService;
+    @Mock
+    private DonationRepository donationRepository;
 
     @BeforeEach
     void setUp() {
-        MedicineDonationValidation donationValidation = new MedicineDonationValidation(
-                        cityRepository, medicineUnitRepository, medicineRepository);
+        MedicineDonationValidation medicineDonationValidation =
+                        new MedicineDonationValidation(donationValidation);
         modelMapper = new NotNullableMapper();
         medicineDonationService = new MedicineDonationService(donationRepository,
-                        donationValidation, cityRepository, medicineUnitRepository,
+                        medicineDonationValidation, cityRepository,
+                        medicineUnitRepository,
                         modelMapper, medicineDonationRepository, medicineRepository,
                         authService);
     }
@@ -72,7 +80,7 @@ class MedicineDonationServiceTest {
         request.setTitle("title");
         request.setDescription("description");
         request.setCommunicationMethod(CommunicationMethod.CHAT);
-        request.setExpirationDate(ZonedDateTime.now().plusMonths(1));
+        request.setMedicineExpirationDate(ZonedDateTime.now().plusMonths(1));
         request.setMedicineExpirationDate(ZonedDateTime.now().plusMonths(1));
 
         City city = new City();
@@ -111,7 +119,7 @@ class MedicineDonationServiceTest {
         request.setTitle("title");
         request.setDescription("description");
         request.setCommunicationMethod(CommunicationMethod.CHAT);
-        request.setExpirationDate(ZonedDateTime.now().plusMonths(1));
+        request.setMedicineExpirationDate(ZonedDateTime.now().plusMonths(1));
         request.setMedicineExpirationDate(ZonedDateTime.now().plusMonths(1));
 
         // when
@@ -142,7 +150,7 @@ class MedicineDonationServiceTest {
         request.setTitle("title");
         request.setDescription("description");
         request.setCommunicationMethod(CommunicationMethod.CHAT);
-        request.setExpirationDate(ZonedDateTime.now().plusMonths(1));
+        request.setMedicineExpirationDate(ZonedDateTime.now().plusMonths(1));
         request.setMedicineExpirationDate(ZonedDateTime.now().plusMonths(1));
 
         // when
@@ -175,7 +183,7 @@ class MedicineDonationServiceTest {
         request.setTitle("title");
         request.setDescription("description");
         request.setCommunicationMethod(CommunicationMethod.CHAT);
-        request.setExpirationDate(ZonedDateTime.now().plusMonths(1));
+        request.setMedicineExpirationDate(ZonedDateTime.now().plusMonths(1));
         request.setMedicineExpirationDate(ZonedDateTime.now().plusMonths(1));
 
         // when
@@ -195,21 +203,39 @@ class MedicineDonationServiceTest {
     }
 
     @Test
-    void create_with_then() {
+    void create_withValidRequest_thenVerifyMapping() {
         // given
         MedicineDonationRequest request = new MedicineDonationRequest();
         request.setCityId(1L);
-        request.setDonationDate(ZonedDateTime.now());
         request.setMedicineId(1L);
         request.setUnitId(1L);
         request.setAmount(1F);
         request.setTitle("title");
         request.setDescription("description");
         request.setCommunicationMethod(CommunicationMethod.CHAT);
-        request.setExpirationDate(ZonedDateTime.now().plusMonths(1));
+        request.setMedicineExpirationDate(ZonedDateTime.now().plusMonths(1));
+        request.setDonationExpirationDate(ZonedDateTime.now().plusMonths(1));
 
         // when
-        // then
-    }
+        when(cityRepository.findById(1L)).thenReturn(Optional.of(new City()));
+        when(medicineRepository.findById(1L)).thenReturn(Optional.of(new Medicine()));
+        when(medicineUnitRepository.findById(1L))
+                        .thenReturn(Optional.of(new MedicineUnit()));
 
+        MedicineDonationResponse medicineDonationResponse =
+                        medicineDonationService.create(request);
+        // then
+        assertEquals(request.getTitle(), medicineDonationResponse.getTitle());
+        assertEquals(request.getDescription(), medicineDonationResponse.getDescription());
+        assertEquals(request.getCommunicationMethod(),
+                        medicineDonationResponse.getCommunicationMethod());
+        assertEquals(request.getMedicineExpirationDate(),
+                        medicineDonationResponse.getMedicineExpirationDate());
+        assertEquals(request.getMedicineExpirationDate(),
+                        medicineDonationResponse.getMedicineExpirationDate());
+        assertEquals(request.getAmount(), medicineDonationResponse.getAmount());
+
+        verify(donationValidation, times(1)).validateCreate(request);
+        verify(medicineDonationRepository, times(1)).save(any());
+    }
 }

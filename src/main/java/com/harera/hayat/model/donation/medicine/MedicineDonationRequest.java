@@ -1,5 +1,7 @@
 package com.harera.hayat.model.donation.medicine;
 
+import java.time.ZonedDateTime;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -15,5 +17,7 @@ public class MedicineDonationRequest extends MedicineDonationDto {
     @JsonProperty(value = "unit_id")
     private long unitId;
     @JsonProperty(value = "medicine_id")
-    private long medicineId;
+    private Long medicineId;
+    @JsonProperty(value = "medicine_expiration_date")
+    private ZonedDateTime medicineExpirationDate;
 }

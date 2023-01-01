@@ -55,10 +55,16 @@ public final class ErrorCode {
     public static final String MANDATORY_DONATION_EXPIRATION_DATE = "donation_005";
     public static final String MANDATORY_DONATION_TITLE = "donation_006";
     public static final String MANDATORY_DONATION_AMOUNT = "donation_007";
+    public static final String MANDATORY_DONATION_DATE = "donation_011";
 
     public static final String FORMAT_DONATION_TITLE = "donation_008";
     public static final String FORMAT_DONATION_EXPIRATION_DATE = "donation_009";
     public static final String FORMAT_DONATION_AMOUNT = "donation_010";
+
+    public static final String MANDATORY_MEDICINE_DONATION_AMOUNT =
+                    "medicine_donation_001";
+    public static final String MANDATORY_MEDICINE_DONATION_EXPIRATION_DATE =
+                    "medicine_donation_002";
 
     private ErrorCode() {
     }

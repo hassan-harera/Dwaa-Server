@@ -13,15 +13,23 @@ import lombok.Data;
 public class DonationDto extends BaseEntityDto {
 
     private String title;
+
     private String description;
+
     @JsonProperty(value = "donation_date")
     private ZonedDateTime donationDate;
+
     @JsonProperty(value = "donation_expiration_date")
-    private ZonedDateTime expirationDate;
+    private ZonedDateTime donationExpirationDate;
+
     private DonationCategory category;
+
     private DonationState state = DonationState.PENDING;
+
     @JsonProperty("communication_method")
     private CommunicationMethod communicationMethod;
+
     private CityDto city;
+
     private UserDto user;
 }

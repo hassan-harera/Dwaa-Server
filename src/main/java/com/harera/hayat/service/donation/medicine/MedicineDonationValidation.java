@@ -3,74 +3,59 @@ package com.harera.hayat.service.donation.medicine;
 import java.time.ZonedDateTime;
 
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
-import com.harera.hayat.exception.FieldFormatException;
 import com.harera.hayat.exception.FieldLimitException;
 import com.harera.hayat.exception.MandatoryFieldException;
 import com.harera.hayat.model.donation.medicine.MedicineDonationRequest;
-import com.harera.hayat.repository.city.CityRepository;
-import com.harera.hayat.repository.medicine.MedicineRepository;
-import com.harera.hayat.repository.medicine.MedicineUnitRepository;
+import com.harera.hayat.service.donation.DonationValidation;
 import com.harera.hayat.util.ErrorCode;
-import com.harera.hayat.util.FieldFormat;
 
 @Service
 public class MedicineDonationValidation {
 
-    private final CityRepository cityRepository;
-    private final MedicineUnitRepository medicineUnitRepository;
-    private final MedicineRepository medicineRepository;
+    private final DonationValidation donationValidation;
 
-    public MedicineDonationValidation(CityRepository cityRepository,
-                    MedicineUnitRepository medicineUnitRepository,
-                    MedicineRepository medicineRepository) {
-        this.cityRepository = cityRepository;
-        this.medicineUnitRepository = medicineUnitRepository;
-        this.medicineRepository = medicineRepository;
+    public MedicineDonationValidation(DonationValidation donationValidation) {
+        this.donationValidation = donationValidation;
     }
 
     public void validateCreate(MedicineDonationRequest medicineDonationRequest) {
-        validateMandatoryFields(medicineDonationRequest);
-        validateFieldsFormat(medicineDonationRequest);
+        donationValidation.validateCreate(medicineDonationRequest);
+        validateMandatoryCreate(medicineDonationRequest);
+        validateFormatCreate(medicineDonationRequest);
     }
 
-    private void validateFieldsFormat(MedicineDonationRequest medicineDonationRequest) {
-        //format validation: title (4, 100), amount (1, 100000), medicineExpirationDate (must be after now)
-        if (medicineDonationRequest.getTitle().length() < 4
-                        || medicineDonationRequest.getTitle().length() > 100) {
-            throw new FieldFormatException(ErrorCode.FORMAT_DONATION_TITLE, "title",
-                            FieldFormat.TITLE_PATTERN);
-        }
-        if (medicineDonationRequest.getAmount() <= 0
-                        || medicineDonationRequest.getAmount() > 100000) {
-            throw new FieldLimitException(ErrorCode.FORMAT_DONATION_AMOUNT, "amount",
-                            String.valueOf(medicineDonationRequest.getAmount()));
-        }
+    private void validateFormatCreate(MedicineDonationRequest medicineDonationRequest) {
         if (medicineDonationRequest.getMedicineExpirationDate()
                         .isBefore(ZonedDateTime.now())) {
             throw new FieldLimitException(ErrorCode.FORMAT_DONATION_EXPIRATION_DATE,
                             "medicine expiration date", medicineDonationRequest
                                             .getMedicineExpirationDate().toString());
         }
+
+        if (medicineDonationRequest.getAmount() < 0
+                        || medicineDonationRequest.getAmount() > 100000) {
+            throw new FieldLimitException(ErrorCode.FORMAT_DONATION_AMOUNT, "amount",
+                            String.valueOf(medicineDonationRequest.getAmount()));
+        }
     }
 
-    private void validateMandatoryFields(
+    private void validateMandatoryCreate(
                     MedicineDonationRequest medicineDonationRequest) {
-        if (medicineDonationRequest.getTitle() == null
-                        || !StringUtils.hasText(medicineDonationRequest.getTitle())) {
-            throw new MandatoryFieldException(ErrorCode.MANDATORY_DONATION_TITLE,
-                            "title");
-        }
-        if (medicineDonationRequest.getCommunicationMethod() == null) {
+        if (medicineDonationRequest.getAmount() == null) {
             throw new MandatoryFieldException(
-                            ErrorCode.MANDATORY_DONATION_COMMUNICATION_METHOD,
-                            "communication method");
+                            ErrorCode.MANDATORY_MEDICINE_DONATION_AMOUNT, "amount");
         }
+
+        if (medicineDonationRequest.getMedicineId() == null) {
+            throw new MandatoryFieldException(
+                            ErrorCode.MANDATORY_DONATION_EXPIRATION_DATE, "medicine_id");
+        }
+
         if (medicineDonationRequest.getMedicineExpirationDate() == null) {
             throw new MandatoryFieldException(
-                            ErrorCode.MANDATORY_DONATION_EXPIRATION_DATE,
-                            "expiration date");
+                            ErrorCode.MANDATORY_MEDICINE_DONATION_EXPIRATION_DATE,
+                            "medicine_expiration_date");
         }
     }
 }
