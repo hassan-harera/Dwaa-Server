@@ -378,59 +378,19 @@
                     </execution>
                 </executions>
             </plugin>
-            <!--            <plugin>-->
-            <!--                <groupId>io.fabric8</groupId>-->
-            <!--                <artifactId>docker-maven-plugin</artifactId>-->
-            <!--                <version>0.40.2</version>-->
-
-            <!--                <configuration>-->
-            <!--                    <dockerHost>unix:///var/run/docker.sock</dockerHost>-->
-            <!--                    <images>-->
-            <!--                        <image>-->
-            <!--                            <name>redis</name>-->
-            <!--                            <alias>it_hayat_redis</alias>-->
-            <!--                            <run>-->
-            <!--                                <hostname>localhost</hostname>-->
-            <!--                                <ports>-->
-            <!--                                    <port>6377:6379</port>-->
-            <!--                                </ports>-->
-            <!--                            </run>-->
-            <!--                        </image>-->
-            <!--                        <image>-->
-            <!--                            <name>mysql:8.0</name>-->
-            <!--                            <alias>it_hayat_mysql</alias>-->
-            <!--                            <run>-->
-            <!--                                <hostname>localhost</hostname>-->
-            <!--                                <ports>-->
-            <!--                                    <port>3366:3306</port>-->
-            <!--                                </ports>-->
-            <!--                                <env>-->
-            <!--                                    <MYSQL_ROOT_PASSWORD>root</MYSQL_ROOT_PASSWORD>-->
-            <!--                                    <MYSQL_DATABASE>hayat</MYSQL_DATABASE>-->
-            <!--                                    <MYSQL_USER>root</MYSQL_USER>-->
-            <!--                                    <MYSQL_PASSWORD>root</MYSQL_PASSWORD>-->
-            <!--                                </env>-->
-            <!--                            </run>-->
-            <!--                        </image>-->
-            <!--                    </images>-->
-            <!--                </configuration>-->
-            <!--                <executions>-->
-            <!--                    <execution>-->
-            <!--                        <id>start</id>-->
-            <!--                        <phase>pre-integration-test</phase>-->
-            <!--                        <goals>-->
-            <!--                            <goal>start</goal>-->
-            <!--                        </goals>-->
-            <!--                    </execution>-->
-            <!--                    <execution>-->
-            <!--                        <id>stop</id>-->
-            <!--                        <phase>post-integration-test</phase>-->
-            <!--                        <goals>-->
-            <!--                            <goal>stop</goal>-->
-            <!--                        </goals>-->
-            <!--                    </execution>-->
-            <!--                </executions>-->
-            <!--            </plugin>-->
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>com.harera.hayat.HayatServerApplication</mainClass>
+                        </manifest>
+                    </archive>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                </configuration>
+            </plugin>
             <plugin>
                 <artifactId>kotlin-maven-plugin</artifactId>
                 <groupId>org.jetbrains.kotlin</groupId>
