@@ -141,10 +141,5 @@ public class DonationValidation {
                             ErrorCode.MANDATORY_DONATION_COMMUNICATION_METHOD,
                             "communication_method");
         }
-        if (donationDto.getDonationExpirationDate() == null) {
-            throw new MandatoryFieldException(
-                            ErrorCode.MANDATORY_DONATION_EXPIRATION_DATE,
-                            "expiration_date");
-        }
     }
 }

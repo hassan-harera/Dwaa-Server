@@ -20,11 +20,11 @@ import lombok.Setter;
 @Setter
 @Getter
 @Entity
-@Table(name = "donation_food")
+@Table(name = "food_donation")
 public class FoodDonation extends BaseEntity {
 
     @Basic
-    @Column(name = "expiration_date")
+    @Column(name = "food_expiration_date")
     private ZonedDateTime foodExpirationDate;
 
     @ManyToOne

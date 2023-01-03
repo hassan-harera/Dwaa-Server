@@ -2,6 +2,7 @@ package com.harera.hayat.service.donations.medicine;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -126,16 +127,9 @@ class MedicineDonationServiceTest {
         when(cityRepository.findById(1L)).thenReturn(Optional.of(new City()));
         when(medicineUnitRepository.findById(1L)).thenReturn(Optional.empty());
 
-        Exception ex = null;
-        try {
-            medicineDonationService.create(request);
-        } catch (Exception e) {
-            ex = e;
-        }
-
         // then
-        assertNotNull(ex);
-        assertEquals(EntityNotFoundException.class, ex.getClass());
+        assertThrows(EntityNotFoundException.class,
+                        () -> medicineDonationService.create(request));
     }
 
     @Test

@@ -36,7 +36,7 @@ public class Donation extends BaseEntity {
 
     @Basic
     @Column(name = "expiration_date")
-    private ZonedDateTime availableTo;
+    private ZonedDateTime donationExpirationDate;
 
     @Column(name = "communication_method")
     private CommunicationMethod communicationMethod;

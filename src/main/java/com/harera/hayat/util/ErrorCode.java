@@ -63,8 +63,17 @@ public final class ErrorCode {
 
     public static final String MANDATORY_MEDICINE_DONATION_AMOUNT =
                     "medicine_donation_001";
-    public static final String MANDATORY_MEDICINE_DONATION_EXPIRATION_DATE =
+    public static final String MANDATORY_MEDICINE_DONATION_MEDICINE_EXPIRATION_DATE =
                     "medicine_donation_002";
+    public static final String MANDATORY_MEDICINE_DONATION_MEDICINE =
+                    "medicine_donation_003";
+
+    public static final String MANDATORY_FOOD_DONATION_AMOUNT = "food_donation_001";
+    public static final String MANDATORY_FOOD_DONATION_FOOD_EXPIRATION_DATE =
+                    "food_donation_002";
+    public static final String MANDATORY_FOOD_DONATION_UNIT = "food_donation_003";
+
+    public static final String FORMAT_FOOD_DONATION_AMOUNT = "food_donation_004";
 
     private ErrorCode() {
     }

@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,7 @@ import com.harera.hayat.repository.user.auth.TokenRepository;
 import com.harera.hayat.service.user.UserValidation;
 
 import io.jsonwebtoken.JwtBuilder;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
@@ -108,5 +110,13 @@ public class AuthService {
         return userRepository.findById(userId)
                         .orElseThrow(() -> new UsernameNotFoundException(
                                         "User not found with id : " + userId));
+    }
+
+    public User getRequestUser() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication()
+                        .getPrincipal();
+        if (principal instanceof User user)
+            return user;
+        throw new JwtException("Invalid token");
     }
 }

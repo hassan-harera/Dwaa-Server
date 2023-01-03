@@ -49,12 +49,12 @@ public class MedicineDonationValidation {
 
         if (medicineDonationRequest.getMedicineId() == null) {
             throw new MandatoryFieldException(
-                            ErrorCode.MANDATORY_DONATION_EXPIRATION_DATE, "medicine_id");
+                            ErrorCode.MANDATORY_MEDICINE_DONATION_MEDICINE,
+                            "medicine_id");
         }
-
         if (medicineDonationRequest.getMedicineExpirationDate() == null) {
             throw new MandatoryFieldException(
-                            ErrorCode.MANDATORY_MEDICINE_DONATION_EXPIRATION_DATE,
+                            ErrorCode.MANDATORY_MEDICINE_DONATION_MEDICINE_EXPIRATION_DATE,
                             "medicine_expiration_date");
         }
     }

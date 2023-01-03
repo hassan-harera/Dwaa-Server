@@ -35,6 +35,7 @@ public class MedicineDonationService {
     private final ModelMapper modelMapper;
     private final MedicineDonationRepository medicineDonationRepository;
     private final MedicineRepository medicineRepository;
+    private final AuthService authService;
 
     public MedicineDonationService(DonationRepository donationRepository,
                     MedicineDonationValidation donationValidation,
@@ -50,6 +51,7 @@ public class MedicineDonationService {
         this.modelMapper = modelMapper;
         this.medicineDonationRepository = medicineDonationRepository;
         this.medicineRepository = medicineRepository;
+        this.authService = authService;
     }
 
     public MedicineDonationResponse create(
@@ -60,7 +62,7 @@ public class MedicineDonationService {
         donation.setCategory(DonationCategory.MEDICINE);
         donation.setCity(getCity(medicineDonationRequest.getCityId()));
         donation.setDonationDate(ZonedDateTime.now());
-        donation.setUser(getUser());
+        donation.setUser(authService.getRequestUser());
 
         Donation savedDonation = donationRepository.save(donation);
 

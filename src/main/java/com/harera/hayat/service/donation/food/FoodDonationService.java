@@ -4,8 +4,8 @@ import java.time.ZonedDateTime;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.harera.hayat.exception.EntityNotFoundException;
 import com.harera.hayat.model.city.City;
@@ -15,7 +15,6 @@ import com.harera.hayat.model.donation.food.FoodDonation;
 import com.harera.hayat.model.donation.food.FoodDonationRequest;
 import com.harera.hayat.model.donation.food.FoodDonationResponse;
 import com.harera.hayat.model.food.FoodUnit;
-import com.harera.hayat.model.user.User;
 import com.harera.hayat.repository.city.CityRepository;
 import com.harera.hayat.repository.donation.DonationRepository;
 import com.harera.hayat.repository.donation.FoodDonationRepository;
@@ -32,12 +31,14 @@ public class FoodDonationService {
     private final AuthService authService;
     private final FoodUnitRepository foodUnitRepository;
     private final FoodDonationRepository foodDonationRepository;
+    private final int foodDonationExpirationDays;
 
     public FoodDonationService(DonationRepository donationRepository,
                     FoodDonationValidation donationValidation,
                     CityRepository cityRepository, ModelMapper modelMapper,
                     AuthService authService, FoodUnitRepository foodUnitRepository,
-                    FoodDonationRepository foodDonationRepository) {
+                    FoodDonationRepository foodDonationRepository,
+                    @Value("${donation.food.expiration_in_days}") int foodDonationExpirationDays) {
         this.donationRepository = donationRepository;
         this.foodDonationValidation = donationValidation;
         this.cityRepository = cityRepository;
@@ -45,37 +46,45 @@ public class FoodDonationService {
         this.authService = authService;
         this.foodUnitRepository = foodUnitRepository;
         this.foodDonationRepository = foodDonationRepository;
+        this.foodDonationExpirationDays = foodDonationExpirationDays;
     }
 
-    public FoodDonationResponse donateFood(FoodDonationRequest foodDonationRequest,
-                    MultipartFile image, String token) {
+    public FoodDonationResponse create(FoodDonationRequest foodDonationRequest) {
         foodDonationValidation.validateCreate(foodDonationRequest);
-
-        User user = authService.getUserForAuthorization(token);
-
-        City city = cityRepository.findById(foodDonationRequest.getCityId())
-                        .orElseThrow(() -> new EntityNotFoundException(City.class,
-                                        foodDonationRequest.getCityId()));
 
         Donation donation = modelMapper.map(foodDonationRequest, Donation.class);
         donation.setCategory(DonationCategory.FOOD);
         donation.setDonationDate(ZonedDateTime.now());
-        donation.setCity(city);
-        donation.setUser(user);
-        Donation savedDonation = donationRepository.save(donation);
+        donation.setDonationExpirationDate(getDonationExpirationDate());
+        donation.setCity(getCity(foodDonationRequest.getCityId()));
+        donation.setUser(authService.getRequestUser());
+        donationRepository.save(donation);
 
         FoodDonation foodDonation =
                         modelMapper.map(foodDonationRequest, FoodDonation.class);
+        foodDonation.setUnit(getUnit(foodDonationRequest.getUnitId()));
+        foodDonation.setDonation(donation);
+        foodDonationRepository.save(foodDonation);
 
-        FoodUnit foodUnit = foodUnitRepository.findById(foodDonationRequest.getUnitId())
-                        .orElseThrow(() -> new EntityNotFoundException(FoodUnit.class,
-                                        foodDonationRequest.getUnitId()));
-        foodDonation.setUnit(foodUnit);
+        FoodDonationResponse response =
+                        modelMapper.map(foodDonation, FoodDonationResponse.class);
+        modelMapper.map(donation, response);
+        return response;
+    }
 
-        foodDonation.setDonation(savedDonation);
+    private ZonedDateTime getDonationExpirationDate() {
+        return ZonedDateTime.now().plusDays(foodDonationExpirationDays);
+    }
 
-        FoodDonation saved = foodDonationRepository.save(foodDonation);
-        return modelMapper.map(saved, FoodDonationResponse.class);
+    private City getCity(Long cityId) {
+        return cityRepository.findById(cityId).orElseThrow(
+                        () -> new EntityNotFoundException(City.class, cityId));
+    }
+
+    private FoodUnit getUnit(Long unitId) {
+        return foodUnitRepository.findById(unitId).orElseThrow(
+                        () -> new EntityNotFoundException(FoodUnit.class, unitId));
+
     }
 
     public List<FoodDonationResponse> list() {

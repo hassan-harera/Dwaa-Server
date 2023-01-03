@@ -89,33 +89,6 @@ class DonationValidationTest {
     }
 
     @Test
-    void validateCreate_withoutExpirationDate_thenMandatoryFieldException() {
-        // given
-        MedicineDonationRequest request = new MedicineDonationRequest();
-        request.setCityId(1L);
-        request.setDonationDate(ZonedDateTime.now());
-        request.setMedicineId(1L);
-        request.setUnitId(1L);
-        request.setCommunicationMethod(CommunicationMethod.CHAT);
-        request.setTitle("title");
-        request.setMedicineExpirationDate(ZonedDateTime.now().plusMonths(1));
-
-        // when
-        Exception ex = null;
-        try {
-            donationValidation.validateCreate(request);
-        } catch (Exception e) {
-            ex = e;
-        }
-
-        // then
-        assertNotNull(ex);
-        assertEquals(MandatoryFieldException.class, ex.getClass());
-        assertEquals(ErrorCode.MANDATORY_DONATION_EXPIRATION_DATE,
-                        ((MandatoryFieldException) ex).getCode());
-    }
-
-    @Test
     void validateCreate_withValidRequest_then() {
         // given
         MedicineDonationRequest request = new MedicineDonationRequest();

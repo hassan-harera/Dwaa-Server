@@ -1,14 +1,14 @@
 package com.harera.hayat.model.food;
 
 
-import lombok.Getter;
-import lombok.Setter;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
 import com.harera.hayat.model.BaseEntity;
+
+import lombok.Getter;
+import lombok.Setter;
 
 @Setter
 @Getter
@@ -16,8 +16,11 @@ import com.harera.hayat.model.BaseEntity;
 @Table(name = "food_unit")
 public class FoodUnit extends BaseEntity {
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "arabic_name")
+    private String arabicName;
+
+    @Column(name = "english_name")
+    private String englishName;
 
     @Column(name = "description")
     private String description;
