@@ -1,6 +1,6 @@
 package com.harera.hayat.model.donation.food;
 
-import java.time.ZonedDateTime;
+import java.time.OffsetDateTime;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -25,7 +25,7 @@ public class FoodDonation extends BaseEntity {
 
     @Basic
     @Column(name = "food_expiration_date")
-    private ZonedDateTime foodExpirationDate;
+    private OffsetDateTime foodExpirationDate;
 
     @ManyToOne
     @JoinColumn(name = "unit_id", referencedColumnName = "id")

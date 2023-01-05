@@ -1,9 +1,9 @@
-package com.harera.hayat.controller.donations.medicne;
+package com.harera.hayat.controller.donation.medicne;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-import java.time.ZonedDateTime;
+import java.time.OffsetDateTime;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,8 +52,8 @@ class MedicineDonationControllerIT extends ApplicationIT {
         request.setMedicineId(medicine.getId());
         request.setUnitId(unit.getId());
         request.setCityId(city.getId());
-        request.setMedicineExpirationDate(ZonedDateTime.now().plusMonths(1));
-        request.setDonationExpirationDate(ZonedDateTime.now().plusMonths(1));
+        request.setMedicineExpirationDate(OffsetDateTime.now().plusMonths(1));
+        request.setDonationExpirationDate(OffsetDateTime.now().plusMonths(1));
 
         try {
             // When

@@ -8,7 +8,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.time.ZonedDateTime;
+import java.time.OffsetDateTime;
 import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -22,8 +22,11 @@ import com.harera.hayat.config.NotNullableMapper;
 import com.harera.hayat.exception.EntityNotFoundException;
 import com.harera.hayat.model.city.City;
 import com.harera.hayat.model.donation.CommunicationMethod;
+import com.harera.hayat.model.donation.Donation;
+import com.harera.hayat.model.donation.food.FoodDonation;
 import com.harera.hayat.model.donation.food.FoodDonationRequest;
 import com.harera.hayat.model.donation.food.FoodDonationResponse;
+import com.harera.hayat.model.donation.food.FoodDonationUpdateRequest;
 import com.harera.hayat.model.food.FoodUnit;
 import com.harera.hayat.repository.city.CityRepository;
 import com.harera.hayat.repository.donation.DonationRepository;
@@ -69,14 +72,14 @@ class FoodDonationServiceTest {
         // given
         FoodDonationRequest request = new FoodDonationRequest();
         request.setCityId(1L);
-        request.setDonationDate(ZonedDateTime.now());
+        request.setDonationDate(OffsetDateTime.now());
         request.setUnitId(1L);
         request.setAmount(1F);
         request.setTitle("title");
         request.setDescription("description");
         request.setCommunicationMethod(CommunicationMethod.CHAT);
-        request.setFoodExpirationDate(ZonedDateTime.now().plusMonths(1));
-        request.setFoodExpirationDate(ZonedDateTime.now().plusMonths(1));
+        request.setFoodExpirationDate(OffsetDateTime.now().plusMonths(1));
+        request.setFoodExpirationDate(OffsetDateTime.now().plusMonths(1));
 
         // when
         when(cityRepository.findById(1L)).thenReturn(Optional.empty());
@@ -92,14 +95,14 @@ class FoodDonationServiceTest {
         // given
         FoodDonationRequest request = new FoodDonationRequest();
         request.setCityId(1L);
-        request.setDonationDate(ZonedDateTime.now());
+        request.setDonationDate(OffsetDateTime.now());
         request.setUnitId(1L);
         request.setAmount(1F);
         request.setTitle("title");
         request.setDescription("description");
         request.setCommunicationMethod(CommunicationMethod.CHAT);
-        request.setFoodExpirationDate(ZonedDateTime.now().plusMonths(1));
-        request.setFoodExpirationDate(ZonedDateTime.now().plusMonths(1));
+        request.setFoodExpirationDate(OffsetDateTime.now().plusMonths(1));
+        request.setFoodExpirationDate(OffsetDateTime.now().plusMonths(1));
 
         // when
         when(cityRepository.findById(1L)).thenReturn(Optional.of(new City()));
@@ -121,14 +124,14 @@ class FoodDonationServiceTest {
         // given
         FoodDonationRequest request = new FoodDonationRequest();
         request.setCityId(1L);
-        request.setDonationDate(ZonedDateTime.now());
+        request.setDonationDate(OffsetDateTime.now());
         request.setUnitId(1L);
         request.setAmount(1F);
         request.setTitle("title");
         request.setDescription("description");
         request.setCommunicationMethod(CommunicationMethod.CHAT);
-        request.setFoodExpirationDate(ZonedDateTime.now().plusMonths(1));
-        request.setFoodExpirationDate(ZonedDateTime.now().plusMonths(1));
+        request.setFoodExpirationDate(OffsetDateTime.now().plusMonths(1));
+        request.setFoodExpirationDate(OffsetDateTime.now().plusMonths(1));
 
         City city = new City();
         city.setId(1L);
@@ -168,8 +171,8 @@ class FoodDonationServiceTest {
         request.setTitle("title");
         request.setDescription("description");
         request.setCommunicationMethod(CommunicationMethod.CHAT);
-        request.setFoodExpirationDate(ZonedDateTime.now().plusMonths(1));
-        request.setDonationExpirationDate(ZonedDateTime.now().plusMonths(1));
+        request.setFoodExpirationDate(OffsetDateTime.now().plusMonths(1));
+        request.setDonationExpirationDate(OffsetDateTime.now().plusMonths(1));
 
         // when
         when(cityRepository.findById(1L)).thenReturn(Optional.of(new City()));
@@ -190,5 +193,147 @@ class FoodDonationServiceTest {
         verify(foodDonationValidation, times(1)).validateCreate(request);
         verify(donationRepository, times(1)).save(any());
         verify(foodDonationRepository, times(1)).save(any());
+    }
+
+    @Test
+    void update_withNotExistedFoodDonation_thenThrowEntityNotFoundException() {
+        // given
+        Long id = 1L;
+
+        FoodDonationUpdateRequest request = new FoodDonationUpdateRequest();
+        request.setCityId(1L);
+        request.setDonationDate(OffsetDateTime.now());
+        request.setUnitId(1L);
+        request.setAmount(1F);
+        request.setTitle("title");
+        request.setDescription("description");
+        request.setCommunicationMethod(CommunicationMethod.CHAT);
+        request.setFoodExpirationDate(OffsetDateTime.now().plusMonths(1));
+        request.setFoodExpirationDate(OffsetDateTime.now().plusMonths(1));
+
+        // when
+        when(foodDonationRepository.findById(id)).thenReturn(Optional.empty());
+
+        // then
+        assertThrows(EntityNotFoundException.class, () -> {
+            foodDonationService.update(id, request);
+        });
+    }
+
+    @Test
+    void update_withNotExistedCity_thenThrowEntityNotFoundException() {
+        // given
+        Long id = 1L;
+
+        FoodDonationUpdateRequest request = new FoodDonationUpdateRequest();
+        request.setCityId(1L);
+        request.setDonationDate(OffsetDateTime.now());
+        request.setUnitId(1L);
+        request.setAmount(1F);
+        request.setTitle("title");
+        request.setDescription("description");
+        request.setCommunicationMethod(CommunicationMethod.CHAT);
+        request.setFoodExpirationDate(OffsetDateTime.now().plusMonths(1));
+        request.setFoodExpirationDate(OffsetDateTime.now().plusMonths(1));
+
+        Donation donation = new Donation();
+        donation.setId(1L);
+
+        FoodDonation foodDonation = new FoodDonation();
+        foodDonation.setId(1L);
+        foodDonation.setDonation(donation);
+
+        // when
+        when(foodDonationRepository.findById(id)).thenReturn(Optional.of(foodDonation));
+
+        // then
+        assertThrows(EntityNotFoundException.class, () -> {
+            foodDonationService.update(id, request);
+        });
+    }
+
+    @Test
+    void update_withNotExistedFoundUnit_thenThrowEntityNotFoundException() {
+        // given
+        Long id = 1L;
+
+        FoodDonationUpdateRequest request = new FoodDonationUpdateRequest();
+        request.setCityId(1L);
+        request.setDonationDate(OffsetDateTime.now());
+        request.setUnitId(1L);
+        request.setAmount(1F);
+        request.setTitle("title");
+        request.setDescription("description");
+        request.setCommunicationMethod(CommunicationMethod.CHAT);
+        request.setFoodExpirationDate(OffsetDateTime.now().plusMonths(1));
+        request.setFoodExpirationDate(OffsetDateTime.now().plusMonths(1));
+
+        Donation donation = new Donation();
+        donation.setId(1L);
+
+        FoodDonation foodDonation = new FoodDonation();
+        foodDonation.setId(1L);
+        foodDonation.setDonation(donation);
+
+        // when
+        when(foodDonationRepository.findById(id)).thenReturn(Optional.of(foodDonation));
+        when(cityRepository.findById(1L)).thenReturn(Optional.of(new City()));
+
+        // when
+        EntityNotFoundException ex = assertThrows(EntityNotFoundException.class, () -> {
+            foodDonationService.update(id, request);
+        });
+
+        // then
+        assertNotNull(ex);
+        assertEquals(EntityNotFoundException.class, ex.getClass());
+    }
+
+    @Test
+    void update_withValidRequest_thenValidateMapping() {
+        // given
+        Long id = 1L;
+
+        FoodDonationUpdateRequest request = new FoodDonationUpdateRequest();
+        request.setCityId(1L);
+        request.setUnitId(1L);
+        request.setAmount(1F);
+        request.setTitle("title");
+        request.setDescription("description");
+        request.setCommunicationMethod(CommunicationMethod.CHAT);
+        request.setFoodExpirationDate(OffsetDateTime.now().plusMonths(1));
+
+        City city = new City();
+        city.setId(1L);
+
+        FoodUnit foodUnit = new FoodUnit();
+        foodUnit.setId(1L);
+
+        Donation donation = new Donation();
+        donation.setId(1L);
+
+        FoodDonation foodDonation = new FoodDonation();
+        foodDonation.setId(1L);
+        foodDonation.setDonation(donation);
+
+        // when
+        when(foodDonationRepository.findById(id)).thenReturn(Optional.of(foodDonation));
+        when(cityRepository.findById(1L)).thenReturn(Optional.of(city));
+        when(foodUnitRepository.findById(1L)).thenReturn(Optional.of(foodUnit));
+
+        FoodDonationResponse response = foodDonationService.update(id, request);
+
+        // then
+        assertNotNull(response);
+        assertEquals(request.getTitle(), response.getTitle());
+        assertEquals(request.getDescription(), response.getDescription());
+        assertEquals(request.getCommunicationMethod(), response.getCommunicationMethod());
+        assertEquals(request.getCityId(), response.getCity().getId());
+
+        verify(foodDonationValidation, times(1)).validateUpdate(id, request);
+        verify(cityRepository, times(1)).findById(1L);
+        verify(foodUnitRepository, times(1)).findById(1L);
+        verify(foodDonationRepository, times(1)).save(any());
+        verify(donationRepository, times(1)).save(any());
     }
 }

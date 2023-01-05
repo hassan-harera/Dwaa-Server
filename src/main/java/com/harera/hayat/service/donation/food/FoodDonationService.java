@@ -1,6 +1,6 @@
 package com.harera.hayat.service.donation.food;
 
-import java.time.ZonedDateTime;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
@@ -14,6 +14,7 @@ import com.harera.hayat.model.donation.DonationCategory;
 import com.harera.hayat.model.donation.food.FoodDonation;
 import com.harera.hayat.model.donation.food.FoodDonationRequest;
 import com.harera.hayat.model.donation.food.FoodDonationResponse;
+import com.harera.hayat.model.donation.food.FoodDonationUpdateRequest;
 import com.harera.hayat.model.food.FoodUnit;
 import com.harera.hayat.repository.city.CityRepository;
 import com.harera.hayat.repository.donation.DonationRepository;
@@ -54,7 +55,7 @@ public class FoodDonationService {
 
         Donation donation = modelMapper.map(foodDonationRequest, Donation.class);
         donation.setCategory(DonationCategory.FOOD);
-        donation.setDonationDate(ZonedDateTime.now());
+        donation.setDonationDate(OffsetDateTime.now());
         donation.setDonationExpirationDate(getDonationExpirationDate());
         donation.setCity(getCity(foodDonationRequest.getCityId()));
         donation.setUser(authService.getRequestUser());
@@ -72,8 +73,8 @@ public class FoodDonationService {
         return response;
     }
 
-    private ZonedDateTime getDonationExpirationDate() {
-        return ZonedDateTime.now().plusDays(foodDonationExpirationDays);
+    private OffsetDateTime getDonationExpirationDate() {
+        return OffsetDateTime.now().plusDays(foodDonationExpirationDays);
     }
 
     private City getCity(Long cityId) {
@@ -89,5 +90,29 @@ public class FoodDonationService {
 
     public List<FoodDonationResponse> list() {
         return List.of();
+    }
+
+    public FoodDonationResponse update(Long id, FoodDonationUpdateRequest request) {
+        foodDonationValidation.validateUpdate(id, request);
+
+        FoodDonation foodDonation = foodDonationRepository.findById(id).orElseThrow(
+                        () -> new EntityNotFoundException(FoodDonation.class, id));
+
+        Donation donation = foodDonation.getDonation();
+        modelMapper.map(request, donation);
+        donation.setCity(getCity(request.getCityId()));
+        donation.setUser(authService.getRequestUser());
+        donationRepository.save(donation);
+
+        modelMapper.map(request, foodDonation);
+        foodDonation.setUnit(getUnit(request.getUnitId()));
+        foodDonation.setDonation(donation);
+        foodDonationRepository.save(foodDonation);
+
+        FoodDonationResponse response =
+                        modelMapper.map(foodDonation, FoodDonationResponse.class);
+        modelMapper.map(donation, response);
+        response.setId(foodDonation.getId());
+        return response;
     }
 }

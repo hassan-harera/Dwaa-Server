@@ -1,6 +1,6 @@
 package com.harera.hayat.model.donation.medicine;
 
-import java.time.ZonedDateTime;
+import java.time.OffsetDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -29,7 +29,7 @@ public class MedicineDonation extends BaseEntity {
     private MedicineUnit medicineUnit;
 
     @Column(name = "medicine_expiration_date")
-    private ZonedDateTime medicineExpirationDate;
+    private OffsetDateTime medicineExpirationDate;
 
     @OneToOne
     @JoinColumn(name = "donation_id", referencedColumnName = "id")

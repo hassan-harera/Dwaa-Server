@@ -1,6 +1,6 @@
 package com.harera.hayat.model.donation.property;
 
-import java.time.ZonedDateTime;
+import java.time.OffsetDateTime;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.harera.hayat.model.BaseEntity;
@@ -18,9 +18,9 @@ public class PropertyDonationRequest extends BaseEntity {
     private Integer kitchens;
 
     @JsonProperty("available_from")
-    private ZonedDateTime AvailableFrom;
+    private OffsetDateTime AvailableFrom;
     @JsonProperty("available_to")
-    private ZonedDateTime AvailableTo;
+    private OffsetDateTime AvailableTo;
     @JsonProperty("city_id")
     private long cityId;
     @JsonProperty("communication_type_id")

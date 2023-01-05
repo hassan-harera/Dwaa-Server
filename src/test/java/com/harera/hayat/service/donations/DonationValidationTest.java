@@ -3,7 +3,7 @@ package com.harera.hayat.service.donations;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import java.time.ZonedDateTime;
+import java.time.OffsetDateTime;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -36,19 +36,19 @@ class DonationValidationTest {
         // given
         MedicineDonationRequest request = new MedicineDonationRequest();
         request.setCityId(1L);
-        request.setDonationDate(ZonedDateTime.now());
+        request.setDonationDate(OffsetDateTime.now());
         request.setMedicineId(1L);
         request.setUnitId(1L);
         request.setAmount(1F);
         request.setDescription("description");
         request.setCommunicationMethod(CommunicationMethod.CHAT);
-        request.setMedicineExpirationDate(ZonedDateTime.now().plusMonths(1));
-        request.setMedicineExpirationDate(ZonedDateTime.now().plusMonths(1));
+        request.setMedicineExpirationDate(OffsetDateTime.now().plusMonths(1));
+        request.setMedicineExpirationDate(OffsetDateTime.now().plusMonths(1));
 
         // when
         Exception ex = null;
         try {
-            donationValidation.validateCreate(request);
+            donationValidation.validate(request);
         } catch (Exception e) {
             ex = e;
         }
@@ -65,17 +65,17 @@ class DonationValidationTest {
         // given
         MedicineDonationRequest request = new MedicineDonationRequest();
         request.setCityId(1L);
-        request.setDonationDate(ZonedDateTime.now());
+        request.setDonationDate(OffsetDateTime.now());
         request.setMedicineId(1L);
         request.setUnitId(1L);
         request.setTitle("title");
-        request.setMedicineExpirationDate(ZonedDateTime.now().plusMonths(1));
-        request.setMedicineExpirationDate(ZonedDateTime.now().plusMonths(1));
+        request.setMedicineExpirationDate(OffsetDateTime.now().plusMonths(1));
+        request.setMedicineExpirationDate(OffsetDateTime.now().plusMonths(1));
 
         // when
         Exception ex = null;
         try {
-            donationValidation.validateCreate(request);
+            donationValidation.validate(request);
         } catch (Exception e) {
             ex = e;
 
@@ -93,15 +93,15 @@ class DonationValidationTest {
         // given
         MedicineDonationRequest request = new MedicineDonationRequest();
         request.setCityId(1L);
-        request.setDonationDate(ZonedDateTime.now());
+        request.setDonationDate(OffsetDateTime.now());
         request.setMedicineId(1L);
         request.setUnitId(1L);
         request.setAmount(1F);
         request.setTitle("title");
         request.setDescription("description");
         request.setCommunicationMethod(CommunicationMethod.CHAT);
-        request.setMedicineExpirationDate(ZonedDateTime.now().plusMonths(1));
-        request.setMedicineExpirationDate(ZonedDateTime.now().plusMonths(1));
+        request.setMedicineExpirationDate(OffsetDateTime.now().plusMonths(1));
+        request.setMedicineExpirationDate(OffsetDateTime.now().plusMonths(1));
 
         // when
         // then
@@ -112,14 +112,14 @@ class DonationValidationTest {
         // given
         MedicineDonationRequest request = new MedicineDonationRequest();
         request.setCityId(1L);
-        request.setDonationDate(ZonedDateTime.now());
+        request.setDonationDate(OffsetDateTime.now());
         request.setMedicineId(1L);
         request.setUnitId(1L);
         request.setAmount(1F);
         request.setTitle("title");
         request.setDescription("description");
         request.setCommunicationMethod(CommunicationMethod.CHAT);
-        request.setMedicineExpirationDate(ZonedDateTime.now().plusMonths(1));
+        request.setMedicineExpirationDate(OffsetDateTime.now().plusMonths(1));
 
         // when
         // then

@@ -1,4 +1,4 @@
-package com.harera.hayat.controller.donations;
+package com.harera.hayat.controller.donation;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

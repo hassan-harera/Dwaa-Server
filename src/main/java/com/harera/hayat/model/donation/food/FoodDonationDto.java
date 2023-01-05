@@ -1,6 +1,6 @@
 package com.harera.hayat.model.donation.food;
 
-import java.time.ZonedDateTime;
+import java.time.OffsetDateTime;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.harera.hayat.model.donation.DonationDto;
@@ -16,5 +16,11 @@ public class FoodDonationDto extends DonationDto {
     private Float amount;
 
     @JsonProperty(value = "food_expiration_date")
-    private ZonedDateTime foodExpirationDate;
+    private OffsetDateTime foodExpirationDate;
+
+    @JsonProperty(value = "city_id")
+    private Long cityId;
+
+    @JsonProperty(value = "unit_id")
+    private Long unitId;
 }

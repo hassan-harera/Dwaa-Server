@@ -1,6 +1,6 @@
 package com.harera.hayat.service.donation.medicine;
 
-import java.time.ZonedDateTime;
+import java.time.OffsetDateTime;
 
 import org.springframework.stereotype.Service;
 
@@ -20,14 +20,14 @@ public class MedicineDonationValidation {
     }
 
     public void validateCreate(MedicineDonationRequest medicineDonationRequest) {
-        donationValidation.validateCreate(medicineDonationRequest);
+        donationValidation.validate(medicineDonationRequest);
         validateMandatoryCreate(medicineDonationRequest);
         validateFormatCreate(medicineDonationRequest);
     }
 
     private void validateFormatCreate(MedicineDonationRequest medicineDonationRequest) {
         if (medicineDonationRequest.getMedicineExpirationDate()
-                        .isBefore(ZonedDateTime.now())) {
+                        .isBefore(OffsetDateTime.now())) {
             throw new FieldLimitException(ErrorCode.FORMAT_DONATION_EXPIRATION_DATE,
                             "medicine expiration date", medicineDonationRequest
                                             .getMedicineExpirationDate().toString());

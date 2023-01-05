@@ -2,7 +2,7 @@ package com.harera.hayat.service.donation;
 
 import static org.apache.commons.lang3.StringUtils.isBlank;
 
-import java.time.ZonedDateTime;
+import java.time.OffsetDateTime;
 
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -74,11 +74,11 @@ public class DonationValidation {
                             "Available from must be before " + "available to");
         }
 
-        if (propertyDonationRequest.getAvailableFrom().isBefore(ZonedDateTime.now())) {
+        if (propertyDonationRequest.getAvailableFrom().isBefore(OffsetDateTime.now())) {
             throw new IllegalArgumentException("Available from must be after " + "now");
         }
 
-        if (propertyDonationRequest.getAvailableTo().isBefore(ZonedDateTime.now())) {
+        if (propertyDonationRequest.getAvailableTo().isBefore(OffsetDateTime.now())) {
             throw new IllegalArgumentException("Available to must be after " + "now");
         }
     }
@@ -114,24 +114,20 @@ public class DonationValidation {
         }
     }
 
-    public void validateCreate(DonationDto donationDto) {
-        validateMandatoryCreate(donationDto);
-        validateFormatCreate(donationDto);
+    public void validate(DonationDto donationDto) {
+        validateMandatory(donationDto);
+        validateFormat(donationDto);
     }
 
-    private void validateFormatCreate(DonationDto donationDto) {
+    private void validateFormat(DonationDto donationDto) {
         if (donationDto.getTitle().length() < 4
                         || donationDto.getTitle().length() > 100) {
             throw new FieldFormatException(ErrorCode.FORMAT_DONATION_TITLE, "title",
                             FieldFormat.TITLE_PATTERN);
         }
-        if (donationDto.getDonationExpirationDate().isBefore(ZonedDateTime.now())) {
-            throw new FieldFormatException(ErrorCode.FORMAT_DONATION_TITLE, "title",
-                            FieldFormat.TITLE_PATTERN);
-        }
     }
 
-    private void validateMandatoryCreate(DonationDto donationDto) {
+    private void validateMandatory(DonationDto donationDto) {
         if (isBlank(donationDto.getTitle())) {
             throw new MandatoryFieldException(ErrorCode.MANDATORY_DONATION_TITLE,
                             "title");
@@ -139,7 +135,7 @@ public class DonationValidation {
         if (donationDto.getCommunicationMethod() == null) {
             throw new MandatoryFieldException(
                             ErrorCode.MANDATORY_DONATION_COMMUNICATION_METHOD,
-                            "communication_method");
+                            "communication method");
         }
     }
 }

@@ -1,6 +1,6 @@
 package com.harera.hayat.model.donation;
 
-import java.time.ZonedDateTime;
+import java.time.OffsetDateTime;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.harera.hayat.model.BaseEntityDto;
@@ -17,10 +17,10 @@ public class DonationDto extends BaseEntityDto {
     private String description;
 
     @JsonProperty(value = "donation_date")
-    private ZonedDateTime donationDate;
+    private OffsetDateTime donationDate;
 
     @JsonProperty(value = "donation_expiration_date")
-    private ZonedDateTime donationExpirationDate;
+    private OffsetDateTime donationExpirationDate;
 
     private DonationCategory category;
 

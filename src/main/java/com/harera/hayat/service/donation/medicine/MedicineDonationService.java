@@ -1,6 +1,6 @@
 package com.harera.hayat.service.donation.medicine;
 
-import java.time.ZonedDateTime;
+import java.time.OffsetDateTime;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -61,7 +61,7 @@ public class MedicineDonationService {
         Donation donation = modelMapper.map(medicineDonationRequest, Donation.class);
         donation.setCategory(DonationCategory.MEDICINE);
         donation.setCity(getCity(medicineDonationRequest.getCityId()));
-        donation.setDonationDate(ZonedDateTime.now());
+        donation.setDonationDate(OffsetDateTime.now());
         donation.setUser(authService.getRequestUser());
 
         Donation savedDonation = donationRepository.save(donation);

@@ -1,6 +1,6 @@
 package com.harera.hayat.model.donation;
 
-import java.time.ZonedDateTime;
+import java.time.OffsetDateTime;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -32,11 +32,11 @@ public class Donation extends BaseEntity {
 
     @Basic
     @Column(name = "donation_date")
-    private ZonedDateTime donationDate;
+    private OffsetDateTime donationDate;
 
     @Basic
     @Column(name = "expiration_date")
-    private ZonedDateTime donationExpirationDate;
+    private OffsetDateTime donationExpirationDate;
 
     @Column(name = "communication_method")
     private CommunicationMethod communicationMethod;

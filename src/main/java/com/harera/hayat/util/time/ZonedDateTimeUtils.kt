@@ -1,14 +1,14 @@
 package com.harera.hayat.util.time
 
-import java.time.ZonedDateTime
+import java.time.OffsetDateTime
 
-object ZonedDateTimeUtils {
+object OffsetDateTimeUtils {
 
     const val FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX"
 
-    fun isValidZonedDateTime(string: String): Boolean {
+    fun isValidOffsetDateTime(string: String): Boolean {
         try {
-            ZonedDateTime.parse(string)
+            OffsetDateTime.parse(string)
             return true
         } catch (e: Exception) {
             return false

@@ -1,6 +1,6 @@
 package com.harera.hayat.model.donation.property;
 
-import java.time.ZonedDateTime;
+import java.time.OffsetDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,8 +27,8 @@ public class PropertyDonation extends BaseEntity {
     private int kitchens;
 
     @Column(name = "available_from")
-    private ZonedDateTime availableFrom;
+    private OffsetDateTime availableFrom;
 
     @Column(name = "available_to")
-    private ZonedDateTime availableTo;
+    private OffsetDateTime availableTo;
 }
