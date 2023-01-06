@@ -1,4 +1,4 @@
-package com.harera.hayat.controller.donation;
+package com.harera.hayat.controller.donation.medicine;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.harera.hayat.model.donation.medicine.MedicineDonationRequest;
 import com.harera.hayat.model.donation.medicine.MedicineDonationResponse;
 import com.harera.hayat.service.donation.medicine.MedicineDonationService;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
 @RestController
 @RequestMapping("/api/v1/donations/medicine")
@@ -21,7 +24,10 @@ public class MedicineDonationController {
     }
 
     @PostMapping
-    public ResponseEntity<MedicineDonationResponse> donateMedicine(
+    @Operation(summary = "Create", description = "Create a food donations",
+                    tags = "Food-Donation", responses = @ApiResponse(responseCode = "200",
+                                    description = "success|Ok"))
+    public ResponseEntity<MedicineDonationResponse> create(
                     @RequestBody MedicineDonationRequest medicineDonationRequest) {
         MedicineDonationResponse donationResponse =
                         donationService.create(medicineDonationRequest);

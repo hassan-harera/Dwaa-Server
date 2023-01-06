@@ -7,8 +7,8 @@ import org.modelmapper.ModelMapper
 import org.springframework.stereotype.Service
 
 interface AnnouncementService {
-    fun getAnnouncements(): List<AnnouncementResponse>
-    fun getAnnouncement(announcementId: Long): AnnouncementResponse
+    fun list(): List<AnnouncementResponse>
+    fun get(announcementId: Long): AnnouncementResponse
 }
 
 @Service
@@ -17,11 +17,11 @@ class AnnouncementServiceImpl(
     private val modelMapper: ModelMapper
 ) : AnnouncementService {
 
-    override fun getAnnouncements(): List<AnnouncementResponse> {
+    override fun list(): List<AnnouncementResponse> {
         return getActiveAnnouncements();
     }
 
-    override fun getAnnouncement(announcementId: Long): AnnouncementResponse {
+    override fun get(announcementId: Long): AnnouncementResponse {
         return announcementRepository
             .findById(announcementId)
             .orElseThrow {
@@ -32,23 +32,9 @@ class AnnouncementServiceImpl(
             }
     }
 
-    private fun getInactiveAnnouncements(): List<AnnouncementResponse> {
-        return announcementRepository.findInactiveOffers().map {
-            modelMapper.map(it, AnnouncementResponse::class.java)
-        }
-    }
-
     private fun getActiveAnnouncements(): List<AnnouncementResponse> {
         return announcementRepository.findActiveOffers().map {
             modelMapper.map(it, AnnouncementResponse::class.java)
         }
     }
-
-    private fun getAllAnnouncements(): List<AnnouncementResponse> {
-        return announcementRepository.findAll().map {
-            modelMapper.map(it, AnnouncementResponse::class.java)
-        }
-    }
 }
-
-

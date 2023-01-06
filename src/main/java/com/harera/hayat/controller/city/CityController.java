@@ -1,6 +1,5 @@
 package com.harera.hayat.controller.city;
 
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.harera.hayat.model.city.CityResponse;
 import com.harera.hayat.service.city.CityService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
 @RestController
 @RequestMapping("/api/v1/cities")
@@ -25,21 +26,22 @@ public class CityController {
     private CityService cityService;
 
     @GetMapping("/search")
-//    @Operation(summary = "Search", description = "Search cities",
-//            tags = "City", responses = {@ApiResponse(responseCode = "200",
-//            description = "success|Ok")})
-    public ResponseEntity<List<CityResponse>> search(@RequestParam(required =
-            false, name = "arabic_name") String arabicName,
-                                                     @RequestParam(name =
-                                                             "english_name",
-                                                     required = false) String englishName) {
-        return ResponseEntity.status(HttpStatus.OK).body(cityService.search(arabicName, englishName));
+    @Operation(summary = "Search", description = "Search cities", tags = "City",
+                    responses = { @ApiResponse(responseCode = "200",
+                                    description = "success|Ok") })
+    public ResponseEntity<List<CityResponse>> search(
+                    @RequestParam(required = false,
+                                    name = "arabic_name") String arabicName,
+                    @RequestParam(name = "english_name",
+                                    required = false) String englishName) {
+        return ResponseEntity.status(HttpStatus.OK)
+                        .body(cityService.search(arabicName, englishName));
     }
 
     @GetMapping("/{id}")
-//    @Operation(summary = "Get", description = "Get city data", tags = "City",
-//            responses = {@ApiResponse(responseCode = "200",
-//                    description = "success|Ok")})
+    @Operation(summary = "Get", description = "Get city data", tags = "City",
+                    responses = { @ApiResponse(responseCode = "200",
+                                    description = "success|Ok") })
     public ResponseEntity<CityResponse> get(@PathVariable("id") long id) {
         return ResponseEntity.ok(cityService.get(id));
     }

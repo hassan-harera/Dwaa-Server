@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.harera.hayat.model.city.StateResponse;
 import com.harera.hayat.service.city.StateService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
 @RestController
 @RequestMapping("/api/v1/states")
@@ -22,18 +24,18 @@ public class StateController {
     private StateService stateService;
 
     @GetMapping
-//    @Operation(summary = "List", description = "list all states",
-//            tags = "State", responses = {@ApiResponse(responseCode = "200",
-//            description = "success|Ok")})
+    @Operation(summary = "List", description = "list all states", tags = "State",
+                    responses = { @ApiResponse(responseCode = "200",
+                                    description = "success|Ok") })
     public ResponseEntity<List<StateResponse>> list() {
         List<StateResponse> list = stateService.list();
         return ResponseEntity.ok(list);
     }
 
     @GetMapping("/{id}")
-//    @Operation(summary = "Get", description = "Get state data", tags =
-//            "State", responses = {@ApiResponse(responseCode = "200",
-//            description = "success|Ok")})
+    @Operation(summary = "Get", description = "Get state data", tags = "State",
+                    responses = { @ApiResponse(responseCode = "200",
+                                    description = "success|Ok") })
     public ResponseEntity<StateResponse> get(@PathVariable("id") int id) {
         StateResponse stateResponse = stateService.get(id);
         return ResponseEntity.ok(stateResponse);

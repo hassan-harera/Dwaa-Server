@@ -17,6 +17,9 @@ import com.harera.hayat.model.donation.food.FoodDonationResponse;
 import com.harera.hayat.model.donation.food.FoodDonationUpdateRequest;
 import com.harera.hayat.service.donation.food.FoodDonationService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+
 @RestController
 @RequestMapping("/api/v1/donations/food")
 public class FoodDonationController {
@@ -28,12 +31,18 @@ public class FoodDonationController {
     }
 
     @PostMapping
+    @Operation(summary = "Create", description = "Create a food donation",
+                    tags = "Food-Donation", responses = @ApiResponse(responseCode = "200",
+                                    description = "success|Ok"))
     public ResponseEntity<FoodDonationResponse> create(
                     @RequestBody FoodDonationRequest foodDonationRequest) {
         return ResponseEntity.ok(foodDonationService.create(foodDonationRequest));
     }
 
     @PutMapping("/{id}")
+    @Operation(summary = "Update", description = "Update a food donation",
+                    tags = "Food-Donation", responses = @ApiResponse(responseCode = "200",
+                                    description = "success|Ok"))
     public ResponseEntity<FoodDonationResponse> update(@PathVariable("id") Long id,
                     @RequestBody FoodDonationUpdateRequest foodDonationUpdateRequest) {
         return ResponseEntity
@@ -41,6 +50,9 @@ public class FoodDonationController {
     }
 
     @GetMapping
+    @Operation(summary = "List", description = "List food donations",
+                    tags = "Food-Donation", responses = @ApiResponse(responseCode = "200",
+                                    description = "success|Ok"))
     public ResponseEntity<List<FoodDonationResponse>> list(
                     @RequestParam(value = "page", defaultValue = "0") int page,
                     @RequestParam(value = "size", defaultValue = "10") int size) {
@@ -50,6 +62,9 @@ public class FoodDonationController {
     }
 
     @GetMapping("/{id}")
+    @Operation(summary = "Get", description = "Get a food donations",
+                    tags = "Food-Donation", responses = @ApiResponse(responseCode = "200",
+                                    description = "success|Ok"))
     public ResponseEntity<FoodDonationResponse> get(@PathVariable("id") Long id) {
         return ResponseEntity.ok(foodDonationService.get(id));
     }
