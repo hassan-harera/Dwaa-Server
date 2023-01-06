@@ -20,7 +20,7 @@ public class DonationStubs {
     public Donation create(String title, DonationCategory category, String description,
                     City city, DonationState state) {
         Donation donation = new Donation();
-        donation.setId(0);
+        donation.setId(0L);
         donation.setTitle(title);
         donation.setCategory(category);
         donation.setCity(city);
@@ -31,7 +31,7 @@ public class DonationStubs {
     public Donation insert(String title, String description, City city,
                     DonationCategory category, DonationState state) {
         Donation donation = create(title, category, description, city, state);
-        donation.setId(0);
+        donation.setId(0L);
         return donationRepository.save(donation);
     }
 }

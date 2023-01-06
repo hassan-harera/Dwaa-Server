@@ -386,7 +386,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>com.harera.hayat.HayatServerApplication</mainClass>
+                            <mainClass>com.harera.hayat.HayatApplication</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>

@@ -1,4 +1,4 @@
-package com.harera.hayat.service.donations;
+package com.harera.hayat.service.donation;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -15,7 +15,6 @@ import com.harera.hayat.exception.MandatoryFieldException;
 import com.harera.hayat.model.donation.CommunicationMethod;
 import com.harera.hayat.model.donation.medicine.MedicineDonationRequest;
 import com.harera.hayat.repository.city.CityRepository;
-import com.harera.hayat.service.donation.DonationValidation;
 import com.harera.hayat.util.ErrorCode;
 
 @ExtendWith(MockitoExtension.class)

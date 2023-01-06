@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class HayatServerApplication {
+public class HayatApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(HayatServerApplication.class, args);
+        SpringApplication.run(HayatApplication.class, args);
     }
 
 }

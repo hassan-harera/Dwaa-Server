@@ -1,4 +1,4 @@
-package com.harera.hayat.service.donations.food;
+package com.harera.hayat.service.donation.food;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -19,7 +19,6 @@ import com.harera.hayat.model.donation.CommunicationMethod;
 import com.harera.hayat.model.donation.food.FoodDonationRequest;
 import com.harera.hayat.model.donation.food.FoodDonationUpdateRequest;
 import com.harera.hayat.service.donation.DonationValidation;
-import com.harera.hayat.service.donation.food.FoodDonationValidation;
 import com.harera.hayat.util.ErrorCode;
 
 @ExtendWith(MockitoExtension.class)

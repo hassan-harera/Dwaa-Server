@@ -19,7 +19,7 @@ public class FoodUnitStubs {
 
     private FoodUnit create(String arabicName, String englishName) {
         FoodUnit foodUnit = new FoodUnit();
-        foodUnit.setId(0);
+        foodUnit.setId(0L);
         foodUnit.setArabicName(arabicName);
         foodUnit.setEnglishName(englishName);
         return foodUnit;

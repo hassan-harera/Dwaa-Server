@@ -1,8 +1,9 @@
-package com.harera.hayat.service.donations.food;
+package com.harera.hayat.service.donation.food;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -33,8 +34,6 @@ import com.harera.hayat.repository.donation.DonationRepository;
 import com.harera.hayat.repository.donation.FoodDonationRepository;
 import com.harera.hayat.repository.food.FoodUnitRepository;
 import com.harera.hayat.service.donation.DonationValidation;
-import com.harera.hayat.service.donation.food.FoodDonationService;
-import com.harera.hayat.service.donation.food.FoodDonationValidation;
 import com.harera.hayat.service.user.auth.AuthService;
 
 @ExtendWith(MockitoExtension.class)
@@ -335,5 +334,62 @@ class FoodDonationServiceTest {
         verify(foodUnitRepository, times(1)).findById(1L);
         verify(foodDonationRepository, times(1)).save(any());
         verify(donationRepository, times(1)).save(any());
+    }
+
+    @Test
+    void get_withNotExistedFoodDonation_thenThrowEntityNotFoundException() {
+        // given
+        Long id = 1L;
+
+        // when
+        when(foodDonationRepository.findById(id)).thenReturn(Optional.empty());
+
+        // then
+        assertThrows(EntityNotFoundException.class, () -> foodDonationService.get(id));
+    }
+
+    @Test
+    void get_thenValidateMapping() {
+        // given
+        Long id = 1L;
+
+        City city = new City();
+        city.setId(1L);
+
+        FoodUnit foodUnit = new FoodUnit();
+        foodUnit.setId(1L);
+
+        Donation donation = new Donation();
+        donation.setId(1L);
+        donation.setTitle("title");
+        donation.setDescription("description");
+        donation.setCommunicationMethod(CommunicationMethod.CHAT);
+        donation.setCity(city);
+
+        FoodDonation foodDonation = new FoodDonation();
+        foodDonation.setAmount(1F);
+        foodDonation.setUnit(foodUnit);
+        foodDonation.setFoodExpirationDate(OffsetDateTime.now().plusMonths(1));
+        foodDonation.setDonation(donation);
+
+        // when
+        when(foodDonationRepository.findById(id)).thenReturn(Optional.of(foodDonation));
+
+        FoodDonationResponse response = foodDonationService.get(id);
+
+        // then
+        assertNotNull(response);
+        assertEquals(donation.getTitle(), response.getTitle());
+        assertEquals(donation.getDescription(), response.getDescription());
+        assertEquals(donation.getCommunicationMethod(),
+                        response.getCommunicationMethod());
+        assertEquals(donation.getCity().getId(), response.getCity().getId());
+
+        assertEquals(foodDonation.getUnit().getId(), response.getUnit().getId());
+        assertEquals(foodDonation.getAmount(), response.getAmount());
+        assertTrue(foodDonation.getFoodExpirationDate()
+                        .isEqual(response.getFoodExpirationDate()));
+
+        verify(foodDonationRepository, times(1)).findById(id);
     }
 }

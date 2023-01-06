@@ -21,7 +21,7 @@ public class FoodDonationStubs {
     public FoodDonation create(FoodUnit unit, Float amount,
                     OffsetDateTime foodExpirationDate, Donation donation) {
         FoodDonation foodDonation = new FoodDonation();
-        foodDonation.setId(0);
+        foodDonation.setId(0L);
         foodDonation.setUnit(unit);
         foodDonation.setAmount(amount);
         foodDonation.setFoodExpirationDate(foodExpirationDate);
@@ -32,7 +32,7 @@ public class FoodDonationStubs {
     public FoodDonation insert(FoodUnit unit, Float amount,
                     OffsetDateTime foodExpirationDate, Donation donation) {
         FoodDonation foodDonation = create(unit, amount, foodExpirationDate, donation);
-        foodDonation.setId(0);
+        foodDonation.setId(0L);
         return foodDonationRepository.save(foodDonation);
     }
 

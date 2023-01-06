@@ -140,4 +140,45 @@ class FoodDonationControllerIT extends ApplicationIT {
         }
     }
 
+    @Test
+    void get_thenValidateMapping() {
+        // Given
+        String url = "/api/v1/donations/food/%d";
+
+        City city = cityStubs.insert("arabic_name", "english_name");
+        FoodUnit foodUnit =
+                        foodUnitStubs.insert("foodUnitArabicName", "foodUnitEnglishName");
+
+        Donation donation = donationStubs.insert("title", "description", city,
+                        DonationCategory.FOOD, DonationState.PENDING);
+        FoodDonation foodDonation = foodDonationStubs.insert(foodUnit, 1F,
+                        OffsetDateTime.now(), donation);
+
+        try {
+            // When
+            ResponseEntity<FoodDonationResponse> responseEntity =
+                            requestUtil.getWithAuth(url.formatted(foodDonation.getId()),
+                                            null, null, FoodDonationResponse.class);
+
+            // Then
+            assertEquals(200, responseEntity.getStatusCodeValue());
+
+            FoodDonationResponse response = responseEntity.getBody();
+            assertNotNull(response);
+
+            assertEquals(donation.getTitle(), response.getTitle());
+            assertEquals(donation.getDescription(), response.getDescription());
+            assertEquals(donation.getCommunicationMethod(),
+                            response.getCommunicationMethod());
+            assertEquals(donation.getCity().getId(), response.getCity().getId());
+            assertEquals(foodDonation.getAmount(), response.getAmount());
+            assertEquals(foodDonation.getUnit().getId(), response.getUnit().getId());
+            assertTrue(foodDonation.getFoodExpirationDate().toLocalDate()
+                            .isEqual(response.getFoodExpirationDate().toLocalDate()));
+        } finally {
+            // Cleanup
+            dataUtil.delete(city, foodUnit, foodDonation, donation);
+        }
+    }
+
 }

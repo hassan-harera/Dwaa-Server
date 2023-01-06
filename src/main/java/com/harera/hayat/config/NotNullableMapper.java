@@ -1,7 +1,10 @@
 package com.harera.hayat.config;
 
+import static java.time.LocalDate.parse;
+import static org.apache.commons.lang3.StringUtils.isNotBlank;
+
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 
 import org.modelmapper.AbstractConverter;
@@ -13,10 +16,6 @@ import org.modelmapper.convention.MatchingStrategies;
 
 import com.harera.hayat.util.DateFormat;
 
-import static java.time.LocalDate.parse;
-import static java.time.format.DateTimeFormatter.ISO_LOCAL_DATE_TIME;
-import static org.apache.commons.lang3.StringUtils.isNotBlank;
-
 public class NotNullableMapper extends ModelMapper {
 
     public NotNullableMapper() {
@@ -27,13 +26,16 @@ public class NotNullableMapper extends ModelMapper {
         this.addConverter(localDateConvertor);
         this.getTypeMap(String.class, LocalDate.class).setProvider(localDateProvider);
 
-        Provider<LocalDateTime> localDateTimeProvider = createLocalDateTimeProvider();
-        Converter<String, LocalDateTime> localDateTimeConvertor =
-                        createLocalDateTimeConverter();
-        this.createTypeMap(String.class, LocalDateTime.class);
+        Provider<OffsetDateTime> localDateTimeProvider = createOffsetDateTimeProvider();
+        Converter<String, OffsetDateTime> localDateTimeConvertor =
+                        getOffsetDateTimeToStringConverter();
+
+        this.createTypeMap(String.class, OffsetDateTime.class);
         this.addConverter(localDateTimeConvertor);
-        this.getTypeMap(String.class, LocalDateTime.class)
+        this.getTypeMap(String.class, OffsetDateTime.class)
                         .setProvider(localDateTimeProvider);
+
+        this.addConverter(getOffsetDateTimetoStringConverter());
     }
 
     @Override
@@ -45,7 +47,7 @@ public class NotNullableMapper extends ModelMapper {
     }
 
     private Provider<LocalDate> createLocalDateProvider() {
-        return new AbstractProvider<LocalDate>() {
+        return new AbstractProvider<>() {
             @Override
             public LocalDate get() {
                 return LocalDate.now();
@@ -53,17 +55,8 @@ public class NotNullableMapper extends ModelMapper {
         };
     }
 
-    private Provider<LocalDateTime> createLocalDateTimeProvider() {
-        return new AbstractProvider<LocalDateTime>() {
-            @Override
-            public LocalDateTime get() {
-                return LocalDateTime.now();
-            }
-        };
-    }
-
     private Converter<String, LocalDate> createLocalDateConverter() {
-        return new AbstractConverter<String, LocalDate>() {
+        return new AbstractConverter<>() {
             @Override
             protected LocalDate convert(String source) {
                 if (isNotBlank(source)) {
@@ -75,16 +68,36 @@ public class NotNullableMapper extends ModelMapper {
         };
     }
 
-    private Converter<String, LocalDateTime> createLocalDateTimeConverter() {
-        return new AbstractConverter<String, LocalDateTime>() {
+    private Provider<OffsetDateTime> createOffsetDateTimeProvider() {
+        return new AbstractProvider<>() {
             @Override
-            protected LocalDateTime convert(String source) {
+            public OffsetDateTime get() {
+                return OffsetDateTime.now();
+            }
+        };
+    }
+
+    private Converter<String, OffsetDateTime> getOffsetDateTimeToStringConverter() {
+        return new AbstractConverter<>() {
+            @Override
+            protected OffsetDateTime convert(String source) {
                 if (isNotBlank(source)) {
-                    return LocalDateTime.parse(source, ISO_LOCAL_DATE_TIME);
+                    return OffsetDateTime.parse(source);
                 }
                 return null;
             }
         };
+    }
 
+    private Converter<OffsetDateTime, String> getOffsetDateTimetoStringConverter() {
+        return new AbstractConverter<>() {
+            @Override
+            protected String convert(OffsetDateTime source) {
+                if (source == null) {
+                    return null;
+                }
+                return source.toString();
+            }
+        };
     }
 }

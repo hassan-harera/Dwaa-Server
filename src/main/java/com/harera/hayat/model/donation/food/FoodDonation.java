@@ -33,7 +33,7 @@ public class FoodDonation extends BaseEntity {
 
     @Basic
     @Column(name = "amount")
-    private double amount;
+    private Float amount;
 
     @OneToOne
     @JoinColumn(name = "donation_id", referencedColumnName = "id")

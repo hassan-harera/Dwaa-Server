@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.harera.hayat.model.donation.food.FoodDonationRequest;
@@ -40,14 +41,16 @@ public class FoodDonationController {
     }
 
     @GetMapping
-    public ResponseEntity<List<FoodDonationResponse>> list() {
-        List<FoodDonationResponse> foodDonationResponses = foodDonationService.list();
+    public ResponseEntity<List<FoodDonationResponse>> list(
+                    @RequestParam(value = "page", defaultValue = "0") int page,
+                    @RequestParam(value = "size", defaultValue = "10") int size) {
+        List<FoodDonationResponse> foodDonationResponses =
+                        foodDonationService.list(size, page);
         return ResponseEntity.ok(foodDonationResponses);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<List<FoodDonationResponse>> get(@PathVariable("id") Long id) {
-        List<FoodDonationResponse> foodDonationResponses = foodDonationService.list();
-        return ResponseEntity.ok(foodDonationResponses);
+    public ResponseEntity<FoodDonationResponse> get(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(foodDonationService.get(id));
     }
 }

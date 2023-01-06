@@ -1,10 +1,12 @@
 package com.harera.hayat.service.donation.food;
 
 import java.time.OffsetDateTime;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.harera.hayat.exception.EntityNotFoundException;
@@ -73,25 +75,6 @@ public class FoodDonationService {
         return response;
     }
 
-    private OffsetDateTime getDonationExpirationDate() {
-        return OffsetDateTime.now().plusDays(foodDonationExpirationDays);
-    }
-
-    private City getCity(Long cityId) {
-        return cityRepository.findById(cityId).orElseThrow(
-                        () -> new EntityNotFoundException(City.class, cityId));
-    }
-
-    private FoodUnit getUnit(Long unitId) {
-        return foodUnitRepository.findById(unitId).orElseThrow(
-                        () -> new EntityNotFoundException(FoodUnit.class, unitId));
-
-    }
-
-    public List<FoodDonationResponse> list() {
-        return List.of();
-    }
-
     public FoodDonationResponse update(Long id, FoodDonationUpdateRequest request) {
         foodDonationValidation.validateUpdate(id, request);
 
@@ -110,9 +93,46 @@ public class FoodDonationService {
         foodDonationRepository.save(foodDonation);
 
         FoodDonationResponse response =
-                        modelMapper.map(foodDonation, FoodDonationResponse.class);
-        modelMapper.map(donation, response);
+                        modelMapper.map(donation, FoodDonationResponse.class);
+        modelMapper.map(foodDonation, response);
         response.setId(foodDonation.getId());
+        return response;
+    }
+
+    private OffsetDateTime getDonationExpirationDate() {
+        return OffsetDateTime.now().plusDays(foodDonationExpirationDays);
+    }
+
+    private City getCity(Long cityId) {
+        return cityRepository.findById(cityId).orElseThrow(
+                        () -> new EntityNotFoundException(City.class, cityId));
+    }
+
+    private FoodUnit getUnit(Long unitId) {
+        return foodUnitRepository.findById(unitId).orElseThrow(
+                        () -> new EntityNotFoundException(FoodUnit.class, unitId));
+
+    }
+
+    public List<FoodDonationResponse> list(int pageSize, int pageNumber) {
+        List<FoodDonation> foodDonationList = foodDonationRepository
+                        .findAll(PageRequest.of(pageNumber, pageSize)).getContent();
+        List<FoodDonationResponse> response = new LinkedList<>();
+        for (FoodDonation foodDonation : foodDonationList) {
+            FoodDonationResponse foodDonationResponse = modelMapper
+                            .map(foodDonation.getDonation(), FoodDonationResponse.class);
+            modelMapper.map(foodDonation, foodDonationResponse);
+            response.add(foodDonationResponse);
+        }
+        return response;
+    }
+
+    public FoodDonationResponse get(Long id) {
+        FoodDonation foodDonation = foodDonationRepository.findById(id).orElseThrow(
+                        () -> new EntityNotFoundException(FoodDonation.class, id));
+        FoodDonationResponse response = modelMapper.map(foodDonation.getDonation(),
+                        FoodDonationResponse.class);
+        modelMapper.map(foodDonation, response);
         return response;
     }
 }

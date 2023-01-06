@@ -19,7 +19,7 @@ public class MedicineUnitStubs {
 
     private MedicineUnit create(String arabicName, String englishName) {
         MedicineUnit medicineUnit = new MedicineUnit();
-        medicineUnit.setId(0);
+        medicineUnit.setId(0L);
         medicineUnit.setArabicName(arabicName);
         medicineUnit.setEnglishName(englishName);
         return medicineUnit;
