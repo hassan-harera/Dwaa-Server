@@ -1,16 +1,21 @@
 version: "3.8"
 
 services:
-  app:
-    build: ./Dockerfile
-    container_name: hayat_app
+  redis:
+    container_name: "it_hayat_redis"
+    image: redis:latest
     ports:
-      - 8080:8080
+      - "6377:6379"
     networks:
       - hayat_network
-    depends_on:
-      - redis
-      - db
+  db:
+    image: mysql:8.0
+    container_name: "it_hayat_mysql"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=hayat
+    ports:
+      - "3366:3306"
 networks:
   hayat_network:
     driver: bridge
