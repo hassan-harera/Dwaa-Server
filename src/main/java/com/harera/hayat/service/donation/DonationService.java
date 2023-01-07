@@ -17,7 +17,7 @@ import com.harera.hayat.model.donation.property.PropertyDonation;
 import com.harera.hayat.model.donation.property.PropertyDonationRequest;
 import com.harera.hayat.repository.city.CityRepository;
 import com.harera.hayat.repository.donation.DonationRepository;
-import com.harera.hayat.repository.donation.FoodDonationRepository;
+import com.harera.hayat.repository.donation.food.FoodDonationRepository;
 
 @Service
 public class DonationService {

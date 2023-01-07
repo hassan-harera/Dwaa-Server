@@ -6,7 +6,7 @@ import com.harera.hayat.model.BaseEntityDto;
 import lombok.Data;
 
 @Data
-@JsonIgnoreProperties(ignoreUnknown = true, value = { "active" })
+@JsonIgnoreProperties(ignoreUnknown = true, value = { "active", "password" })
 public class UserDto extends BaseEntityDto {
 
     private String firstName;

@@ -13,10 +13,10 @@ services:
     env_file: ./.env
     container_name: "hayat_mysql"
     environment:
-      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_ROOT_PASSWORD=harera
       - MYSQL_DATABASE=hayat
     ports:
-      - "3300:3306"
+      - "3306:3306"
 networks:
   hayat_network:
     driver: bridge

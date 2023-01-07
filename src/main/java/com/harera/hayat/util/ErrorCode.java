@@ -55,11 +55,11 @@ public final class ErrorCode {
     public static final String MANDATORY_DONATION_EXPIRATION_DATE = "donation_005";
     public static final String MANDATORY_DONATION_TITLE = "donation_006";
     public static final String MANDATORY_DONATION_AMOUNT = "donation_007";
-    public static final String MANDATORY_DONATION_DATE = "donation_011";
-
     public static final String FORMAT_DONATION_TITLE = "donation_008";
     public static final String FORMAT_DONATION_EXPIRATION_DATE = "donation_009";
     public static final String FORMAT_DONATION_AMOUNT = "donation_010";
+    public static final String MANDATORY_DONATION_DATE = "donation_011";
+    public static final String FORMAT_DONATION_IMAGE_FILE = "donation_012";
 
     public static final String MANDATORY_MEDICINE_DONATION_AMOUNT =
                     "medicine_donation_001";
@@ -74,6 +74,8 @@ public final class ErrorCode {
     public static final String MANDATORY_FOOD_DONATION_UNIT = "food_donation_003";
 
     public static final String FORMAT_FOOD_DONATION_AMOUNT = "food_donation_004";
+    public static final String FORMAT_FOOD_DONATION_FOOD_EXPIRATION_DATE =
+                    "food_donation_005";
 
     private ErrorCode() {
     }

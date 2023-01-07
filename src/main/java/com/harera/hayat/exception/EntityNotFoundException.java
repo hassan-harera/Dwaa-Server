@@ -1,11 +1,15 @@
 package com.harera.hayat.exception;
 
-import lombok.Getter;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.harera.hayat.model.BaseEntity;
 
+import lombok.Getter;
+
 
 @Getter
+@ResponseStatus(HttpStatus.NOT_FOUND)
 public class EntityNotFoundException extends RuntimeException {
 
     private String code;

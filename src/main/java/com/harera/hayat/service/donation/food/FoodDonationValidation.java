@@ -1,5 +1,7 @@
 package com.harera.hayat.service.donation.food;
 
+import java.time.OffsetDateTime;
+
 import org.springframework.stereotype.Service;
 
 import com.harera.hayat.exception.FieldFormatException;
@@ -25,11 +27,17 @@ public class FoodDonationValidation {
     }
 
     private void validateFormat(FoodDonationDto foodDonationRequest) {
-        if (foodDonationRequest.getAmount() < 0
+        if (foodDonationRequest.getAmount() <= 0
                         || foodDonationRequest.getAmount() > 10000) {
             throw new FieldFormatException(ErrorCode.FORMAT_FOOD_DONATION_AMOUNT,
                             "amount",
                             foodDonationRequest.getAmount().toString());
+        }
+        if (foodDonationRequest.getFoodExpirationDate().isBefore(OffsetDateTime.now())) {
+            throw new FieldFormatException(
+                            ErrorCode.FORMAT_FOOD_DONATION_FOOD_EXPIRATION_DATE,
+                            "food expiration date",
+                            foodDonationRequest.getFoodExpirationDate().toString());
         }
     }
 
@@ -45,7 +53,7 @@ public class FoodDonationValidation {
         if (foodDonationRequest.getFoodExpirationDate() == null) {
             throw new MandatoryFieldException(
                             ErrorCode.MANDATORY_FOOD_DONATION_FOOD_EXPIRATION_DATE,
-                            "expiration_date");
+                            "food expiration date");
         }
     }
 

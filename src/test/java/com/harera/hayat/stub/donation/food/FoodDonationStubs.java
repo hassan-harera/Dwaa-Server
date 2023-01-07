@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import com.harera.hayat.model.donation.Donation;
 import com.harera.hayat.model.donation.food.FoodDonation;
 import com.harera.hayat.model.food.FoodUnit;
-import com.harera.hayat.repository.donation.FoodDonationRepository;
+import com.harera.hayat.repository.donation.food.FoodDonationRepository;
 
 import lombok.RequiredArgsConstructor;
 

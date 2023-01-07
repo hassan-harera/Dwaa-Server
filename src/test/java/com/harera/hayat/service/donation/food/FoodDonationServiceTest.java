@@ -31,9 +31,12 @@ import com.harera.hayat.model.donation.food.FoodDonationUpdateRequest;
 import com.harera.hayat.model.food.FoodUnit;
 import com.harera.hayat.repository.city.CityRepository;
 import com.harera.hayat.repository.donation.DonationRepository;
-import com.harera.hayat.repository.donation.FoodDonationRepository;
+import com.harera.hayat.repository.donation.food.FoodDonationRepository;
+import com.harera.hayat.repository.donation.image.DonationImageRepository;
 import com.harera.hayat.repository.food.FoodUnitRepository;
+import com.harera.hayat.service.FileManager;
 import com.harera.hayat.service.donation.DonationValidation;
+import com.harera.hayat.service.file.CloudFileService;
 import com.harera.hayat.service.user.auth.AuthService;
 
 @ExtendWith(MockitoExtension.class)
@@ -57,13 +60,20 @@ class FoodDonationServiceTest {
     private DonationRepository donationRepository;
     @Mock
     private FoodDonationValidation foodDonationValidation;
+    @Mock
+    private DonationImageRepository donationImageRepository;
+    @Mock
+    private CloudFileService cloudFileService;
+    @Mock
+    private FileManager fileManager;
 
     @BeforeEach
     void setUp() {
         modelMapper = new NotNullableMapper();
         foodDonationService = new FoodDonationService(donationRepository,
                         foodDonationValidation, cityRepository, modelMapper, authService,
-                        foodUnitRepository, foodDonationRepository, days);
+                        foodUnitRepository, foodDonationRepository, days, fileManager,
+                        cloudFileService, donationImageRepository);
     }
 
     @Test
