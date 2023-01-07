@@ -7,6 +7,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.harera.hayat.model.BaseEntity;
+import com.harera.hayat.model.medicine.MedicineUnit;
 
 import lombok.Getter;
 import lombok.Setter;

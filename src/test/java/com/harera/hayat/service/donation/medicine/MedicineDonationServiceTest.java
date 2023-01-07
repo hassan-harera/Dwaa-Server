@@ -25,7 +25,7 @@ import com.harera.hayat.model.donation.CommunicationMethod;
 import com.harera.hayat.model.donation.medicine.Medicine;
 import com.harera.hayat.model.donation.medicine.MedicineDonationRequest;
 import com.harera.hayat.model.donation.medicine.MedicineDonationResponse;
-import com.harera.hayat.model.donation.medicine.MedicineUnit;
+import com.harera.hayat.model.medicine.MedicineUnit;
 import com.harera.hayat.repository.city.CityRepository;
 import com.harera.hayat.repository.donation.DonationRepository;
 import com.harera.hayat.repository.donation.medicine.MedicineDonationRepository;

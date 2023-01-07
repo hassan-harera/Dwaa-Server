@@ -1,6 +1,7 @@
 package com.harera.hayat.model.donation.medicine;
 
 import com.harera.hayat.model.BaseEntityDto;
+import com.harera.hayat.model.medicine.MedicineUnit;
 
 import lombok.Data;
 

@@ -4,6 +4,7 @@ import java.time.OffsetDateTime;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.harera.hayat.model.donation.DonationDto;
+import com.harera.hayat.model.medicine.MedicineUnitDto;
 
 import lombok.Data;
 

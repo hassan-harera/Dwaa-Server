@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.harera.hayat.model.donation.medicine.Medicine;
-import com.harera.hayat.model.donation.medicine.MedicineUnit;
+import com.harera.hayat.model.medicine.MedicineUnit;
 import com.harera.hayat.repository.medicine.MedicineRepository;
 
 @Service
