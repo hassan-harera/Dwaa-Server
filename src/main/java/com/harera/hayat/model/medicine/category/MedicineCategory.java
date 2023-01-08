@@ -1,4 +1,4 @@
-package com.harera.hayat.model.donation.medicine;
+package com.harera.hayat.model.medicine.category;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;

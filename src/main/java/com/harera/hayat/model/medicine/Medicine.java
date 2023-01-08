@@ -1,4 +1,4 @@
-package com.harera.hayat.model.donation.medicine;
+package com.harera.hayat.model.medicine;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -7,7 +7,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.harera.hayat.model.BaseEntity;
-import com.harera.hayat.model.medicine.MedicineUnit;
+import com.harera.hayat.model.medicine.category.MedicineCategory;
+import com.harera.hayat.model.medicine.unit.MedicineUnit;
 
 import lombok.Getter;
 import lombok.Setter;

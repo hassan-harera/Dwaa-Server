@@ -1,4 +1,4 @@
-package com.harera.hayat.model.medicine;
+package com.harera.hayat.model.medicine.unit;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.harera.hayat.model.BaseEntityDto;

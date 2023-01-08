@@ -1,4 +1,4 @@
-package com.harera.hayat.controller.info.food;
+package com.harera.hayat.controller.food;
 
 import java.util.List;
 
@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.harera.hayat.model.food.FoodUnitResponse;
-import com.harera.hayat.service.info.food.FoodUnitService;
+import com.harera.hayat.service.food.FoodUnitService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;

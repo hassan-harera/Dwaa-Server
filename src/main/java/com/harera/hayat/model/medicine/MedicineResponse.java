@@ -5,6 +5,5 @@ import lombok.Setter;
 
 @Setter
 @Getter
-public class MedicineUnitResponse extends MedicineUnitDto {
-
+public class MedicineResponse extends MedicineDto {
 }

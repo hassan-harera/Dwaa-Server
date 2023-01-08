@@ -1,4 +1,4 @@
-package com.harera.hayat.model.medicine;
+package com.harera.hayat.model.medicine.unit;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;

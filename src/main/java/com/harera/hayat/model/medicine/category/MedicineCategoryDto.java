@@ -1,4 +1,4 @@
-package com.harera.hayat.model.donation.medicine;
+package com.harera.hayat.model.medicine.category;
 
 import com.harera.hayat.model.BaseEntityDto;
 

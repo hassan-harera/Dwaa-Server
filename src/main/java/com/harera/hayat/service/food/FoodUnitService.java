@@ -1,4 +1,4 @@
-package com.harera.hayat.service.info.food;
+package com.harera.hayat.service.food;
 
 import static com.harera.hayat.util.ObjectMapperUtils.mapAll;
 
