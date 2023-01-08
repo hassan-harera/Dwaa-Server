@@ -101,4 +101,14 @@ public class MedicineDonationService {
             return user;
         throw new JwtException("Invalid token");
     }
+
+    public void deactivate(Donation donation) {
+        MedicineDonation medicineDonation =
+                        medicineDonationRepository.findByDonationId(donation.getId())
+                                        .orElseThrow(() -> new EntityNotFoundException(
+                                                        MedicineDonation.class,
+                                                        donation.getId()));
+        medicineDonation.deactivate();
+        medicineDonationRepository.save(medicineDonation);
+    }
 }

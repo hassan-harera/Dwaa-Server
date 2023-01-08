@@ -1,5 +1,6 @@
 package com.harera.hayat.service.donation;
 
+import java.time.OffsetDateTime;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -18,6 +19,8 @@ import com.harera.hayat.model.donation.property.PropertyDonationRequest;
 import com.harera.hayat.repository.city.CityRepository;
 import com.harera.hayat.repository.donation.DonationRepository;
 import com.harera.hayat.repository.donation.food.FoodDonationRepository;
+import com.harera.hayat.service.donation.food.FoodDonationService;
+import com.harera.hayat.service.donation.medicine.MedicineDonationService;
 
 @Service
 public class DonationService {
@@ -25,16 +28,21 @@ public class DonationService {
     private final DonationRepository donationRepository;
     private final FoodDonationRepository foodDonationRepository;
     private final DonationValidation donationValidation;
+    private final FoodDonationService foodDonationService;
+    private final MedicineDonationService medicinDonationService;
     private final ModelMapper modelMapper;
-
 
     public DonationService(DonationRepository donationRepository,
                     FoodDonationRepository foodDonationRepository,
                     DonationValidation donationValidation, CityRepository cityRepository,
+                    FoodDonationService foodDonationService,
+                    MedicineDonationService medicinDonationService,
                     ModelMapper modelMapper) {
         this.donationRepository = donationRepository;
         this.foodDonationRepository = foodDonationRepository;
         this.donationValidation = donationValidation;
+        this.foodDonationService = foodDonationService;
+        this.medicinDonationService = medicinDonationService;
         this.modelMapper = modelMapper;
     }
 
@@ -60,7 +68,6 @@ public class DonationService {
         return ResponseEntity.ok(donationResponse);
     }
 
-
     public List<FoodDonationResponse> listFoodDonations() {
         List<FoodDonationResponse> foodDonationList = new LinkedList<>();
         foodDonationRepository.findAll().forEach(foodDonation -> {
@@ -72,5 +79,25 @@ public class DonationService {
             foodDonationList.add(foodDonationResponse);
         });
         return foodDonationList;
+    }
+
+    public void deactivateExpiredDonations() {
+        donationRepository.findAllActiveByExpirationDate(OffsetDateTime.now())
+                        .forEach(donation -> {
+                            donation.deactivate();
+                            donationRepository.save(donation);
+                            updateCategoryDonation(donation);
+                        });
+    }
+
+    public void updateCategoryDonation(Donation donation) {
+        switch (donation.getCategory()) {
+            case FOOD -> {
+                foodDonationService.deactivate(donation);
+            }
+            case MEDICINE -> {
+                medicinDonationService.deactivate(donation);
+            }
+        }
     }
 }

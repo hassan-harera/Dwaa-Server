@@ -24,4 +24,8 @@ public abstract class BaseEntity implements Serializable {
     @Basic
     @Column(name = "active", nullable = false)
     private boolean active = true;
+
+    public void deactivate() {
+        setActive(false);
+    }
 }

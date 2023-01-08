@@ -177,4 +177,11 @@ public class FoodDonationService {
 
         return modelMapper.map(foodDonation, FoodDonationResponse.class);
     }
+
+    public void deactivate(Donation donation) {
+        FoodDonation foodDonation = foodDonationRepository
+                        .findByDonationId(donation.getId()).orElseThrow();
+        foodDonation.deactivate();
+        foodDonationRepository.save(foodDonation);
+    }
 }
