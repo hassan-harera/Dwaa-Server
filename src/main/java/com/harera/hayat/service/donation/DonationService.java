@@ -86,11 +86,11 @@ public class DonationService {
                         .forEach(donation -> {
                             donation.deactivate();
                             donationRepository.save(donation);
-                            updateCategoryDonation(donation);
+                            deactivateSpecificDonation(donation);
                         });
     }
 
-    public void updateCategoryDonation(Donation donation) {
+    public void deactivateSpecificDonation(Donation donation) {
         switch (donation.getCategory()) {
             case FOOD -> {
                 foodDonationService.deactivate(donation);

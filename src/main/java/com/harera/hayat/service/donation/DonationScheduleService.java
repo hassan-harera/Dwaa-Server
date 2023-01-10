@@ -1,9 +1,7 @@
-package com.harera.hayat.service;
+package com.harera.hayat.service.donation;
 
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-
-import com.harera.hayat.service.donation.DonationService;
 
 @Service
 public class DonationScheduleService {
@@ -14,7 +12,6 @@ public class DonationScheduleService {
         this.donationService = donationService;
     }
 
-    // schedule cron job to run every 24 hours at 00:00 time
     @Scheduled(cron = "0 0 * * *")
     public void checkExpiredDonations() {
         donationService.deactivateExpiredDonations();
