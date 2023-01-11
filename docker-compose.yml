@@ -11,9 +11,11 @@ services:
   db:
     image: mysql:8.0
     container_name: "it_hayat_mysql"
+    env_file:
+      - .env
     environment:
-      - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=hayat
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+      - MYSQL_DATABASE=${DB_DATABASE}
     ports:
       - "3366:3306"
 networks:

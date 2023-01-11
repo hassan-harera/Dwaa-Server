@@ -1,5 +1,7 @@
 package com.harera.hayat.model.entity
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize
+import com.harera.hayat.config.OffsetDateTimeSerializer
 import java.util.*
 import javax.persistence.*
 
@@ -26,6 +28,7 @@ open class DonationPostEntity {
 
     @Basic
     @Column(name = "medicine_expiration_date")
+    @JsonSerialize(using = OffsetDateTimeSerializer::class)
     open var medicineExpirationDate: Date? = null
 
     @Basic

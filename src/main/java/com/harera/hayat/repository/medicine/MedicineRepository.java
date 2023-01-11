@@ -14,4 +14,5 @@ public interface MedicineRepository extends JpaRepository<Medicine, Long> {
 
     @Query("SELECT m FROM Medicine m WHERE m.arabicName LIKE %?1% or m.englishName LIKE %?1%")
     List<Medicine> search(String query, Pageable pageable);
+
 }

@@ -9,6 +9,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.harera.hayat.config.OffsetDateTimeSerializer;
 import com.harera.hayat.model.BaseEntity;
 import com.harera.hayat.model.donation.Donation;
 import com.harera.hayat.model.medicine.Medicine;
@@ -28,9 +30,10 @@ public class MedicineDonation extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "unit_id", referencedColumnName = "id")
-    private MedicineUnit medicineUnit;
+    private MedicineUnit unit;
 
     @Column(name = "medicine_expiration_date")
+    @JsonSerialize(using = OffsetDateTimeSerializer.class)
     private OffsetDateTime medicineExpirationDate;
 
     @OneToOne

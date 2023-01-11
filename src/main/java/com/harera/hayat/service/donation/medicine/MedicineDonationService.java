@@ -1,10 +1,14 @@
 package com.harera.hayat.service.donation.medicine;
 
 import java.time.OffsetDateTime;
+import java.util.List;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.harera.hayat.exception.EntityNotFoundException;
 import com.harera.hayat.model.city.City;
@@ -21,6 +25,8 @@ import com.harera.hayat.repository.donation.DonationRepository;
 import com.harera.hayat.repository.donation.medicine.MedicineDonationRepository;
 import com.harera.hayat.repository.medicine.MedicineRepository;
 import com.harera.hayat.repository.medicine.MedicineUnitRepository;
+import com.harera.hayat.service.FileManager;
+import com.harera.hayat.service.donation.DonationImagesService;
 import com.harera.hayat.service.user.auth.AuthService;
 
 import io.jsonwebtoken.JwtException;
@@ -36,6 +42,9 @@ public class MedicineDonationService {
     private final MedicineDonationRepository medicineDonationRepository;
     private final MedicineRepository medicineRepository;
     private final AuthService authService;
+    private final DonationImagesService donationImagesService;
+
+    private final Integer pageSizeOfMedicineDonation;
 
     public MedicineDonationService(DonationRepository donationRepository,
                     MedicineDonationValidation donationValidation,
@@ -43,7 +52,10 @@ public class MedicineDonationService {
                     MedicineUnitRepository medicineUnitRepository,
                     ModelMapper modelMapper,
                     MedicineDonationRepository medicineDonationRepository,
-                    MedicineRepository medicineRepository, AuthService authService) {
+                    MedicineRepository medicineRepository, AuthService authService,
+                    FileManager fileManager,
+                    @Value(value = "${donations.medicine.page_size}") String pageSizeOfMedicineDonation,
+                    DonationImagesService donationImagesService) {
         this.donationRepository = donationRepository;
         this.donationValidation = donationValidation;
         this.cityRepository = cityRepository;
@@ -52,6 +64,8 @@ public class MedicineDonationService {
         this.medicineDonationRepository = medicineDonationRepository;
         this.medicineRepository = medicineRepository;
         this.authService = authService;
+        this.pageSizeOfMedicineDonation = Integer.valueOf(pageSizeOfMedicineDonation);
+        this.donationImagesService = donationImagesService;
     }
 
     public MedicineDonationResponse create(
@@ -68,7 +82,7 @@ public class MedicineDonationService {
 
         MedicineDonation medicineDonation =
                         modelMapper.map(medicineDonationRequest, MedicineDonation.class);
-        medicineDonation.setMedicineUnit(getUnit(medicineDonationRequest.getUnitId()));
+        medicineDonation.setUnit(getUnit(medicineDonationRequest.getUnitId()));
         medicineDonation.setDonation(savedDonation);
         medicineDonation.setMedicine(
                         getMedicine(medicineDonationRequest.getMedicineId()));
@@ -77,6 +91,29 @@ public class MedicineDonationService {
                         modelMapper.map(medicineDonation, MedicineDonationResponse.class);
         modelMapper.map(donation, response);
         return response;
+    }
+
+    public List<MedicineDonationResponse> list(Integer page) {
+        page = Integer.max(page, 1) - 1;
+        List<MedicineDonation> medicineDonationList =
+                        medicineDonationRepository.findAllActiveMedicineDonation(
+                                        Pageable.ofSize(pageSizeOfMedicineDonation)
+                                                        .withPage(page));
+
+        return medicineDonationList.stream().map(medicineDonation -> {
+            MedicineDonationResponse donationResponse =
+                            modelMapper.map(medicineDonation.getDonation(),
+                                            MedicineDonationResponse.class);
+            modelMapper.map(medicineDonation, donationResponse);
+            return donationResponse;
+        }).toList();
+    }
+
+    public MedicineDonationResponse get(Long id) {
+        MedicineDonation medicineDonation = medicineDonationRepository.findById(id)
+                        .orElseThrow(() -> new EntityNotFoundException(
+                                        MedicineDonation.class, id));
+        return modelMapper.map(medicineDonation, MedicineDonationResponse.class);
     }
 
     private Medicine getMedicine(long medicineId) {
@@ -110,5 +147,15 @@ public class MedicineDonationService {
                                                         donation.getId()));
         medicineDonation.deactivate();
         medicineDonationRepository.save(medicineDonation);
+    }
+
+    public MedicineDonationResponse insertImage(Long id, MultipartFile image) {
+        MedicineDonation medicineDonation = medicineDonationRepository.findById(id)
+                        .orElseThrow(() -> new EntityNotFoundException(
+                                        MedicineDonation.class, id));
+        Donation donation = medicineDonation.getDonation();
+        donation = donationImagesService.insertImage(donation, image);
+        medicineDonation.setDonation(donation);
+        return modelMapper.map(medicineDonation, MedicineDonationResponse.class);
     }
 }

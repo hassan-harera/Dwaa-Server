@@ -1,0 +1,17 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.7"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.7
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.7.xsd">
+    <changeSet id="0000401" author="hharera@pocketsolutions.net">
+        <sql>
+            create table donation_images (
+            id bigint primary key auto_increment,
+            active boolean default true,
+            donation_id bigint,
+            url text,
+            constraint foreign key (donation_id) references donation (id)
+            );
+        </sql>
+    </changeSet>
+</databaseChangeLog>

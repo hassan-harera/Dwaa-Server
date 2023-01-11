@@ -64,7 +64,7 @@ class MedicineDonationServiceTest {
                         medicineDonationValidation, cityRepository,
                         medicineUnitRepository,
                         modelMapper, medicineDonationRepository, medicineRepository,
-                        authService);
+                        authService, fileManager, "10");
     }
 
     @Test
