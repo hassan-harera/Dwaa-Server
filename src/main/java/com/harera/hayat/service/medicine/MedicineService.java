@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.harera.hayat.exception.EntityNotFoundException;
 import com.harera.hayat.model.medicine.Medicine;
 import com.harera.hayat.model.medicine.MedicineResponse;
 import com.harera.hayat.model.medicine.unit.MedicineUnitResponse;
@@ -37,5 +38,10 @@ public class MedicineService {
         List<Medicine> medicineList = medicineRepository.search(query,
                         Pageable.ofSize(pageSize).withPage(page));
         return mapAll(medicineList, MedicineResponse.class);
+    }
+
+    public Medicine getMedicine(Long medicineId) {
+        return medicineRepository.findById(medicineId).orElseThrow(
+                        () -> new EntityNotFoundException(Medicine.class, medicineId));
     }
 }

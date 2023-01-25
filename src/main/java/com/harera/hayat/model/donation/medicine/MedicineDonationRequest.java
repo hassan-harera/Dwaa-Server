@@ -4,8 +4,6 @@ import java.time.OffsetDateTime;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.harera.hayat.config.OffsetDateTimeSerializer;
 
 import lombok.Data;
 
@@ -21,6 +19,5 @@ public class MedicineDonationRequest extends MedicineDonationDto {
     @JsonProperty(value = "medicine_id")
     private Long medicineId;
     @JsonProperty(value = "medicine_expiration_date")
-    @JsonSerialize(using = OffsetDateTimeSerializer.class)
     private OffsetDateTime medicineExpirationDate;
 }

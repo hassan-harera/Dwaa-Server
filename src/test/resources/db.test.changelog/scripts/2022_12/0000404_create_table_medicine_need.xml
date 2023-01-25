@@ -1,0 +1,20 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.7"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.7
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.7.xsd">
+    <changeSet id="0000401" author="hharera@pocketsolutions.net">
+        <sql>
+            create table medicine_need (
+            id bigint auto_increment primary key,
+            active boolean default 1,
+            medicine_id bigint,
+            medicine_unit_id bigint,
+            need_id bigint,
+            foreign key (need_id) references need (id),
+            foreign key (medicine_id) references medicine (id),
+            foreign key (medicine_unit_id) references medicine_unit (id)
+            );
+        </sql>
+    </changeSet>
+</databaseChangeLog>

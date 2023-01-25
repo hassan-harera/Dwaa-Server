@@ -48,7 +48,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         final String[] publicUris = { "/api/v1/login", "/api/v1/oauth/**",
                 "/api/v1/signup/**", "/api/v1/cities/**", "/api/v1/states/**",
                 "/api/v1/notifications/**", "/v3/api-docs/**", "/swagger-ui/**",
-                "/swagger-resources/**" };
+                "/swagger-resources/**", "/actuator/**", "/swagger-ui/**",
+                "/v3/api-docs/**" };
 
         httpSecurity.csrf().disable().httpBasic().disable().formLogin().disable()
                         .authorizeRequests().antMatchers(publicUris).permitAll()

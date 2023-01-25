@@ -13,6 +13,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.harera.hayat.exception.EntityNotFoundException;
 import com.harera.hayat.exception.SignupException;
 import com.harera.hayat.model.user.FirebaseUser;
 import com.harera.hayat.model.user.User;
@@ -93,6 +94,12 @@ class UserServiceImpl implements UserService {
 
         userRepository.save(user);
         return modelMapper.map(user, SignupResponse.class);
+    }
+
+    @Override
+    public User getUser(Long userId) {
+        return userRepository.findById(userId).orElseThrow(
+                        () -> new EntityNotFoundException(User.class, userId));
     }
 
     private long getUserId(String subject) {

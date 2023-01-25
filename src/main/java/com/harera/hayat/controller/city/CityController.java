@@ -1,9 +1,10 @@
 package com.harera.hayat.controller.city;
 
+import static org.springframework.http.ResponseEntity.ok;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,17 +26,14 @@ public class CityController {
     @Autowired
     private CityService cityService;
 
-    @GetMapping("/search")
+    @GetMapping
     @Operation(summary = "Search", description = "Search cities", tags = "City",
                     responses = { @ApiResponse(responseCode = "200",
                                     description = "success|Ok") })
     public ResponseEntity<List<CityResponse>> search(
-                    @RequestParam(required = false,
-                                    name = "arabic_name") String arabicName,
-                    @RequestParam(name = "english_name",
-                                    required = false) String englishName) {
-        return ResponseEntity.status(HttpStatus.OK)
-                        .body(cityService.search(arabicName, englishName));
+                    @RequestParam(name = "q") String query, @RequestParam(name = "page",
+                                    required = false, defaultValue = "1") Integer page) {
+        return ok().body(cityService.search(query, page));
     }
 
     @GetMapping("/{id}")
@@ -43,6 +41,6 @@ public class CityController {
                     responses = { @ApiResponse(responseCode = "200",
                                     description = "success|Ok") })
     public ResponseEntity<CityResponse> get(@PathVariable("id") long id) {
-        return ResponseEntity.ok(cityService.get(id));
+        return ok(cityService.get(id));
     }
 }

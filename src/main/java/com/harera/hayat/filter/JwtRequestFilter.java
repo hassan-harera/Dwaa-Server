@@ -1,5 +1,7 @@
 package com.harera.hayat.filter;
 
+import static com.harera.hayat.util.RegexPattern.PERMITTED_URI_REGEX;
+
 import java.io.IOException;
 
 import javax.servlet.FilterChain;
@@ -44,41 +46,44 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
         Long userId = null;
         String jwt = null;
-        try {
-            if (authorizationHeader == null) {
-                throw new JwtException("Authorization header is null");
+        if (!request.getRequestURI().matches(PERMITTED_URI_REGEX)) {
+            try {
+                if (authorizationHeader == null) {
+                    throw new JwtException("Authorization header is null");
+                }
+
+                if (!authorizationHeader.startsWith("Bearer ")) {
+                    throw new JwtException("Invalid authorization header");
+                }
+
+                jwt = authorizationHeader.substring(7);
+                userId = jwtUtils.extractUserId(jwt);
+
+                if (userId == null) {
+                    throw new JwtException("Invalid token");
+                }
+
+                if (SecurityContextHolder.getContext().getAuthentication() != null) {
+                    return;
+                }
+
+                User user = userRepository.findById(userId).orElse(null);
+                if (user == null) {
+                    throw new JwtException("User not found");
+                }
+
+                UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
+                                new UsernamePasswordAuthenticationToken(user, null,
+                                                user.getAuthorities());
+                usernamePasswordAuthenticationToken
+                                .setDetails(new WebAuthenticationDetailsSource()
+                                                .buildDetails(request));
+                SecurityContextHolder.getContext()
+                                .setAuthentication(usernamePasswordAuthenticationToken);
+                request.getSession().setAttribute("loggedUser", userId);
+            } catch (JwtException ex) {
+                log.error(ex.getLocalizedMessage());
             }
-
-            if (!authorizationHeader.startsWith("Bearer ")) {
-                throw new JwtException("Authorization header is null");
-            }
-
-            jwt = authorizationHeader.substring(7);
-            userId = jwtUtils.extractUserId(jwt);
-
-            if (userId == null) {
-                throw new JwtException("Invalid token");
-            }
-
-            if (SecurityContextHolder.getContext().getAuthentication() != null) {
-                return;
-            }
-
-            User user = userRepository.findById(userId).orElse(null);
-            if (user == null) {
-                throw new JwtException("User not found");
-            }
-
-            UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
-                            new UsernamePasswordAuthenticationToken(user, null,
-                                            user.getAuthorities());
-            usernamePasswordAuthenticationToken.setDetails(
-                            new WebAuthenticationDetailsSource().buildDetails(request));
-            SecurityContextHolder.getContext()
-                            .setAuthentication(usernamePasswordAuthenticationToken);
-            request.getSession().setAttribute("loggedUser", userId);
-        } catch (JwtException ex) {
-            log.error(ex.getLocalizedMessage());
         }
         chain.doFilter(request, response);
     }

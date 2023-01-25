@@ -12,8 +12,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.harera.hayat.config.OffsetDateTimeSerializer;
 import com.harera.hayat.model.BaseEntity;
 import com.harera.hayat.model.city.City;
 import com.harera.hayat.model.donation.image.DonationImage;
@@ -38,12 +36,10 @@ public class Donation extends BaseEntity {
 
     @Basic
     @Column(name = "donation_date")
-    @JsonSerialize(using = OffsetDateTimeSerializer.class)
     private OffsetDateTime donationDate;
 
     @Basic
     @Column(name = "expiration_date")
-    @JsonSerialize(using = OffsetDateTimeSerializer.class)
     private OffsetDateTime donationExpirationDate;
 
     @Column(name = "communication_method")
