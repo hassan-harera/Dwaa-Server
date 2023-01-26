@@ -3,25 +3,27 @@ version: "3.8"
 services:
   app:
     build: ./Dockerfile
-    container_name: hayat_app
+    container_name: "hayat_app"
+    image: hayat_app:latest
     ports:
       - 8080:8080
-    networks:
-      - hayat_network
     depends_on:
       - redis
       - db
+    network_mode: host
   redis:
     container_name: "hayat_redis"
     image: redis:latest
     ports:
       - "6379:6379"
+    network_mode: host
   db:
     image: mysql:8.0
-    env_file: ./.env
     container_name: "hayat_mysql"
+    hostname: "localhost"
     environment:
-      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_ROOT_PASSWORD=harera
       - MYSQL_DATABASE=hayat
     ports:
       - "3306:3306"
+    network_mode: host
