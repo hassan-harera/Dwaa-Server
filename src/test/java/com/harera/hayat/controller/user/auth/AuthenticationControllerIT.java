@@ -16,6 +16,7 @@ import com.harera.hayat.model.user.auth.LoginResponse;
 import com.harera.hayat.model.user.auth.SignupRequest;
 import com.harera.hayat.model.user.auth.SignupResponse;
 import com.harera.hayat.service.firebase.FirebaseService;
+import com.harera.hayat.stub.PasswordStubs;
 import com.harera.hayat.stub.user.UserStubs;
 import com.harera.hayat.util.DataUtil;
 import com.harera.hayat.util.RequestUtil;
@@ -29,6 +30,7 @@ class AuthenticationControllerIT extends ApplicationIT {
     private final UserStubs userStubs;
     private final DataUtil dataUtil;
     private final FirebaseService firebaseService;
+    private final PasswordStubs passwordStubs;
 
     @Test
     void login_withValidRequest_thenVerifyResponse() {
@@ -91,5 +93,12 @@ class AuthenticationControllerIT extends ApplicationIT {
         assertNotNull(response.getBody());
         assertNotNull(response.getBody().getMobile());
         dataUtil.delete(userStubs.get(mobile));
+    }
+
+    @Test
+    void encrypt_password() {
+        // Given
+        String password = passwordStubs.encode("password");
+        System.out.println(password);
     }
 }
