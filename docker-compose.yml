@@ -10,6 +10,8 @@ services:
     depends_on:
       - redis
       - db
+    networks:
+      - hayat_network
   redis:
     container_name: "hayat_redis"
     image: redis:latest
@@ -23,10 +25,13 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=harera
       - MYSQL_DATABASE=hayat
+    hostname: "localhost"
     volumes:
       - hayat_db:/var/lib/mysql
     ports:
       - "3306:3306"
+    networks:
+      - hayat_network
 networks:
   hayat_network:
     driver: bridge
