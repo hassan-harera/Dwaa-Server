@@ -1,10 +1,10 @@
-package com.harera.hayat.stub.food;
+package com.harera.hayat.core.stub.food;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.harera.hayat.model.food.FoodUnit;
-import com.harera.hayat.repository.food.FoodUnitRepository;
+import com.harera.hayat.core.model.food.FoodUnit;
+import com.harera.hayat.core.repository.food.FoodUnitRepository;
 
 @Service
 public class FoodUnitStubs {

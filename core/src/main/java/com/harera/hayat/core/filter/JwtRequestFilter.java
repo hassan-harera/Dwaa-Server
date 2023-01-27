@@ -15,13 +15,9 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.harera.core.model.user.User;
-import com.harera.core.repository.UserRepository;
 import com.harera.hayat.core.model.user.User;
 import com.harera.hayat.core.repository.UserRepository;
-import com.harera.hayat.model.user.User;
-import com.harera.hayat.repository.UserRepository;
-import com.harera.hayat.service.user.auth.JwtUtils;
+import com.harera.hayat.core.service.user.auth.JwtUtils;
 
 import io.jsonwebtoken.JwtException;
 import lombok.extern.log4j.Log4j2;

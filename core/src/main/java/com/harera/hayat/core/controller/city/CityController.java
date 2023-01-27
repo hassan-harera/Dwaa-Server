@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.harera.hayat.model.city.CityResponse;
-import com.harera.hayat.service.city.CityService;
+import com.harera.hayat.core.model.city.CityResponse;
+import com.harera.hayat.core.service.city.CityService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;

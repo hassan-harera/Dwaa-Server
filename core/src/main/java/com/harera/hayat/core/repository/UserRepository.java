@@ -9,7 +9,7 @@ import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.harera.hayat.model.user.User;
+import com.harera.hayat.core.model.user.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {

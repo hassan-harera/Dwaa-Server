@@ -26,16 +26,16 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import com.harera.hayat.exception.EntityNotFoundException;
-import com.harera.hayat.exception.FieldFormatException;
-import com.harera.hayat.exception.FieldLimitException;
-import com.harera.hayat.exception.LogicError;
-import com.harera.hayat.exception.LoginException;
-import com.harera.hayat.exception.MandatoryFieldException;
-import com.harera.hayat.exception.UniqueFieldException;
-import com.harera.hayat.model.exception.ApiError;
-import com.harera.hayat.model.exception.GlobalMessage;
-import com.harera.hayat.repository.GlobalMessageRepository;
+import com.harera.hayat.core.exception.EntityNotFoundException;
+import com.harera.hayat.core.exception.FieldFormatException;
+import com.harera.hayat.core.exception.FieldLimitException;
+import com.harera.hayat.core.exception.LogicError;
+import com.harera.hayat.core.exception.LoginException;
+import com.harera.hayat.core.exception.MandatoryFieldException;
+import com.harera.hayat.core.exception.UniqueFieldException;
+import com.harera.hayat.core.model.exception.ApiError;
+import com.harera.hayat.core.model.exception.GlobalMessage;
+import com.harera.hayat.core.repository.GlobalMessageRepository;
 
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;

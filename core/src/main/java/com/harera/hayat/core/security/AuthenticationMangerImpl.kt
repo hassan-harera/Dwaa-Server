@@ -1,7 +1,7 @@
 package com.harera.hayat.core.security
 
-import com.harera.hayat.security.utils.Constant.MILLIS_IN_DAY
-import com.harera.hayat.security.utils.Constant.USER_TOKEN_EXPIRATION_IN_DAYS
+import com.harera.hayat.core.security.utils.Constant.MILLIS_IN_DAY
+import com.harera.hayat.core.security.utils.Constant.USER_TOKEN_EXPIRATION_IN_DAYS
 import io.jsonwebtoken.Claims
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm

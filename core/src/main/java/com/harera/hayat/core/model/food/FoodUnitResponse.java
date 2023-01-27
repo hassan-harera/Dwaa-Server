@@ -5,6 +5,6 @@ import lombok.Setter;
 
 @Setter
 @Getter
-public class FoodUnitResponse extends FoodUnitDto {
+public class FoodUnitResponse extends com.harera.hayat.core.model.food.FoodUnitDto {
 
 }

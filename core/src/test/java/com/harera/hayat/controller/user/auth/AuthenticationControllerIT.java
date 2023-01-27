@@ -1,4 +1,4 @@
-package com.harera.hayat.controller.user.auth;
+package com.harera.hayat.core.controller.user.auth;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -8,18 +8,18 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 
-import com.harera.hayat.ApplicationIT;
-import com.harera.hayat.model.user.FirebaseUser;
-import com.harera.hayat.model.user.User;
-import com.harera.hayat.model.user.auth.LoginRequest;
-import com.harera.hayat.model.user.auth.LoginResponse;
-import com.harera.hayat.model.user.auth.SignupRequest;
-import com.harera.hayat.model.user.auth.SignupResponse;
-import com.harera.hayat.service.firebase.FirebaseService;
-import com.harera.hayat.stub.PasswordStubs;
-import com.harera.hayat.stub.user.UserStubs;
-import com.harera.hayat.util.DataUtil;
-import com.harera.hayat.util.RequestUtil;
+import com.harera.hayat.core.ApplicationIT;
+import com.harera.hayat.core.model.user.FirebaseUser;
+import com.harera.hayat.core.model.user.User;
+import com.harera.hayat.core.model.user.auth.LoginRequest;
+import com.harera.hayat.core.model.user.auth.LoginResponse;
+import com.harera.hayat.core.model.user.auth.SignupRequest;
+import com.harera.hayat.core.model.user.auth.SignupResponse;
+import com.harera.hayat.core.service.firebase.FirebaseService;
+import com.harera.hayat.core.stub.PasswordStubs;
+import com.harera.hayat.core.stub.user.UserStubs;
+import com.harera.hayat.core.util.DataUtil;
+import com.harera.hayat.core.util.RequestUtil;
 
 import lombok.RequiredArgsConstructor;
 

@@ -3,11 +3,9 @@ package com.harera.hayat.core.model.donation.medicine;
 import java.time.OffsetDateTime;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.harera.core.model.medicine.unit.MedicineUnitDto;
+import com.harera.hayat.core.model.donation.DonationDto;
+import com.harera.hayat.core.model.medicine.MedicineDto;
 import com.harera.hayat.core.model.medicine.unit.MedicineUnitDto;
-import com.harera.hayat.model.donation.DonationDto;
-import com.harera.hayat.model.medicine.MedicineDto;
-import com.harera.hayat.model.medicine.unit.MedicineUnitDto;
 
 import lombok.Data;
 

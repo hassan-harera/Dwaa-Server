@@ -3,8 +3,8 @@ package com.harera.hayat.core.model.donation.food;
 import java.time.OffsetDateTime;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.harera.hayat.model.donation.DonationDto;
-import com.harera.hayat.model.food.FoodUnitDto;
+import com.harera.hayat.core.model.donation.DonationDto;
+import com.harera.hayat.core.model.food.FoodUnitDto;
 
 import lombok.Data;
 

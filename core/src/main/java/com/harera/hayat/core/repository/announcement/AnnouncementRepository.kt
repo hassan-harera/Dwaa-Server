@@ -1,6 +1,6 @@
 package com.harera.hayat.core.repository.announcement
 
-import com.harera.hayat.model.announcement.Announcement
+import com.harera.hayat.core.model.announcement.Announcement
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 

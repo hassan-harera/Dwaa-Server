@@ -11,24 +11,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.harera.core.exception.EntityNotFoundException;
-import com.harera.core.exception.FieldFormatException;
-import com.harera.core.model.city.City;
-import com.harera.core.model.donation.Donation;
-import com.harera.core.model.donation.DonationCategory;
-import com.harera.core.model.donation.food.FoodDonation;
-import com.harera.core.model.donation.food.FoodDonationRequest;
-import com.harera.core.model.donation.food.FoodDonationResponse;
-import com.harera.core.model.donation.food.FoodDonationUpdateRequest;
-import com.harera.core.model.donation.image.DonationImage;
-import com.harera.core.model.food.FoodUnit;
-import com.harera.core.repository.city.CityRepository;
-import com.harera.core.repository.donation.DonationRepository;
-import com.harera.core.repository.donation.food.FoodDonationRepository;
-import com.harera.core.repository.donation.image.DonationImageRepository;
-import com.harera.core.repository.food.FoodUnitRepository;
-import com.harera.core.service.user.auth.AuthService;
-import com.harera.core.util.ErrorCode;
 import com.harera.hayat.core.exception.EntityNotFoundException;
 import com.harera.hayat.core.exception.FieldFormatException;
 import com.harera.hayat.core.model.city.City;
@@ -45,34 +27,15 @@ import com.harera.hayat.core.repository.donation.DonationRepository;
 import com.harera.hayat.core.repository.donation.food.FoodDonationRepository;
 import com.harera.hayat.core.repository.donation.image.DonationImageRepository;
 import com.harera.hayat.core.repository.food.FoodUnitRepository;
+import com.harera.hayat.core.service.FileManager;
 import com.harera.hayat.core.service.user.auth.AuthService;
 import com.harera.hayat.core.util.ErrorCode;
-import com.harera.hayat.exception.EntityNotFoundException;
-import com.harera.hayat.exception.FieldFormatException;
-import com.harera.hayat.model.city.City;
-import com.harera.hayat.model.donation.Donation;
-import com.harera.hayat.model.donation.DonationCategory;
-import com.harera.hayat.model.donation.food.FoodDonation;
-import com.harera.hayat.model.donation.food.FoodDonationRequest;
-import com.harera.hayat.model.donation.food.FoodDonationResponse;
-import com.harera.hayat.model.donation.food.FoodDonationUpdateRequest;
-import com.harera.hayat.model.donation.image.DonationImage;
-import com.harera.hayat.model.food.FoodUnit;
-import com.harera.hayat.repository.city.CityRepository;
-import com.harera.hayat.repository.donation.DonationRepository;
-import com.harera.hayat.repository.donation.food.FoodDonationRepository;
-import com.harera.hayat.repository.donation.image.DonationImageRepository;
-import com.harera.hayat.repository.food.FoodUnitRepository;
-import com.harera.hayat.service.FileManager;
-import com.harera.hayat.service.file.CloudFileService;
-import com.harera.hayat.service.user.auth.AuthService;
-import com.harera.hayat.util.ErrorCode;
 
 @Service
 public class FoodDonationService {
 
     private final DonationRepository donationRepository;
-    private final FoodDonationValidation foodDonationValidation;
+    private final com.harera.hayat.core.service.donation.food.FoodDonationValidation foodDonationValidation;
     private final CityRepository cityRepository;
     private final ModelMapper modelMapper;
     private final AuthService authService;
@@ -80,16 +43,17 @@ public class FoodDonationService {
     private final FoodDonationRepository foodDonationRepository;
     private final int foodDonationExpirationDays;
     private final FileManager fileManager;
-    private final CloudFileService cloudFileService;
+    private final com.harera.hayat.core.service.file.CloudFileService cloudFileService;
     private final DonationImageRepository donationImageRepository;
 
     public FoodDonationService(DonationRepository donationRepository,
-                    FoodDonationValidation donationValidation,
+                    com.harera.hayat.core.service.donation.food.FoodDonationValidation donationValidation,
                     CityRepository cityRepository, ModelMapper modelMapper,
                     AuthService authService, FoodUnitRepository foodUnitRepository,
                     FoodDonationRepository foodDonationRepository,
                     @Value("${donation.food.expiration_in_days}") int foodDonationExpirationDays,
-                    FileManager fileManager, CloudFileService cloudFileService,
+                    FileManager fileManager,
+                    com.harera.hayat.core.service.file.CloudFileService cloudFileService,
                     DonationImageRepository donationImageRepository) {
         this.donationRepository = donationRepository;
         this.foodDonationValidation = donationValidation;

@@ -1,4 +1,4 @@
-package com.harera.hayat.controller.donation.food;
+package com.harera.hayat.core.controller.donation.food;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -10,23 +10,23 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 
-import com.harera.hayat.ApplicationIT;
-import com.harera.hayat.model.city.City;
-import com.harera.hayat.model.donation.CommunicationMethod;
-import com.harera.hayat.model.donation.Donation;
-import com.harera.hayat.model.donation.DonationCategory;
-import com.harera.hayat.model.donation.DonationState;
-import com.harera.hayat.model.donation.food.FoodDonation;
-import com.harera.hayat.model.donation.food.FoodDonationRequest;
-import com.harera.hayat.model.donation.food.FoodDonationResponse;
-import com.harera.hayat.model.donation.food.FoodDonationUpdateRequest;
-import com.harera.hayat.model.food.FoodUnit;
-import com.harera.hayat.stub.city.CityStubs;
-import com.harera.hayat.stub.donation.DonationStubs;
-import com.harera.hayat.stub.donation.food.FoodDonationStubs;
-import com.harera.hayat.stub.food.FoodUnitStubs;
-import com.harera.hayat.util.DataUtil;
-import com.harera.hayat.util.RequestUtil;
+import com.harera.hayat.core.ApplicationIT;
+import com.harera.hayat.core.model.city.City;
+import com.harera.hayat.core.model.donation.CommunicationMethod;
+import com.harera.hayat.core.model.donation.Donation;
+import com.harera.hayat.core.model.donation.DonationCategory;
+import com.harera.hayat.core.model.donation.DonationState;
+import com.harera.hayat.core.model.donation.food.FoodDonation;
+import com.harera.hayat.core.model.donation.food.FoodDonationRequest;
+import com.harera.hayat.core.model.donation.food.FoodDonationResponse;
+import com.harera.hayat.core.model.donation.food.FoodDonationUpdateRequest;
+import com.harera.hayat.core.model.food.FoodUnit;
+import com.harera.hayat.core.stub.city.CityStubs;
+import com.harera.hayat.core.stub.donation.DonationStubs;
+import com.harera.hayat.core.stub.donation.food.FoodDonationStubs;
+import com.harera.hayat.core.stub.food.FoodUnitStubs;
+import com.harera.hayat.core.util.DataUtil;
+import com.harera.hayat.core.util.RequestUtil;
 
 import lombok.RequiredArgsConstructor;
 

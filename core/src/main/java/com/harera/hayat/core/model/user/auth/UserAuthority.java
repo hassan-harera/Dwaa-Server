@@ -10,7 +10,7 @@ import javax.persistence.Table;
 
 import org.springframework.security.core.GrantedAuthority;
 
-import com.harera.hayat.model.user.User;
+import com.harera.hayat.core.model.user.User;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -19,7 +19,7 @@ import lombok.Setter;
 @Getter
 @Entity
 @Table(name = "user_authorities")
-@IdClass(UserAuthorityId.class)
+@IdClass(com.harera.hayat.core.model.user.auth.UserAuthorityId.class)
 public class UserAuthority implements GrantedAuthority {
 
     @Id

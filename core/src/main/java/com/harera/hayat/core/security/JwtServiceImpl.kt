@@ -1,12 +1,11 @@
 package com.harera.hayat.core.security
 
-import com.harera.hayat.security.utils.Constant.MILLIS_IN_DAY
-import com.harera.hayat.security.utils.Constant.USER_TOKEN_EXPIRATION_IN_MILLIS
+import com.harera.hayat.core.security.utils.Constant.MILLIS_IN_DAY
+import com.harera.hayat.core.security.utils.Constant.USER_TOKEN_EXPIRATION_IN_MILLIS
 import io.jsonwebtoken.Claims
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import org.springframework.beans.factory.annotation.Value
-import org.springframework.context.annotation.PropertySource
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.stereotype.Service
 import java.util.*

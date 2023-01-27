@@ -1,6 +1,6 @@
 package com.harera.hayat.core.model.medicine.category;
 
-import com.harera.hayat.model.BaseEntityDto;
+import com.harera.hayat.core.model.BaseEntityDto;
 
 import lombok.Data;
 

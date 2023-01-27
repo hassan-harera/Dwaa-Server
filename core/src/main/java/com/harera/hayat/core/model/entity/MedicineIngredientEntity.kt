@@ -1,6 +1,6 @@
 package com.harera.hayat.core.model.entity
 
-import com.harera.hayat.model.entity.pk.MedicineIngredientPK
+import com.harera.hayat.core.model.entity.pk.MedicineIngredientPK
 import javax.persistence.*
 
 @Entity

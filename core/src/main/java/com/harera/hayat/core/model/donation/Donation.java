@@ -12,12 +12,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.harera.core.model.donation.image.DonationImage;
+import com.harera.hayat.core.model.BaseEntity;
+import com.harera.hayat.core.model.city.City;
 import com.harera.hayat.core.model.donation.image.DonationImage;
-import com.harera.hayat.model.BaseEntity;
-import com.harera.hayat.model.city.City;
-import com.harera.hayat.model.donation.image.DonationImage;
-import com.harera.hayat.model.user.User;
+import com.harera.hayat.core.model.user.User;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -45,13 +43,13 @@ public class Donation extends BaseEntity {
     private OffsetDateTime donationExpirationDate;
 
     @Column(name = "communication_method")
-    private CommunicationMethod communicationMethod;
+    private com.harera.hayat.core.model.donation.CommunicationMethod communicationMethod;
 
     @Column(name = "category")
     private DonationCategory category;
 
     @Column(name = "state")
-    private DonationState state;
+    private com.harera.hayat.core.model.donation.DonationState state;
 
     @ManyToOne(targetEntity = City.class)
     @JoinColumn(name = "city_id", referencedColumnName = "id")

@@ -6,22 +6,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import com.harera.core.exception.EntityNotFoundException;
-import com.harera.core.model.city.City;
-import com.harera.core.model.donation.Donation;
-import com.harera.core.model.donation.DonationCategory;
-import com.harera.core.model.donation.medicine.MedicineDonation;
-import com.harera.core.model.donation.medicine.MedicineDonationRequest;
-import com.harera.core.model.donation.medicine.MedicineDonationResponse;
-import com.harera.core.model.medicine.Medicine;
-import com.harera.core.model.medicine.unit.MedicineUnit;
-import com.harera.core.model.user.User;
-import com.harera.core.repository.city.CityRepository;
-import com.harera.core.repository.donation.DonationRepository;
-import com.harera.core.repository.donation.medicine.MedicineDonationRepository;
-import com.harera.core.repository.medicine.MedicineRepository;
-import com.harera.core.repository.medicine.MedicineUnitRepository;
-import com.harera.core.service.user.auth.AuthService;
 import com.harera.hayat.core.exception.EntityNotFoundException;
 import com.harera.hayat.core.model.city.City;
 import com.harera.hayat.core.model.donation.Donation;
@@ -38,22 +22,6 @@ import com.harera.hayat.core.repository.donation.medicine.MedicineDonationReposi
 import com.harera.hayat.core.repository.medicine.MedicineRepository;
 import com.harera.hayat.core.repository.medicine.MedicineUnitRepository;
 import com.harera.hayat.core.service.user.auth.AuthService;
-import com.harera.hayat.exception.EntityNotFoundException;
-import com.harera.hayat.model.city.City;
-import com.harera.hayat.model.donation.Donation;
-import com.harera.hayat.model.donation.DonationCategory;
-import com.harera.hayat.model.donation.medicine.MedicineDonation;
-import com.harera.hayat.model.donation.medicine.MedicineDonationRequest;
-import com.harera.hayat.model.donation.medicine.MedicineDonationResponse;
-import com.harera.hayat.model.medicine.Medicine;
-import com.harera.hayat.model.medicine.unit.MedicineUnit;
-import com.harera.hayat.model.user.User;
-import com.harera.hayat.repository.city.CityRepository;
-import com.harera.hayat.repository.donation.DonationRepository;
-import com.harera.hayat.repository.donation.medicine.MedicineDonationRepository;
-import com.harera.hayat.repository.medicine.MedicineRepository;
-import com.harera.hayat.repository.medicine.MedicineUnitRepository;
-import com.harera.hayat.service.user.auth.AuthService;
 
 import io.jsonwebtoken.JwtException;
 
@@ -61,7 +29,7 @@ import io.jsonwebtoken.JwtException;
 public class MedicineDonationService {
 
     private final DonationRepository donationRepository;
-    private final MedicineDonationValidation donationValidation;
+    private final com.harera.hayat.core.service.donation.medicine.MedicineDonationValidation donationValidation;
     private final CityRepository cityRepository;
     private final MedicineUnitRepository medicineUnitRepository;
     private final ModelMapper modelMapper;
@@ -70,7 +38,7 @@ public class MedicineDonationService {
     private final AuthService authService;
 
     public MedicineDonationService(DonationRepository donationRepository,
-                    MedicineDonationValidation donationValidation,
+                    com.harera.hayat.core.service.donation.medicine.MedicineDonationValidation donationValidation,
                     CityRepository cityRepository,
                     MedicineUnitRepository medicineUnitRepository,
                     ModelMapper modelMapper,

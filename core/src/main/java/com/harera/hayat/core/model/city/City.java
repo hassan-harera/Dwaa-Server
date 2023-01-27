@@ -7,7 +7,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.harera.hayat.model.BaseEntity;
+import com.harera.hayat.core.model.BaseEntity;
 
 import lombok.Getter;
 import lombok.Setter;

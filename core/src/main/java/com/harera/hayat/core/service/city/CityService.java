@@ -1,7 +1,5 @@
 package com.harera.hayat.core.service.city;
 
-import static com.harera.hayat.util.ErrorCode.NOT_FOUND_CITY_ID;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -9,20 +7,11 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.harera.core.exception.EntityNotFoundException;
-import com.harera.core.model.city.City;
-import com.harera.core.model.city.CityResponse;
-import com.harera.core.repository.city.CityRepository;
-import com.harera.core.util.ErrorCode;
 import com.harera.hayat.core.exception.EntityNotFoundException;
 import com.harera.hayat.core.model.city.City;
 import com.harera.hayat.core.model.city.CityResponse;
 import com.harera.hayat.core.repository.city.CityRepository;
 import com.harera.hayat.core.util.ErrorCode;
-import com.harera.hayat.exception.EntityNotFoundException;
-import com.harera.hayat.model.city.City;
-import com.harera.hayat.model.city.CityResponse;
-import com.harera.hayat.repository.city.CityRepository;
 
 
 @Service

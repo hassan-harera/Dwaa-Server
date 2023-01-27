@@ -5,5 +5,5 @@ import lombok.Setter;
 
 @Setter
 @Getter
-public class MedicineResponse extends MedicineDto {
+public class MedicineResponse extends com.harera.hayat.core.model.medicine.MedicineDto {
 }

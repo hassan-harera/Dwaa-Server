@@ -3,9 +3,7 @@ package com.harera.hayat.core.exception;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import com.harera.core.model.BaseEntity;
 import com.harera.hayat.core.model.BaseEntity;
-import com.harera.hayat.model.BaseEntity;
 
 import lombok.Getter;
 

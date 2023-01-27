@@ -1,13 +1,13 @@
-package com.harera.hayat.stub.donation;
+package com.harera.hayat.core.stub.donation;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.harera.hayat.model.city.City;
-import com.harera.hayat.model.donation.Donation;
-import com.harera.hayat.model.donation.DonationCategory;
-import com.harera.hayat.model.donation.DonationState;
-import com.harera.hayat.repository.donation.DonationRepository;
+import com.harera.hayat.core.model.city.City;
+import com.harera.hayat.core.model.donation.Donation;
+import com.harera.hayat.core.model.donation.DonationCategory;
+import com.harera.hayat.core.model.donation.DonationState;
+import com.harera.hayat.core.repository.donation.DonationRepository;
 
 import lombok.RequiredArgsConstructor;
 

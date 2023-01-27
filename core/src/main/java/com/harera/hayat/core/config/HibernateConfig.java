@@ -1,7 +1,8 @@
 package com.harera.hayat.core.config;
 
-import javax.sql.DataSource;
 import java.util.Properties;
+
+import javax.sql.DataSource;
 
 import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.springframework.beans.factory.annotation.Autowired;

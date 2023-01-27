@@ -1,4 +1,4 @@
-package com.harera.hayat.service.donation.food;
+package com.harera.hayat.core.service.donation.food;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -19,25 +19,25 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 
-import com.harera.hayat.config.NotNullableMapper;
-import com.harera.hayat.exception.EntityNotFoundException;
-import com.harera.hayat.model.city.City;
-import com.harera.hayat.model.donation.CommunicationMethod;
-import com.harera.hayat.model.donation.Donation;
-import com.harera.hayat.model.donation.food.FoodDonation;
-import com.harera.hayat.model.donation.food.FoodDonationRequest;
-import com.harera.hayat.model.donation.food.FoodDonationResponse;
-import com.harera.hayat.model.donation.food.FoodDonationUpdateRequest;
-import com.harera.hayat.model.food.FoodUnit;
-import com.harera.hayat.repository.city.CityRepository;
-import com.harera.hayat.repository.donation.DonationRepository;
-import com.harera.hayat.repository.donation.food.FoodDonationRepository;
-import com.harera.hayat.repository.donation.image.DonationImageRepository;
-import com.harera.hayat.repository.food.FoodUnitRepository;
-import com.harera.hayat.service.FileManager;
-import com.harera.hayat.service.donation.DonationValidation;
-import com.harera.hayat.service.file.CloudFileService;
-import com.harera.hayat.service.user.auth.AuthService;
+import com.harera.hayat.core.config.NotNullableMapper;
+import com.harera.hayat.core.exception.EntityNotFoundException;
+import com.harera.hayat.core.model.city.City;
+import com.harera.hayat.core.model.donation.CommunicationMethod;
+import com.harera.hayat.core.model.donation.Donation;
+import com.harera.hayat.core.model.donation.food.FoodDonation;
+import com.harera.hayat.core.model.donation.food.FoodDonationRequest;
+import com.harera.hayat.core.model.donation.food.FoodDonationResponse;
+import com.harera.hayat.core.model.donation.food.FoodDonationUpdateRequest;
+import com.harera.hayat.core.model.food.FoodUnit;
+import com.harera.hayat.core.repository.city.CityRepository;
+import com.harera.hayat.core.repository.donation.DonationRepository;
+import com.harera.hayat.core.repository.donation.food.FoodDonationRepository;
+import com.harera.hayat.core.repository.donation.image.DonationImageRepository;
+import com.harera.hayat.core.repository.food.FoodUnitRepository;
+import com.harera.hayat.core.service.FileManager;
+import com.harera.hayat.core.service.donation.DonationValidation;
+import com.harera.hayat.core.service.file.CloudFileService;
+import com.harera.hayat.core.service.user.auth.AuthService;
 
 @ExtendWith(MockitoExtension.class)
 class FoodDonationServiceTest {

@@ -19,19 +19,16 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.harera.core.repository.UserRepository;
-import com.harera.core.service.user.UserService;
 import com.harera.hayat.core.repository.UserRepository;
+import com.harera.hayat.core.service.FileManager;
 import com.harera.hayat.core.service.user.UserService;
-import com.harera.hayat.repository.UserRepository;
-import com.harera.hayat.service.FileManager;
-import com.harera.hayat.service.user.UserService;
 
 import lombok.extern.log4j.Log4j2;
 
 @Log4j2
 @Service
-public class S3FileService implements CloudFileService {
+public class S3FileService
+                implements com.harera.hayat.core.service.file.CloudFileService {
 
     private final UserRepository userRepository;
     private final String endpointUrl;
@@ -43,11 +40,11 @@ public class S3FileService implements CloudFileService {
 
     @Autowired
     public S3FileService(UserService userService, UserRepository userRepository,
-                         @Value("${s3.endpoint.url}") String endpointUrl,
-                         @Value("${s3.bucket.name}") String bucketName,
-                         @Value("${s3.access.key.id}") String accessKeyId,
-                         @Value("${s3.secret.key}") String secretKey,
-                         FileManager fileManager) {
+                    @Value("${s3.endpoint.url}") String endpointUrl,
+                    @Value("${s3.bucket.name}") String bucketName,
+                    @Value("${s3.access.key.id}") String accessKeyId,
+                    @Value("${s3.secret.key}") String secretKey,
+                    FileManager fileManager) {
         this.userRepository = userRepository;
         this.endpointUrl = endpointUrl;
         this.bucketName = bucketName;

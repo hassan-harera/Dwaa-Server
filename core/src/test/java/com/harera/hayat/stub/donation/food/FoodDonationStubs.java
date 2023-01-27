@@ -1,14 +1,14 @@
-package com.harera.hayat.stub.donation.food;
+package com.harera.hayat.core.stub.donation.food;
 
 import java.time.OffsetDateTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.harera.hayat.model.donation.Donation;
-import com.harera.hayat.model.donation.food.FoodDonation;
-import com.harera.hayat.model.food.FoodUnit;
-import com.harera.hayat.repository.donation.food.FoodDonationRepository;
+import com.harera.hayat.core.model.donation.Donation;
+import com.harera.hayat.core.model.donation.food.FoodDonation;
+import com.harera.hayat.core.model.food.FoodUnit;
+import com.harera.hayat.core.repository.donation.food.FoodDonationRepository;
 
 import lombok.RequiredArgsConstructor;
 

@@ -1,16 +1,17 @@
 package com.harera.hayat.core.model.city;
 
-import lombok.Getter;
-import lombok.Setter;
+import java.util.List;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import java.util.List;
 
-import com.harera.hayat.model.BaseEntity;
+import com.harera.hayat.core.model.BaseEntity;
+
+import lombok.Getter;
+import lombok.Setter;
 
 @Setter
 @Getter
@@ -27,5 +28,5 @@ public class State extends BaseEntity {
     private String englishName;
 
     @OneToMany(mappedBy = "state")
-    private List<City> cities;
+    private List<com.harera.hayat.core.model.city.City> cities;
 }

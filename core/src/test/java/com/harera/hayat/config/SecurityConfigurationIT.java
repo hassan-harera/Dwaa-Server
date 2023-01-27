@@ -1,10 +1,10 @@
-package com.harera.hayat.config;
+package com.harera.hayat.core.config;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.harera.hayat.ApplicationIT;
-import com.harera.hayat.stub.PasswordStubs;
+import com.harera.hayat.core.ApplicationIT;
+import com.harera.hayat.core.stub.PasswordStubs;
 
 import lombok.extern.slf4j.Slf4j;
 

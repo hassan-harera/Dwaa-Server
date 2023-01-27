@@ -8,15 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.harera.core.model.medicine.MedicineResponse;
-import com.harera.core.model.medicine.unit.MedicineUnitResponse;
-import com.harera.core.service.medicine.MedicineService;
 import com.harera.hayat.core.model.medicine.MedicineResponse;
 import com.harera.hayat.core.model.medicine.unit.MedicineUnitResponse;
 import com.harera.hayat.core.service.medicine.MedicineService;
-import com.harera.hayat.model.medicine.MedicineResponse;
-import com.harera.hayat.model.medicine.unit.MedicineUnitResponse;
-import com.harera.hayat.service.medicine.MedicineService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -44,7 +38,7 @@ public class MedicineController {
                     responses = @ApiResponse(responseCode = "200",
                                     description = "success|Ok"))
     public ResponseEntity<List<MedicineResponse>> list(@RequestParam("q") String query,
-                                                       @RequestParam("page") int page) {
+                    @RequestParam("page") int page) {
         return ResponseEntity.ok(medicineService.list(query, page));
     }
 }

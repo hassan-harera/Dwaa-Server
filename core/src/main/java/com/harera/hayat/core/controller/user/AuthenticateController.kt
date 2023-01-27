@@ -1,7 +1,7 @@
 package com.harera.hayat.core.controller.user
 
-import com.harera.hayat.model.user.auth.*
-import com.harera.hayat.service.user.UserService
+import com.harera.hayat.core.model.user.auth.*
+import com.harera.hayat.core.service.user.UserService
 import lombok.extern.log4j.Log4j2
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping

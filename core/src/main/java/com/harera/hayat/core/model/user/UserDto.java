@@ -1,7 +1,7 @@
 package com.harera.hayat.core.model.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.harera.hayat.model.BaseEntityDto;
+import com.harera.hayat.core.model.BaseEntityDto;
 
 import lombok.Data;
 

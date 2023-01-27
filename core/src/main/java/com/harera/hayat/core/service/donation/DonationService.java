@@ -10,17 +10,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.harera.core.model.donation.Donation;
-import com.harera.core.model.donation.DonationDto;
-import com.harera.core.model.donation.DonationResponse;
-import com.harera.core.model.donation.food.FoodDonationResponse;
-import com.harera.core.model.donation.property.PropertyDonation;
-import com.harera.core.model.donation.property.PropertyDonationRequest;
-import com.harera.core.repository.city.CityRepository;
-import com.harera.core.repository.donation.DonationRepository;
-import com.harera.core.repository.donation.food.FoodDonationRepository;
-import com.harera.core.service.donation.food.FoodDonationService;
-import com.harera.core.service.donation.medicine.MedicineDonationService;
 import com.harera.hayat.core.model.donation.Donation;
 import com.harera.hayat.core.model.donation.DonationDto;
 import com.harera.hayat.core.model.donation.DonationResponse;
@@ -32,31 +21,21 @@ import com.harera.hayat.core.repository.donation.DonationRepository;
 import com.harera.hayat.core.repository.donation.food.FoodDonationRepository;
 import com.harera.hayat.core.service.donation.food.FoodDonationService;
 import com.harera.hayat.core.service.donation.medicine.MedicineDonationService;
-import com.harera.hayat.model.donation.Donation;
-import com.harera.hayat.model.donation.DonationDto;
-import com.harera.hayat.model.donation.DonationResponse;
-import com.harera.hayat.model.donation.food.FoodDonationResponse;
-import com.harera.hayat.model.donation.property.PropertyDonation;
-import com.harera.hayat.model.donation.property.PropertyDonationRequest;
-import com.harera.hayat.repository.city.CityRepository;
-import com.harera.hayat.repository.donation.DonationRepository;
-import com.harera.hayat.repository.donation.food.FoodDonationRepository;
-import com.harera.hayat.service.donation.food.FoodDonationService;
-import com.harera.hayat.service.donation.medicine.MedicineDonationService;
 
 @Service
 public class DonationService {
 
     private final DonationRepository donationRepository;
     private final FoodDonationRepository foodDonationRepository;
-    private final DonationValidation donationValidation;
+    private final com.harera.hayat.core.service.donation.DonationValidation donationValidation;
     private final FoodDonationService foodDonationService;
     private final MedicineDonationService medicinDonationService;
     private final ModelMapper modelMapper;
 
     public DonationService(DonationRepository donationRepository,
                     FoodDonationRepository foodDonationRepository,
-                    DonationValidation donationValidation, CityRepository cityRepository,
+                    com.harera.hayat.core.service.donation.DonationValidation donationValidation,
+                    CityRepository cityRepository,
                     FoodDonationService foodDonationService,
                     MedicineDonationService medicinDonationService,
                     ModelMapper modelMapper) {
@@ -69,7 +48,7 @@ public class DonationService {
     }
 
     public List<DonationResponse> list(Integer page, Integer size, String query,
-                                       String category) {
+                    String category) {
         donationValidation.validateList(page, size);
         Pageable pageable = Pageable.ofSize(size).withPage(page);
         Page<Donation> all = donationRepository.findAll(pageable);

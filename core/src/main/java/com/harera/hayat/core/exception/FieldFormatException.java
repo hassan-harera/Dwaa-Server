@@ -4,7 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.BAD_REQUEST)
-public class FieldFormatException extends FieldException {
+public class FieldFormatException extends com.harera.hayat.core.exception.FieldException {
 
     public FieldFormatException(String code, String field, String value) {
         super(String.format("Invalid %s: %s Format", field, value), code, field);

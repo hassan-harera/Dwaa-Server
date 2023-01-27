@@ -10,22 +10,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.harera.core.model.user.Role;
-import com.harera.core.model.user.User;
-import com.harera.core.model.user.auth.LoginResponse;
-import com.harera.core.repository.UserRepository;
-import com.harera.core.repository.user.auth.TokenRepository;
 import com.harera.hayat.core.model.user.Role;
 import com.harera.hayat.core.model.user.User;
 import com.harera.hayat.core.model.user.auth.LoginResponse;
 import com.harera.hayat.core.repository.UserRepository;
 import com.harera.hayat.core.repository.user.auth.TokenRepository;
-import com.harera.hayat.model.user.Role;
-import com.harera.hayat.model.user.User;
-import com.harera.hayat.model.user.auth.LoginResponse;
-import com.harera.hayat.repository.UserRepository;
-import com.harera.hayat.repository.user.auth.TokenRepository;
-import com.harera.hayat.service.user.UserValidation;
+import com.harera.hayat.core.service.user.UserValidation;
 
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.JwtException;
@@ -39,7 +29,7 @@ public class AuthService {
     private final String refreshTokenExpire;
     private final String secretKey;
     private final UserRepository userRepository;
-    private final JwtUtils jwtUtils;
+    private final com.harera.hayat.core.service.user.auth.JwtUtils jwtUtils;
     private final TokenRepository tokenRepository;
 
     @Autowired
@@ -47,7 +37,8 @@ public class AuthService {
                     @Value("${jwt.token.refresh.expire}") String refreshTokenExpire,
                     @Value("${jwt.token.secret.key}") String secretKey,
                     UserRepository userRepository, UserValidation ignoredUserValidation,
-                    JwtUtils jwtUtils, TokenRepository tokenRepository) {
+                    com.harera.hayat.core.service.user.auth.JwtUtils jwtUtils,
+                    TokenRepository tokenRepository) {
         this.tokenExpire = tokenExpire;
         this.refreshTokenExpire = refreshTokenExpire;
         this.secretKey = secretKey;

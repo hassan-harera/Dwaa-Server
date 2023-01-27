@@ -13,10 +13,8 @@ import javax.persistence.Table;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.harera.core.model.user.auth.UserAuthority;
+import com.harera.hayat.core.model.BaseEntity;
 import com.harera.hayat.core.model.user.auth.UserAuthority;
-import com.harera.hayat.model.BaseEntity;
-import com.harera.hayat.model.user.auth.UserAuthority;
 
 import lombok.Getter;
 import lombok.Setter;

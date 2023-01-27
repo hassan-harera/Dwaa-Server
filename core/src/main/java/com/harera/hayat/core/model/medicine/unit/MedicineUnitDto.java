@@ -1,7 +1,7 @@
 package com.harera.hayat.core.model.medicine.unit;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.harera.hayat.model.BaseEntityDto;
+import com.harera.hayat.core.model.BaseEntityDto;
 
 import lombok.Getter;
 import lombok.Setter;

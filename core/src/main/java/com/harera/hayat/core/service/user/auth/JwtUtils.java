@@ -5,12 +5,8 @@ import java.util.Objects;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import com.harera.core.model.user.User;
-import com.harera.core.repository.user.auth.TokenRepository;
 import com.harera.hayat.core.model.user.User;
 import com.harera.hayat.core.repository.user.auth.TokenRepository;
-import com.harera.hayat.model.user.User;
-import com.harera.hayat.repository.user.auth.TokenRepository;
 
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;

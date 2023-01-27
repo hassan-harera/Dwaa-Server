@@ -4,7 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-import com.harera.hayat.model.BaseEntity;
+import com.harera.hayat.core.model.BaseEntity;
 
 import lombok.Data;
 

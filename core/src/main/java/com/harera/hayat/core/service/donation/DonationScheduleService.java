@@ -6,9 +6,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class DonationScheduleService {
 
-    private final DonationService donationService;
+    private final com.harera.hayat.core.service.donation.DonationService donationService;
 
-    public DonationScheduleService(DonationService donationService) {
+    public DonationScheduleService(
+                    com.harera.hayat.core.service.donation.DonationService donationService) {
         this.donationService = donationService;
     }
 

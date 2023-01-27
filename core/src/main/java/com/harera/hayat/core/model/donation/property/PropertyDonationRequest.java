@@ -3,7 +3,7 @@ package com.harera.hayat.core.model.donation.property;
 import java.time.OffsetDateTime;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.harera.hayat.model.BaseEntity;
+import com.harera.hayat.core.model.BaseEntity;
 
 import lombok.Data;
 

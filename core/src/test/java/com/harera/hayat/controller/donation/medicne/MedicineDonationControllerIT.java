@@ -1,4 +1,4 @@
-package com.harera.hayat.controller.donation.medicne;
+package com.harera.hayat.core.controller.donation.medicne;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -9,18 +9,18 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 
-import com.harera.hayat.ApplicationIT;
-import com.harera.hayat.model.city.City;
-import com.harera.hayat.model.donation.CommunicationMethod;
-import com.harera.hayat.model.donation.medicine.MedicineDonationRequest;
-import com.harera.hayat.model.donation.medicine.MedicineDonationResponse;
-import com.harera.hayat.model.medicine.Medicine;
-import com.harera.hayat.model.medicine.unit.MedicineUnit;
-import com.harera.hayat.stub.city.CityStubs;
-import com.harera.hayat.stub.medicine.MedicineStubs;
-import com.harera.hayat.stub.medicine.MedicineUnitStubs;
-import com.harera.hayat.util.DataUtil;
-import com.harera.hayat.util.RequestUtil;
+import com.harera.hayat.core.ApplicationIT;
+import com.harera.hayat.core.model.city.City;
+import com.harera.hayat.core.model.donation.CommunicationMethod;
+import com.harera.hayat.core.model.donation.medicine.MedicineDonationRequest;
+import com.harera.hayat.core.model.donation.medicine.MedicineDonationResponse;
+import com.harera.hayat.core.model.medicine.Medicine;
+import com.harera.hayat.core.model.medicine.unit.MedicineUnit;
+import com.harera.hayat.core.stub.city.CityStubs;
+import com.harera.hayat.core.stub.medicine.MedicineStubs;
+import com.harera.hayat.core.stub.medicine.MedicineUnitStubs;
+import com.harera.hayat.core.util.DataUtil;
+import com.harera.hayat.core.util.RequestUtil;
 
 import lombok.RequiredArgsConstructor;
 

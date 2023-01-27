@@ -14,7 +14,7 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.Provider;
 import org.modelmapper.convention.MatchingStrategies;
 
-import com.harera.hayat.util.DateFormat;
+import com.harera.hayat.core.util.DateFormat;
 
 public class NotNullableMapper extends ModelMapper {
 

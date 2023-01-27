@@ -1,9 +1,5 @@
 package com.harera.hayat.core.service.user;
 
-import static com.harera.hayat.util.StringRegexUtils.isEmail;
-import static com.harera.hayat.util.StringRegexUtils.isPhoneNumber;
-import static com.harera.hayat.util.StringRegexUtils.isUsername;
-
 import java.util.Objects;
 
 import org.apache.commons.lang3.StringUtils;
@@ -13,20 +9,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.harera.core.exception.SignupException;
-import com.harera.core.model.user.FirebaseUser;
-import com.harera.core.model.user.User;
-import com.harera.core.model.user.auth.InvalidateLoginRequest;
-import com.harera.core.model.user.auth.LoginRequest;
-import com.harera.core.model.user.auth.LoginResponse;
-import com.harera.core.model.user.auth.OAuthLoginRequest;
-import com.harera.core.model.user.auth.SignupRequest;
-import com.harera.core.model.user.auth.SignupResponse;
-import com.harera.core.repository.UserRepository;
-import com.harera.core.repository.user.auth.TokenRepository;
-import com.harera.core.service.user.auth.AuthService;
-import com.harera.core.service.user.auth.JwtUtils;
-import com.harera.core.util.StringRegexUtils;
 import com.harera.hayat.core.exception.SignupException;
 import com.harera.hayat.core.model.user.FirebaseUser;
 import com.harera.hayat.core.model.user.User;
@@ -38,38 +20,26 @@ import com.harera.hayat.core.model.user.auth.SignupRequest;
 import com.harera.hayat.core.model.user.auth.SignupResponse;
 import com.harera.hayat.core.repository.UserRepository;
 import com.harera.hayat.core.repository.user.auth.TokenRepository;
+import com.harera.hayat.core.service.firebase.FirebaseService;
 import com.harera.hayat.core.service.user.auth.AuthService;
 import com.harera.hayat.core.service.user.auth.JwtUtils;
 import com.harera.hayat.core.util.StringRegexUtils;
-import com.harera.hayat.exception.SignupException;
-import com.harera.hayat.model.user.FirebaseUser;
-import com.harera.hayat.model.user.User;
-import com.harera.hayat.model.user.auth.InvalidateLoginRequest;
-import com.harera.hayat.model.user.auth.LoginRequest;
-import com.harera.hayat.model.user.auth.LoginResponse;
-import com.harera.hayat.model.user.auth.OAuthLoginRequest;
-import com.harera.hayat.model.user.auth.SignupRequest;
-import com.harera.hayat.model.user.auth.SignupResponse;
-import com.harera.hayat.repository.UserRepository;
-import com.harera.hayat.repository.user.auth.TokenRepository;
-import com.harera.hayat.service.firebase.FirebaseService;
-import com.harera.hayat.service.user.auth.AuthService;
-import com.harera.hayat.service.user.auth.JwtUtils;
 
 @Service
-class UserServiceImpl implements UserService {
+class UserServiceImpl implements com.harera.hayat.core.service.user.UserService {
 
     private final UserRepository userRepository;
     private final AuthService authService;
     private final PasswordEncoder passwordEncoder;
-    private final UserValidation userValidation;
+    private final com.harera.hayat.core.service.user.UserValidation userValidation;
     private final TokenRepository tokenRepository;
     private final FirebaseService firebaseService;
     private final ModelMapper modelMapper;
     private final JwtUtils jwtUtils;
 
     UserServiceImpl(UserRepository userRepository, AuthService authService,
-                    PasswordEncoder passwordEncoder, UserValidation userValidation,
+                    PasswordEncoder passwordEncoder,
+                    com.harera.hayat.core.service.user.UserValidation userValidation,
                     TokenRepository tokenRepository, FirebaseService firebaseService,
                     ModelMapper modelMapper, JwtUtils jwtUtils) {
         this.userRepository = userRepository;

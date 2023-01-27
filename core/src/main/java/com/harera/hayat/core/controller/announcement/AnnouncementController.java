@@ -8,12 +8,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.harera.core.model.announcement.AnnouncementResponse;
-import com.harera.core.service.announcement.AnnouncementService;
 import com.harera.hayat.core.model.announcement.AnnouncementResponse;
 import com.harera.hayat.core.service.announcement.AnnouncementService;
-import com.harera.hayat.model.announcement.AnnouncementResponse;
-import com.harera.hayat.service.announcement.AnnouncementService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;

@@ -6,6 +6,7 @@ import lombok.Data;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true, value = { "active", })
-public class MedicineDonationResponse extends MedicineDonationDto {
+public class MedicineDonationResponse extends
+                com.harera.hayat.core.model.donation.medicine.MedicineDonationDto {
 
 }

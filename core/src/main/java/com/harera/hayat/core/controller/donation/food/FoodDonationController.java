@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.harera.hayat.model.donation.food.FoodDonationRequest;
-import com.harera.hayat.model.donation.food.FoodDonationResponse;
-import com.harera.hayat.model.donation.food.FoodDonationUpdateRequest;
-import com.harera.hayat.service.donation.food.FoodDonationService;
+import com.harera.hayat.core.model.donation.food.FoodDonationRequest;
+import com.harera.hayat.core.model.donation.food.FoodDonationResponse;
+import com.harera.hayat.core.model.donation.food.FoodDonationUpdateRequest;
+import com.harera.hayat.core.service.donation.food.FoodDonationService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;

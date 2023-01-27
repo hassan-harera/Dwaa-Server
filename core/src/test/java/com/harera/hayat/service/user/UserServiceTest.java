@@ -1,4 +1,4 @@
-package com.harera.hayat.service.user;
+package com.harera.hayat.core.service.user;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -14,18 +14,18 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.harera.hayat.exception.FieldFormatException;
-import com.harera.hayat.exception.UniqueFieldException;
-import com.harera.hayat.model.user.FirebaseUser;
-import com.harera.hayat.model.user.User;
-import com.harera.hayat.model.user.auth.SignupRequest;
-import com.harera.hayat.model.user.auth.SignupResponse;
-import com.harera.hayat.repository.UserRepository;
-import com.harera.hayat.repository.user.auth.TokenRepository;
-import com.harera.hayat.service.firebase.FirebaseService;
-import com.harera.hayat.service.user.auth.AuthService;
-import com.harera.hayat.service.user.auth.JwtUtils;
-import com.harera.hayat.util.ErrorCode;
+import com.harera.hayat.core.exception.FieldFormatException;
+import com.harera.hayat.core.exception.UniqueFieldException;
+import com.harera.hayat.core.model.user.FirebaseUser;
+import com.harera.hayat.core.model.user.User;
+import com.harera.hayat.core.model.user.auth.SignupRequest;
+import com.harera.hayat.core.model.user.auth.SignupResponse;
+import com.harera.hayat.core.repository.UserRepository;
+import com.harera.hayat.core.repository.user.auth.TokenRepository;
+import com.harera.hayat.core.service.firebase.FirebaseService;
+import com.harera.hayat.core.service.user.auth.AuthService;
+import com.harera.hayat.core.service.user.auth.JwtUtils;
+import com.harera.hayat.core.util.ErrorCode;
 
 @ExtendWith(MockitoExtension.class)
 class UserServiceTest {

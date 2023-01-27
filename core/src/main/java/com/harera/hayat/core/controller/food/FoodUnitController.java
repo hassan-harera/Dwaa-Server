@@ -7,12 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.harera.core.model.food.FoodUnitResponse;
-import com.harera.core.service.food.FoodUnitService;
 import com.harera.hayat.core.model.food.FoodUnitResponse;
 import com.harera.hayat.core.service.food.FoodUnitService;
-import com.harera.hayat.model.food.FoodUnitResponse;
-import com.harera.hayat.service.food.FoodUnitService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;

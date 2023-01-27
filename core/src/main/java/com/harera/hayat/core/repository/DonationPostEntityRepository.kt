@@ -1,6 +1,6 @@
 package com.harera.hayat.core.repository;
 
-import com.harera.hayat.model.entity.DonationPostEntity
+import com.harera.hayat.core.model.entity.DonationPostEntity
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 

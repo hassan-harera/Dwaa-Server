@@ -2,7 +2,7 @@ package com.harera.hayat.core.model.donation.image;
 
 import javax.persistence.JoinColumn;
 
-import com.harera.hayat.model.BaseEntityDto;
+import com.harera.hayat.core.model.BaseEntityDto;
 
 import lombok.Getter;
 import lombok.Setter;

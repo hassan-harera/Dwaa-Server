@@ -1,12 +1,11 @@
 package com.harera.hayat.core.model.exception;
 
-import lombok.Data;
-
-import javax.validation.ConstraintViolation;
 import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
+
+import javax.validation.ConstraintViolation;
 
 import org.hibernate.validator.internal.engine.path.PathImpl;
 import org.springframework.http.HttpStatus;
@@ -14,6 +13,8 @@ import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+
+import lombok.Data;
 
 @Data
 public class ApiError {
@@ -25,7 +26,7 @@ public class ApiError {
     private String debugMessage;
     private String displayMessage;
     private String code;
-    private LinkedList<ApiValidationError> subErrors;
+    private LinkedList<com.harera.hayat.core.model.exception.ApiValidationError> subErrors;
 
     private ApiError() {
         timestamp = LocalDateTime.now();
@@ -50,7 +51,8 @@ public class ApiError {
         this.debugMessage = ex.getLocalizedMessage();
     }
 
-    private void addSubError(ApiValidationError subError) {
+    private void addSubError(
+                    com.harera.hayat.core.model.exception.ApiValidationError subError) {
         if (subErrors == null) {
             subErrors = new LinkedList<>();
         }
@@ -59,11 +61,13 @@ public class ApiError {
 
     private void addValidationError(String object, String field, Object rejectedValue,
                     String message) {
-        addSubError(new ApiValidationError(object, field, rejectedValue, message));
+        addSubError(new com.harera.hayat.core.model.exception.ApiValidationError(object,
+                        field, rejectedValue, message));
     }
 
     private void addValidationError(String object, String message) {
-        addSubError(new ApiValidationError(object, message));
+        addSubError(new com.harera.hayat.core.model.exception.ApiValidationError(object,
+                        message));
     }
 
     private void addValidationError(FieldError fieldError) {

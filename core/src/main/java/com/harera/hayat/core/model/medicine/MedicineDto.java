@@ -1,13 +1,9 @@
 package com.harera.hayat.core.model.medicine;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.harera.core.model.medicine.category.MedicineCategoryDto;
-import com.harera.core.model.medicine.unit.MedicineUnitDto;
+import com.harera.hayat.core.model.BaseEntityDto;
 import com.harera.hayat.core.model.medicine.category.MedicineCategoryDto;
 import com.harera.hayat.core.model.medicine.unit.MedicineUnitDto;
-import com.harera.hayat.model.BaseEntityDto;
-import com.harera.hayat.model.medicine.category.MedicineCategoryDto;
-import com.harera.hayat.model.medicine.unit.MedicineUnitDto;
 
 import lombok.Data;
 

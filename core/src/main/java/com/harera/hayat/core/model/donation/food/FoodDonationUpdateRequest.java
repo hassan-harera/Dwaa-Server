@@ -7,6 +7,7 @@ import lombok.Data;
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true, value = { "id", "user", "city", "unit",
         "category", "donation_date", "donation_expiration_date" })
-public class FoodDonationUpdateRequest extends FoodDonationDto {
+public class FoodDonationUpdateRequest
+                extends com.harera.hayat.core.model.donation.food.FoodDonationDto {
 
 }

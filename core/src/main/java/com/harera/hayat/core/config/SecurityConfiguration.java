@@ -19,10 +19,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.harera.hayat.filter.JwtRequestFilter;
-import com.harera.hayat.model.exception.ApiError;
-import com.harera.hayat.model.exception.GlobalMessage;
-import com.harera.hayat.repository.GlobalMessageRepository;
+import com.harera.hayat.core.filter.JwtRequestFilter;
+import com.harera.hayat.core.model.exception.ApiError;
+import com.harera.hayat.core.model.exception.GlobalMessage;
+import com.harera.hayat.core.repository.GlobalMessageRepository;
 
 @EnableWebSecurity
 @Configuration

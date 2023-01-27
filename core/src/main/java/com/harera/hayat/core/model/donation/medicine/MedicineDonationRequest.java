@@ -10,7 +10,8 @@ import lombok.Data;
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true,
                 value = { "id", "active", "city", "user", "unit", "medicine" })
-public class MedicineDonationRequest extends MedicineDonationDto {
+public class MedicineDonationRequest extends
+                com.harera.hayat.core.model.donation.medicine.MedicineDonationDto {
 
     @JsonProperty(value = "city_id")
     private long cityId;

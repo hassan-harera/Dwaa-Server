@@ -9,12 +9,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.harera.core.model.medicine.unit.MedicineUnit;
+import com.harera.hayat.core.model.BaseEntity;
+import com.harera.hayat.core.model.donation.Donation;
+import com.harera.hayat.core.model.medicine.Medicine;
 import com.harera.hayat.core.model.medicine.unit.MedicineUnit;
-import com.harera.hayat.model.BaseEntity;
-import com.harera.hayat.model.donation.Donation;
-import com.harera.hayat.model.medicine.Medicine;
-import com.harera.hayat.model.medicine.unit.MedicineUnit;
 
 import lombok.Getter;
 import lombok.Setter;

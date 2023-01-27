@@ -7,14 +7,6 @@ import java.time.OffsetDateTime;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import com.harera.core.exception.FieldFormatException;
-import com.harera.core.exception.MandatoryFieldException;
-import com.harera.core.model.donation.DonationDto;
-import com.harera.core.model.donation.property.PropertyDonationRequest;
-import com.harera.core.repository.city.CityRepository;
-import com.harera.core.util.ErrorCode;
-import com.harera.core.util.FieldFormat;
-import com.harera.core.validation.PagingValidation;
 import com.harera.hayat.core.exception.FieldFormatException;
 import com.harera.hayat.core.exception.MandatoryFieldException;
 import com.harera.hayat.core.model.donation.DonationDto;
@@ -23,14 +15,6 @@ import com.harera.hayat.core.repository.city.CityRepository;
 import com.harera.hayat.core.util.ErrorCode;
 import com.harera.hayat.core.util.FieldFormat;
 import com.harera.hayat.core.validation.PagingValidation;
-import com.harera.hayat.exception.FieldFormatException;
-import com.harera.hayat.exception.MandatoryFieldException;
-import com.harera.hayat.model.donation.DonationDto;
-import com.harera.hayat.model.donation.property.PropertyDonationRequest;
-import com.harera.hayat.repository.city.CityRepository;
-import com.harera.hayat.util.ErrorCode;
-import com.harera.hayat.util.FieldFormat;
-import com.harera.hayat.validation.PagingValidation;
 
 @Service
 public class DonationValidation {
