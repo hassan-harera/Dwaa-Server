@@ -9,7 +9,7 @@ import com.harera.hayat.stub.PasswordStubs;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-class SecurityConfigurationIT extends ApplicationIT {
+class SecurityConfigIT extends ApplicationIT {
 
     @Autowired
     private PasswordStubs passwordStubs;

@@ -1,22 +1,24 @@
-package com.harera.hayat.service.user;
+package com.harera.hayat.service.user.auth;
 
 import static com.harera.hayat.util.ErrorCode.FORMAT_FIRST_NAME;
 import static com.harera.hayat.util.ErrorCode.FORMAT_LAST_NAME;
+import static com.harera.hayat.util.ErrorCode.FORMAT_LOGIN_SUBJECT;
 import static com.harera.hayat.util.ErrorCode.FORMAT_USER_MOBILE;
-import static com.harera.hayat.util.ErrorCode.INCORRECT_USERNAME_FORMAT;
-import static com.harera.hayat.util.ErrorCode.INCORRECT_USERNAME_OR_PASSWORD;
 import static com.harera.hayat.util.ErrorCode.INVALID_FIREBASE_TOKEN;
 import static com.harera.hayat.util.ErrorCode.MANDATORY_FIRST_NAME;
 import static com.harera.hayat.util.ErrorCode.MANDATORY_LAST_NAME;
-import static com.harera.hayat.util.ErrorCode.MANDATORY_PASSWORD;
+import static com.harera.hayat.util.ErrorCode.MANDATORY_LOGIN_PASSWORD;
+import static com.harera.hayat.util.ErrorCode.MANDATORY_LOGIN_SUBJECT;
 import static com.harera.hayat.util.ErrorCode.MANDATORY_TOKEN;
 import static com.harera.hayat.util.ErrorCode.MANDATORY_USER_MOBILE;
-import static com.harera.hayat.util.ErrorCode.MANDATORY_USER_NAME;
+import static com.harera.hayat.util.ErrorCode.NOT_FOUND_USERNAME_OR_PASSWORD;
 import static com.harera.hayat.util.ErrorCode.UNIQUE_EMAIL;
 import static com.harera.hayat.util.ErrorCode.UNIQUE_USER_MOBILE;
-import static com.harera.hayat.util.ErrorCode.UNIQUE_USER_NAME;
 import static com.harera.hayat.util.ErrorMessage.INCORRECT_USERNAME_PASSWORD_MESSAGE;
-import static com.harera.hayat.util.FieldName.AR_NAME;
+import static com.harera.hayat.util.HayatStringUtils.isValidEmail;
+import static com.harera.hayat.util.SubjectUtils.INSTANCE;
+
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -28,6 +30,7 @@ import com.harera.hayat.exception.FieldFormatException;
 import com.harera.hayat.exception.LoginException;
 import com.harera.hayat.exception.MandatoryFieldException;
 import com.harera.hayat.exception.UniqueFieldException;
+import com.harera.hayat.model.user.User;
 import com.harera.hayat.model.user.auth.LoginRequest;
 import com.harera.hayat.model.user.auth.OAuthLoginRequest;
 import com.harera.hayat.model.user.auth.SignupRequest;
@@ -35,7 +38,6 @@ import com.harera.hayat.repository.UserRepository;
 import com.harera.hayat.service.firebase.FirebaseService;
 import com.harera.hayat.util.ErrorCode;
 import com.harera.hayat.util.HayatStringUtils;
-import com.harera.hayat.util.StringRegexUtils;
 import com.harera.hayat.util.Subject;
 import com.harera.hayat.util.SubjectUtils;
 
@@ -43,14 +45,14 @@ import lombok.extern.log4j.Log4j2;
 
 @Log4j2
 @Service
-public class UserValidation {
+public class AuthValidation {
 
     private final FirebaseService firebaseService;
     private final UserRepository userRepository;
     private final PasswordEncoder encoder;
 
     @Autowired
-    public UserValidation(FirebaseService firebaseService, UserRepository userRepository,
+    public AuthValidation(FirebaseService firebaseService, UserRepository userRepository,
                     PasswordEncoder encoder) {
         this.firebaseService = firebaseService;
         this.userRepository = userRepository;
@@ -63,10 +65,24 @@ public class UserValidation {
         validateExisting(signupRequest);
     }
 
-    public void validate(LoginRequest loginRequest) {
+    public void validateLogin(LoginRequest loginRequest) {
         validateMandatory(loginRequest);
+        validateFormat(loginRequest);
         validateExisting(loginRequest);
         validatePassword(loginRequest);
+    }
+
+    private void validateFormat(LoginRequest loginRequest) {
+        FieldFormatException incorrectUsernameFormat = new FieldFormatException(
+                        FORMAT_LOGIN_SUBJECT, "subject", loginRequest.getSubject());
+
+        String subjectPayload = loginRequest.getSubject();
+        Subject subjectType = SubjectUtils.INSTANCE.getSubject(subjectPayload);
+
+        if (!(subjectType instanceof Subject.Email)
+                        && !(subjectType instanceof Subject.PhoneNumber)) {
+            throw incorrectUsernameFormat;
+        }
     }
 
     public void validate(OAuthLoginRequest loginRequest) {
@@ -99,8 +115,7 @@ public class UserValidation {
             throw new FieldFormatException(ErrorCode.FORMAT_SIGNUP_PASSWORD,
                             MANDATORY_LAST_NAME);
         }
-        if (signupRequest.getEmail() != null
-                        && !HayatStringUtils.isValidEmail(signupRequest.getEmail())) {
+        if (signupRequest.getEmail() != null && !isValidEmail(signupRequest.getEmail())) {
             throw new FieldFormatException(ErrorCode.FORMAT_SIGNUP_EMAIL,
                             MANDATORY_LAST_NAME);
         }
@@ -111,33 +126,33 @@ public class UserValidation {
     }
 
     private void validateSubjectExisted(String subject) {
-        Subject subjectType = SubjectUtils.INSTANCE.getSubject(subject);
+        Subject subjectType = INSTANCE.getSubject(subject);
         if (subjectType instanceof Subject.Email) {
             validateEmailExisted(subject);
         } else if (subjectType instanceof Subject.PhoneNumber) {
             validatePhoneNumberExisted(subject);
-        } else if (subjectType instanceof Subject.Username) {
+        } else {
             validateUsernameExisted(subject);
         }
     }
 
     private void validateEmailExisted(String subject) {
         if (!userRepository.existsByEmail(subject)) {
-            throw new LoginException(INCORRECT_USERNAME_OR_PASSWORD,
+            throw new LoginException(NOT_FOUND_USERNAME_OR_PASSWORD,
                             INCORRECT_USERNAME_PASSWORD_MESSAGE);
         }
     }
 
     private void validatePhoneNumberExisted(String subject) {
         if (!userRepository.existsByMobile(subject)) {
-            throw new LoginException(INCORRECT_USERNAME_OR_PASSWORD,
+            throw new LoginException(NOT_FOUND_USERNAME_OR_PASSWORD,
                             INCORRECT_USERNAME_PASSWORD_MESSAGE);
         }
     }
 
     private void validateUsernameExisted(String subject) {
         if (!userRepository.existsByUsername(subject)) {
-            throw new LoginException(INCORRECT_USERNAME_OR_PASSWORD,
+            throw new LoginException(NOT_FOUND_USERNAME_OR_PASSWORD,
                             INCORRECT_USERNAME_PASSWORD_MESSAGE);
         }
     }
@@ -146,12 +161,6 @@ public class UserValidation {
         validateMobileNotExisted(signupRequest.getMobile());
         if (signupRequest.getEmail() != null) {
             validateEmailNotExisted(signupRequest.getEmail());
-        }
-    }
-
-    private void validateUsernameNotExisted(String username) {
-        if (userRepository.existsByUsername(username)) {
-            throw new UniqueFieldException(UNIQUE_USER_NAME, AR_NAME, username);
         }
     }
 
@@ -179,22 +188,23 @@ public class UserValidation {
             throw new MandatoryFieldException(MANDATORY_LAST_NAME, "lastName");
         }
         if (!StringUtils.hasText(signupRequest.getPassword())) {
-            throw new MandatoryFieldException(MANDATORY_PASSWORD, "password");
+            throw new MandatoryFieldException(MANDATORY_LOGIN_PASSWORD, "password");
         }
     }
 
     private void validatePassword(LoginRequest loginRequest) {
-        String subject = loginRequest.getSubject();
-        if (StringRegexUtils.INSTANCE.isPhoneNumber(subject)) {
-            validatePassword(loginRequest.getPassword(),
-                            userRepository.findByMobile(subject).getPassword());
-        } else if (StringRegexUtils.INSTANCE.isEmail(subject)) {
-            validatePassword(loginRequest.getPassword(),
-                            userRepository.findByEmail(subject).getPassword());
+        String subjectPayload = loginRequest.getSubject();
+        Subject subjectType = INSTANCE.getSubject(subjectPayload);
+        Optional<User> user;
+        if (subjectType instanceof Subject.PhoneNumber) {
+            user = userRepository.findByMobile(subjectPayload);
+        } else if (subjectType instanceof Subject.Email) {
+            user = userRepository.findByEmail(subjectPayload);
         } else {
-            validatePassword(loginRequest.getPassword(),
-                            userRepository.findByUsername(subject).getPassword());
+            user = userRepository.findByUsername(subjectPayload);
         }
+        user.ifPresent(u -> validatePassword(loginRequest.getPassword(),
+                        u.getPassword()));
     }
 
     private void validateMandatory(OAuthLoginRequest loginRequest) {
@@ -205,51 +215,25 @@ public class UserValidation {
 
     private void validatePassword(String password, String encodedPassword) {
         if (!encoder.matches(password, encodedPassword)) {
-            throw new LoginException(INCORRECT_USERNAME_OR_PASSWORD,
-                            INCORRECT_USERNAME_PASSWORD_MESSAGE);
-        }
-    }
-
-    private void validateLoginExistingSubject(String subject) {
-        if (StringRegexUtils.INSTANCE.isPhoneNumber(subject)) {
-            validateLoginExistingPhoneNumber(subject);
-        } else if (StringRegexUtils.INSTANCE.isEmail(subject)) {
-            validateExistingEmail(subject);
-        } else if (StringRegexUtils.INSTANCE.isUsername(subject)) {
-            validateLoginExistingUsername(subject);
-        } else {
-            throw new FieldFormatException(INCORRECT_USERNAME_FORMAT, "subject", null);
-        }
-    }
-
-    private void validateLoginExistingUsername(String subject) {
-        if (!userRepository.existsByUsername(subject)) {
-            throw new LoginException(INCORRECT_USERNAME_OR_PASSWORD,
+            throw new LoginException(NOT_FOUND_USERNAME_OR_PASSWORD,
                             INCORRECT_USERNAME_PASSWORD_MESSAGE);
         }
     }
 
     private void validateExistingEmail(String subject) {
         if (!userRepository.existsByEmail(subject)) {
-            throw new LoginException(INCORRECT_USERNAME_OR_PASSWORD,
-                            INCORRECT_USERNAME_PASSWORD_MESSAGE);
-        }
-    }
-
-    private void validateLoginExistingPhoneNumber(String subject) {
-        if (!userRepository.existsByMobile(subject)) {
-            throw new LoginException(INCORRECT_USERNAME_OR_PASSWORD,
+            throw new LoginException(NOT_FOUND_USERNAME_OR_PASSWORD,
                             INCORRECT_USERNAME_PASSWORD_MESSAGE);
         }
     }
 
     private void validateMandatory(LoginRequest loginRequest) {
         if (!StringUtils.hasText(loginRequest.getSubject())) {
-            throw new MandatoryFieldException(MANDATORY_USER_NAME, "subject");
+            throw new MandatoryFieldException(MANDATORY_LOGIN_SUBJECT, "subject");
         }
 
         if (!StringUtils.hasText(loginRequest.getPassword())) {
-            throw new MandatoryFieldException(MANDATORY_PASSWORD, "password");
+            throw new MandatoryFieldException(MANDATORY_LOGIN_PASSWORD, "password");
         }
     }
 }

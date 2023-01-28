@@ -1,24 +1,24 @@
 package com.harera.hayat.util
 
-object StringRegexUtils {
+object RegexUtils {
 
     @JvmStatic
     fun isUsername(subject: String): Boolean {
-        return subject.matches(RegexPattern.USERNAME_REGEX.toRegex())
+        return subject.matches(Regex.USERNAME.toRegex())
     }
 
     @JvmStatic
     fun isEmail(subject: String): Boolean {
-        return subject.matches(RegexPattern.EMAIL_REGEX.toRegex())
+        return subject.matches(Regex.EMAIL.toRegex())
     }
 
     @JvmStatic
     fun isPhoneNumber(subject: String): Boolean {
-        return subject.matches(RegexPattern.MOBILE_REGEX.toRegex())
+        return subject.matches(Regex.MOBILE.toRegex())
     }
 
     @JvmStatic
     fun isValidPassword(Password: String): Boolean {
-        return Password.matches(RegexPattern.PASSWORD_REGEX.toRegex())
+        return Password.matches(Regex.PASSWORD.toRegex())
     }
 }

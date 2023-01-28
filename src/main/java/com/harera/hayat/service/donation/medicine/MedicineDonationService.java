@@ -21,7 +21,7 @@ import com.harera.hayat.repository.donation.DonationRepository;
 import com.harera.hayat.repository.donation.medicine.MedicineDonationRepository;
 import com.harera.hayat.repository.medicine.MedicineRepository;
 import com.harera.hayat.repository.medicine.MedicineUnitRepository;
-import com.harera.hayat.service.user.auth.AuthService;
+import com.harera.hayat.service.user.auth.JwtService;
 
 import io.jsonwebtoken.JwtException;
 
@@ -35,7 +35,7 @@ public class MedicineDonationService {
     private final ModelMapper modelMapper;
     private final MedicineDonationRepository medicineDonationRepository;
     private final MedicineRepository medicineRepository;
-    private final AuthService authService;
+    private final JwtService jwtService;
 
     public MedicineDonationService(DonationRepository donationRepository,
                     MedicineDonationValidation donationValidation,
@@ -43,7 +43,7 @@ public class MedicineDonationService {
                     MedicineUnitRepository medicineUnitRepository,
                     ModelMapper modelMapper,
                     MedicineDonationRepository medicineDonationRepository,
-                    MedicineRepository medicineRepository, AuthService authService) {
+                    MedicineRepository medicineRepository, JwtService jwtService) {
         this.donationRepository = donationRepository;
         this.donationValidation = donationValidation;
         this.cityRepository = cityRepository;
@@ -51,7 +51,7 @@ public class MedicineDonationService {
         this.modelMapper = modelMapper;
         this.medicineDonationRepository = medicineDonationRepository;
         this.medicineRepository = medicineRepository;
-        this.authService = authService;
+        this.jwtService = jwtService;
     }
 
     public MedicineDonationResponse create(
@@ -62,7 +62,7 @@ public class MedicineDonationService {
         donation.setCategory(DonationCategory.MEDICINE);
         donation.setCity(getCity(medicineDonationRequest.getCityId()));
         donation.setDonationDate(OffsetDateTime.now());
-        donation.setUser(authService.getRequestUser());
+        donation.setUser(jwtService.getRequestUser());
 
         Donation savedDonation = donationRepository.save(donation);
 

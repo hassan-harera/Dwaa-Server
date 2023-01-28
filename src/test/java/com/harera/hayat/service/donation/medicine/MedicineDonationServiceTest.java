@@ -32,7 +32,7 @@ import com.harera.hayat.repository.donation.medicine.MedicineDonationRepository;
 import com.harera.hayat.repository.medicine.MedicineRepository;
 import com.harera.hayat.repository.medicine.MedicineUnitRepository;
 import com.harera.hayat.service.donation.DonationValidation;
-import com.harera.hayat.service.user.auth.AuthService;
+import com.harera.hayat.service.user.auth.JwtService;
 
 @ExtendWith(MockitoExtension.class)
 class MedicineDonationServiceTest {
@@ -51,7 +51,7 @@ class MedicineDonationServiceTest {
     @Mock
     private MedicineRepository medicineRepository;;
     @Mock
-    private AuthService authService;
+    private JwtService jwtService;
     @Mock
     private DonationRepository donationRepository;
 
@@ -64,7 +64,7 @@ class MedicineDonationServiceTest {
                         medicineDonationValidation, cityRepository,
                         medicineUnitRepository,
                         modelMapper, medicineDonationRepository, medicineRepository,
-                        authService);
+                        jwtService);
     }
 
     @Test

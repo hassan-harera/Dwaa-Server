@@ -24,16 +24,18 @@ import com.harera.hayat.repository.UserRepository;
 import com.harera.hayat.repository.user.auth.TokenRepository;
 import com.harera.hayat.service.firebase.FirebaseService;
 import com.harera.hayat.service.user.auth.AuthService;
+import com.harera.hayat.service.user.auth.AuthValidation;
+import com.harera.hayat.service.user.auth.JwtService;
 import com.harera.hayat.service.user.auth.JwtUtils;
 import com.harera.hayat.util.ErrorCode;
 
 @ExtendWith(MockitoExtension.class)
-class UserServiceTest {
+class AuthServiceTest {
 
     @Mock
     private UserRepository userRepository;
     @Mock
-    private AuthService authService;
+    private JwtService jwtService;
     @Mock
     private PasswordEncoder passwordEncoder;
     @Mock
@@ -44,15 +46,15 @@ class UserServiceTest {
     private JwtUtils jwtUtils;
 
     private ModelMapper modelMapper = new ModelMapper();
-    private UserValidation userValidation;
-    private UserService userService;
+    private AuthValidation authValidation;
+    private AuthService authService;
 
     @BeforeEach
     void setup() {
-        userValidation = new UserValidation(firebaseService, userRepository,
+        authValidation = new AuthValidation(firebaseService, userRepository,
                         passwordEncoder);
-        userService = new UserServiceImpl(userRepository, authService, passwordEncoder,
-                        userValidation, tokenRepository, firebaseService, modelMapper,
+        authService = new AuthService(userRepository, jwtService, passwordEncoder,
+                        authValidation, tokenRepository, firebaseService, modelMapper,
                         jwtUtils);
     }
 
@@ -73,7 +75,7 @@ class UserServiceTest {
         // when
         Exception ex = null;
         try {
-            userService.signup(signupRequest);
+            authService.signup(signupRequest);
         } catch (Exception e) {
             ex = e;
         }
@@ -99,7 +101,7 @@ class UserServiceTest {
         // when
         Exception ex = null;
         try {
-            userService.signup(signupRequest);
+            authService.signup(signupRequest);
         } catch (Exception e) {
             ex = e;
         }
@@ -125,7 +127,7 @@ class UserServiceTest {
         // when
         Exception ex = null;
         try {
-            userService.signup(signupRequest);
+            authService.signup(signupRequest);
         } catch (Exception e) {
             ex = e;
         }
@@ -151,7 +153,7 @@ class UserServiceTest {
         // when
         Exception ex = null;
         try {
-            userService.signup(signupRequest);
+            authService.signup(signupRequest);
         } catch (Exception e) {
             ex = e;
         }
@@ -179,7 +181,7 @@ class UserServiceTest {
         // when
         Exception ex = null;
         try {
-            userService.signup(signupRequest);
+            authService.signup(signupRequest);
         } catch (Exception e) {
             ex = e;
         }
@@ -209,7 +211,7 @@ class UserServiceTest {
         // when
         Exception ex = null;
         try {
-            userService.signup(signupRequest);
+            authService.signup(signupRequest);
         } catch (Exception e) {
             ex = e;
         }
@@ -239,7 +241,7 @@ class UserServiceTest {
         // when
         Exception ex = null;
         try {
-            userService.signup(signupRequest);
+            authService.signup(signupRequest);
         } catch (Exception e) {
             ex = e;
         }
@@ -269,7 +271,7 @@ class UserServiceTest {
         // when
         Exception ex = null;
         try {
-            userService.signup(signupRequest);
+            authService.signup(signupRequest);
         } catch (Exception e) {
             ex = e;
         }
@@ -301,7 +303,7 @@ class UserServiceTest {
         Exception ex = null;
         when(userRepository.existsByMobile(signupRequest.getMobile())).thenReturn(true);
         try {
-            userService.signup(signupRequest);
+            authService.signup(signupRequest);
         } catch (Exception e) {
             ex = e;
         }
@@ -350,7 +352,7 @@ class UserServiceTest {
         when(firebaseService.createUser(signupRequest)).thenReturn(firebaseUser);
 
         try {
-            userService.signup(signupRequest);
+            authService.signup(signupRequest);
         } catch (Exception e) {
             ex = e;
         }

@@ -30,6 +30,6 @@ public class UserStubs {
     }
 
     public User get(String mobile) {
-        return userRepository.findByMobile(mobile);
+        return userRepository.findByMobile(mobile).orElse(null);
     }
 }

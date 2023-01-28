@@ -1,122 +1,147 @@
 package com.harera.hayat.service.user.auth;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import static com.harera.hayat.util.RegexUtils.isEmail;
+import static com.harera.hayat.util.RegexUtils.isPhoneNumber;
+import static com.harera.hayat.util.RegexUtils.isUsername;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.context.SecurityContextHolder;
+import java.util.Objects;
+import java.util.Optional;
+
+import org.apache.commons.lang3.StringUtils;
+import org.modelmapper.ModelMapper;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.harera.hayat.model.user.Role;
+import com.harera.hayat.exception.SignupException;
+import com.harera.hayat.model.user.FirebaseUser;
 import com.harera.hayat.model.user.User;
+import com.harera.hayat.model.user.auth.InvalidateLoginRequest;
+import com.harera.hayat.model.user.auth.LoginRequest;
 import com.harera.hayat.model.user.auth.LoginResponse;
+import com.harera.hayat.model.user.auth.OAuthLoginRequest;
+import com.harera.hayat.model.user.auth.SignupRequest;
+import com.harera.hayat.model.user.auth.SignupResponse;
 import com.harera.hayat.repository.UserRepository;
 import com.harera.hayat.repository.user.auth.TokenRepository;
-import com.harera.hayat.service.user.UserValidation;
-
-import io.jsonwebtoken.JwtBuilder;
-import io.jsonwebtoken.JwtException;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import com.harera.hayat.service.firebase.FirebaseService;
 
 @Service
 public class AuthService {
 
-    private final String tokenExpire;
-    private final String refreshTokenExpire;
-    private final String secretKey;
     private final UserRepository userRepository;
-    private final JwtUtils jwtUtils;
+    private final JwtService jwtService;
+    private final PasswordEncoder passwordEncoder;
+    private final AuthValidation authValidation;
     private final TokenRepository tokenRepository;
+    private final FirebaseService firebaseService;
+    private final ModelMapper modelMapper;
+    private final JwtUtils jwtUtils;
 
-    @Autowired
-    public AuthService(@Value("${jwt.token.expire}") String tokenExpire,
-                    @Value("${jwt.token.refresh.expire}") String refreshTokenExpire,
-                    @Value("${jwt.token.secret.key}") String secretKey,
-                    UserRepository userRepository, UserValidation ignoredUserValidation,
-                    JwtUtils jwtUtils, TokenRepository tokenRepository) {
-        this.tokenExpire = tokenExpire;
-        this.refreshTokenExpire = refreshTokenExpire;
-        this.secretKey = secretKey;
+    public AuthService(UserRepository userRepository, JwtService jwtService,
+                    PasswordEncoder passwordEncoder, AuthValidation authValidation,
+                    TokenRepository tokenRepository, FirebaseService firebaseService,
+                    ModelMapper modelMapper, JwtUtils jwtUtils) {
         this.userRepository = userRepository;
-        this.jwtUtils = jwtUtils;
+        this.jwtService = jwtService;
+        this.passwordEncoder = passwordEncoder;
+        this.authValidation = authValidation;
         this.tokenRepository = tokenRepository;
+        this.firebaseService = firebaseService;
+        this.modelMapper = modelMapper;
+        this.jwtUtils = jwtUtils;
     }
 
-    public LoginResponse guestAuthenticate() {
+    public LoginResponse login(LoginRequest loginRequest) {
+        authValidation.validateLogin(loginRequest);
+
+        long userId = getUserId(loginRequest.getSubject());
+        User user = userRepository.findById(userId).orElseThrow(
+                        () -> new UsernameNotFoundException("User not found"));
+
+        if (!Objects.equals(user.getDeviceToken(), loginRequest.getDeviceToken())) {
+            user.setDeviceToken(loginRequest.getDeviceToken());
+            userRepository.save(user);
+        }
+
+        LoginResponse loginResponse = new LoginResponse();
+        loginResponse.setToken(jwtService.generateToken(user));
+        loginResponse.setRefreshToken(jwtService.generateRefreshToken(user));
+
+        return loginResponse;
+    }
+
+    public LoginResponse login(OAuthLoginRequest oAuthLoginRequest) {
+        authValidation.validate(oAuthLoginRequest);
+        //TODO
+        return null;
+    }
+
+    public SignupResponse signup(SignupRequest signupRequest) {
+        authValidation.validate(signupRequest);
+        FirebaseUser firebaseUser = firebaseService.createUser(signupRequest);
+        if (firebaseUser == null) {
+            throw new SignupException("User creation failed");
+        }
+
+        User user = modelMapper.map(signupRequest, User.class);
+        user.setPassword(passwordEncoder.encode(signupRequest.getPassword()));
+        user.setUid(firebaseUser.getUid());
+        user.setUsername(firebaseUser.getUid());
+
+        userRepository.save(user);
+        return modelMapper.map(user, SignupResponse.class);
+    }
+
+    private long getUserId(String subject) {
+        Optional<User> user = Optional.empty();
+        if (isPhoneNumber(subject)) {
+            user = userRepository.findByMobile(subject);
+        } else if (isEmail(subject)) {
+            user = userRepository.findByEmail(subject);
+        } else if (isUsername(subject)) {
+            user = userRepository.findByUsername(subject);
+        }
+        if (user.isPresent()) {
+            return user.get().getId();
+        }
+        return 0;
+    }
+
+    public UserDetails loadUserByUsername(String username)
+                    throws UsernameNotFoundException {
+        try {
+            long userId = Integer.parseInt(username);
+            return userRepository.findById(userId).orElse(null);
+        } catch (Exception e) {
+            throw new UsernameNotFoundException("User not found");
+        }
+    }
+
+    public LoginResponse refresh(String refreshToken) {
+        String usernameOrMobile = jwtUtils.extractUserSubject(refreshToken);
+        final User user = (User) loadUserByUsername(usernameOrMobile);
+        jwtUtils.validateRefreshToken(user, refreshToken);
         LoginResponse authResponse = new LoginResponse();
-        String jwt = createToken("GUEST", -1, getGuestClaims());
-        authResponse.setRefreshToken(jwt);
-        authResponse.setToken(jwt);
+        authResponse.setToken(jwtService.generateToken(user));
+        authResponse.setRefreshToken(jwtService.generateRefreshToken(user));
         return authResponse;
     }
 
-    private Map<String, Object> getClaims(User user) {
-        Map<String, Object> claims = new HashMap<>(2);
-        claims.put("id", user.getId());
-        claims.put("uid", user.getUid());
-        claims.put("username", user.getUsername());
-        claims.put("email", user.getEmail());
-        claims.put("mobile", user.getMobile());
-        claims.put("role", Role.GUEST);
-        return claims;
-    }
-
-    private Map<String, Object> getGuestClaims() {
-        Map<String, Object> claims = new HashMap<>(5);
-        claims.put("id", 0);
-        claims.put("role", Role.GUEST);
-
-        return claims;
-    }
-
-    public String generateToken(User user) {
-        final String userSubject = String.valueOf(user.getId());
-        final String token = createToken(userSubject, Long.valueOf(tokenExpire),
-                        getClaims(user));
-        tokenRepository.addToken(user.getId(), token);
-        return token;
-    }
-
-    public String generateRefreshToken(User user) {
-        final String token = createToken(user.getUsername(),
-                        Long.valueOf(refreshTokenExpire), null);
-        tokenRepository.addRefreshToken(user.getId(), token);
-        return token;
-    }
-
-    private String createToken(String username, long expireInMillis,
-                    Map<String, Object> claims) {
-        final JwtBuilder jwtBuilder = Jwts.builder();
-        if (claims != null) {
-            jwtBuilder.setClaims(claims);
+    public void invalidate(InvalidateLoginRequest request) {
+        String usernameOrMobile = jwtUtils.extractUserSubject(request.getToken());
+        final User user = (User) loadUserByUsername(usernameOrMobile);
+        // resetting user device token in case of logout
+        if (StringUtils.isNotEmpty(user.getDeviceToken())) {
+            user.setDeviceToken(null);
+            userRepository.save(user);
         }
-
-        if (expireInMillis != -1) {
-            jwtBuilder.setExpiration(
-                            new Date(System.currentTimeMillis() + expireInMillis));
+        jwtUtils.validateToken(user, request.getToken());
+        tokenRepository.removeUserToken(request.getToken());
+        if (StringUtils.isNotEmpty(request.getRefreshToken())) {
+            jwtUtils.validateRefreshToken(user, request.getRefreshToken());
+            tokenRepository.removeUserRefreshToken(request.getRefreshToken());
         }
-
-        jwtBuilder.setSubject(username).setIssuedAt(new Date(System.currentTimeMillis()))
-                        .signWith(SignatureAlgorithm.HS256, secretKey);
-        return jwtBuilder.compact();
-    }
-
-    public User getUserForAuthorization(String token) {
-        Long userId = jwtUtils.extractUserId(token.substring(7));
-        return userRepository.findById(userId)
-                        .orElseThrow(() -> new UsernameNotFoundException(
-                                        "User not found with id : " + userId));
-    }
-
-    public User getRequestUser() {
-        Object principal = SecurityContextHolder.getContext().getAuthentication()
-                        .getPrincipal();
-        if (principal instanceof User user)
-            return user;
-        throw new JwtException("Invalid token");
     }
 }

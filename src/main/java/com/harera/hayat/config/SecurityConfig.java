@@ -9,12 +9,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -26,7 +28,7 @@ import com.harera.hayat.repository.GlobalMessageRepository;
 
 @EnableWebSecurity
 @Configuration
-public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final GlobalMessageRepository globalMessageRepository;
     private final ObjectMapper mapper;
@@ -34,7 +36,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private final JwtRequestFilter jwtRequestFilter;
     private final PasswordEncoder passwordEncoder;
 
-    public SecurityConfiguration(GlobalMessageRepository globalMessageRepository,
+    public SecurityConfig(GlobalMessageRepository globalMessageRepository,
                     ObjectMapper mapper, JwtRequestFilter jwtRequestFilter,
                     PasswordEncoder passwordEncoder) {
         this.globalMessageRepository = globalMessageRepository;
@@ -85,5 +87,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         final Optional<GlobalMessage> globalMessage = globalMessageRepository
                         .findByLanguageAndCode(language, UNAUTHORIZED);
         return globalMessage.get().getMessage();
+    }
+
+    @Bean
+    public PasswordEncoder bCryptPasswordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }

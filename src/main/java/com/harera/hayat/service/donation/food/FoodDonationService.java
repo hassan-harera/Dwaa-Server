@@ -22,7 +22,7 @@ import com.harera.hayat.repository.city.CityRepository;
 import com.harera.hayat.repository.donation.DonationRepository;
 import com.harera.hayat.repository.donation.FoodDonationRepository;
 import com.harera.hayat.repository.food.FoodUnitRepository;
-import com.harera.hayat.service.user.auth.AuthService;
+import com.harera.hayat.service.user.auth.JwtService;
 
 @Service
 public class FoodDonationService {
@@ -31,7 +31,7 @@ public class FoodDonationService {
     private final FoodDonationValidation foodDonationValidation;
     private final CityRepository cityRepository;
     private final ModelMapper modelMapper;
-    private final AuthService authService;
+    private final JwtService jwtService;
     private final FoodUnitRepository foodUnitRepository;
     private final FoodDonationRepository foodDonationRepository;
     private final int foodDonationExpirationDays;
@@ -39,14 +39,14 @@ public class FoodDonationService {
     public FoodDonationService(DonationRepository donationRepository,
                     FoodDonationValidation donationValidation,
                     CityRepository cityRepository, ModelMapper modelMapper,
-                    AuthService authService, FoodUnitRepository foodUnitRepository,
+                    JwtService jwtService, FoodUnitRepository foodUnitRepository,
                     FoodDonationRepository foodDonationRepository,
                     @Value("${donation.food.expiration_in_days}") int foodDonationExpirationDays) {
         this.donationRepository = donationRepository;
         this.foodDonationValidation = donationValidation;
         this.cityRepository = cityRepository;
         this.modelMapper = modelMapper;
-        this.authService = authService;
+        this.jwtService = jwtService;
         this.foodUnitRepository = foodUnitRepository;
         this.foodDonationRepository = foodDonationRepository;
         this.foodDonationExpirationDays = foodDonationExpirationDays;
@@ -60,7 +60,7 @@ public class FoodDonationService {
         donation.setDonationDate(OffsetDateTime.now());
         donation.setDonationExpirationDate(getDonationExpirationDate());
         donation.setCity(getCity(foodDonationRequest.getCityId()));
-        donation.setUser(authService.getRequestUser());
+        donation.setUser(jwtService.getRequestUser());
         donationRepository.save(donation);
 
         FoodDonation foodDonation =
@@ -84,7 +84,7 @@ public class FoodDonationService {
         Donation donation = foodDonation.getDonation();
         modelMapper.map(request, donation);
         donation.setCity(getCity(request.getCityId()));
-        donation.setUser(authService.getRequestUser());
+        donation.setUser(jwtService.getRequestUser());
         donationRepository.save(donation);
 
         modelMapper.map(request, foodDonation);

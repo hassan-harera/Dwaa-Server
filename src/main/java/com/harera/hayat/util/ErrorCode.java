@@ -14,13 +14,13 @@ public final class ErrorCode {
 
     public static final String MANDATORY_TOKEN = "token_001";
 
-    public static final String MANDATORY_USER_NAME = "username_001";
+    public static final String MANDATORY_LOGIN_SUBJECT = "username_001";
 
     public static final String UNIQUE_USER_NAME = "username_002";
 
-    public static final String MANDATORY_PASSWORD = "password_001";
+    public static final String MANDATORY_LOGIN_PASSWORD = "password_001";
 
-    public static final String INCORRECT_USERNAME_OR_PASSWORD = "login_001";
+    public static final String NOT_FOUND_USERNAME_OR_PASSWORD = "login_001";
 
     public static final String INVALID_FIREBASE_TOKEN = "signup_001";
     public static final String INCORRECT_USERNAME_FORMAT = "login_002";
@@ -74,6 +74,7 @@ public final class ErrorCode {
     public static final String MANDATORY_FOOD_DONATION_UNIT = "food_donation_003";
 
     public static final String FORMAT_FOOD_DONATION_AMOUNT = "food_donation_004";
+    public static final String FORMAT_LOGIN_SUBJECT = "login_003";
 
     private ErrorCode() {
     }
