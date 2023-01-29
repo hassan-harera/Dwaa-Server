@@ -12,9 +12,11 @@ import com.harera.hayat.service.donation.medicine.MedicineDonationService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @RequestMapping("/api/v1/donations/medicine")
+@Tag(name = "Medicine-Donation")
 public class MedicineDonationController {
 
     private final MedicineDonationService donationService;

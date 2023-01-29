@@ -12,7 +12,7 @@ public final class ErrorCode {
     public static final String MANDATORY_LAST_NAME = "last_name_001";
     public static final String FORMAT_LAST_NAME = "last_name_002";
 
-    public static final String MANDATORY_TOKEN = "token_001";
+    public static final String MANDATORY_LOGIN_OAUTH_TOKEN = "token_001";
 
     public static final String MANDATORY_LOGIN_SUBJECT = "username_001";
 
@@ -75,6 +75,7 @@ public final class ErrorCode {
 
     public static final String FORMAT_FOOD_DONATION_AMOUNT = "food_donation_004";
     public static final String FORMAT_LOGIN_SUBJECT = "login_003";
+    public static final String INVALID_FIREBASE_UID = "auth_001";
 
     private ErrorCode() {
     }

@@ -15,6 +15,7 @@ import com.harera.hayat.exception.FieldFormatException;
 import com.harera.hayat.exception.LoginException;
 import com.harera.hayat.exception.MandatoryFieldException;
 import com.harera.hayat.model.user.auth.LoginRequest;
+import com.harera.hayat.model.user.auth.OAuthLoginRequest;
 import com.harera.hayat.repository.UserRepository;
 import com.harera.hayat.service.firebase.FirebaseService;
 import com.harera.hayat.service.user.auth.AuthValidation;
@@ -129,4 +130,20 @@ class AuthValidationTest {
         assertThrows(LoginException.class,
                         () -> authValidation.validateLogin(loginRequest));
     }
+
+    @Test
+    void validateLogin_withoutOauthToken_thenThrowMandatoryFieldException() {
+        // given
+        OAuthLoginRequest loginRequest = new OAuthLoginRequest();
+        loginRequest.setDeviceToken("google");
+
+        // when
+        MandatoryFieldException fieldFormatException =
+                        assertThrows(MandatoryFieldException.class,
+                                        () -> authValidation.validate(loginRequest));
+        // then
+        assertEquals(ErrorCode.MANDATORY_LOGIN_OAUTH_TOKEN,
+                        fieldFormatException.getCode());
+    }
+
 }

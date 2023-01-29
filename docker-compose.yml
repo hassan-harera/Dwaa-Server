@@ -19,6 +19,7 @@ services:
       - "6379:6379"
     networks:
       - hayat_network
+#    command: redis-server --requirepass ${REDIS_PASSWORD}
   db:
     image: mysql:8.0
     container_name: "hayat_mysql"

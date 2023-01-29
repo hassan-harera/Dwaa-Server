@@ -14,12 +14,15 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.google.firebase.auth.FirebaseToken;
+import com.google.firebase.auth.UserRecord;
 import com.harera.hayat.exception.SignupException;
 import com.harera.hayat.model.user.FirebaseUser;
 import com.harera.hayat.model.user.User;
-import com.harera.hayat.model.user.auth.InvalidateLoginRequest;
+import com.harera.hayat.model.user.auth.FirebaseOauthToken;
 import com.harera.hayat.model.user.auth.LoginRequest;
 import com.harera.hayat.model.user.auth.LoginResponse;
+import com.harera.hayat.model.user.auth.LogoutRequest;
 import com.harera.hayat.model.user.auth.OAuthLoginRequest;
 import com.harera.hayat.model.user.auth.SignupRequest;
 import com.harera.hayat.model.user.auth.SignupResponse;
@@ -74,8 +77,13 @@ public class AuthService {
 
     public LoginResponse login(OAuthLoginRequest oAuthLoginRequest) {
         authValidation.validate(oAuthLoginRequest);
-        //TODO
-        return null;
+        FirebaseToken firebaseToken = firebaseService
+                        .getFirebaseToken(oAuthLoginRequest.getFirebaseToken());
+        UserRecord userRecord = firebaseService.getUser(firebaseToken.getUid());
+        User user = userRepository.findByUid(userRecord.getUid()).orElseThrow(
+                        () -> new UsernameNotFoundException("User not found"));
+        return new LoginResponse(jwtService.generateToken(user),
+                        jwtService.generateRefreshToken(user));
     }
 
     public SignupResponse signup(SignupRequest signupRequest) {
@@ -129,19 +137,27 @@ public class AuthService {
         return authResponse;
     }
 
-    public void invalidate(InvalidateLoginRequest request) {
-        String usernameOrMobile = jwtUtils.extractUserSubject(request.getToken());
+    public FirebaseOauthToken generateFirebaseToken(LoginRequest loginRequest) {
+        authValidation.validateLogin(loginRequest);
+        long userId = getUserId(loginRequest.getSubject());
+        User user = userRepository.findById(userId).orElseThrow(
+                        () -> new UsernameNotFoundException("User not found"));
+        String s = firebaseService.generateToken(user.getUid());
+        return new FirebaseOauthToken(s);
+    }
+
+    public void logout(LogoutRequest logoutRequest) {
+        String usernameOrMobile = jwtUtils.extractUserSubject(logoutRequest.getToken());
         final User user = (User) loadUserByUsername(usernameOrMobile);
-        // resetting user device token in case of logout
         if (StringUtils.isNotEmpty(user.getDeviceToken())) {
             user.setDeviceToken(null);
             userRepository.save(user);
         }
-        jwtUtils.validateToken(user, request.getToken());
-        tokenRepository.removeUserToken(request.getToken());
-        if (StringUtils.isNotEmpty(request.getRefreshToken())) {
-            jwtUtils.validateRefreshToken(user, request.getRefreshToken());
-            tokenRepository.removeUserRefreshToken(request.getRefreshToken());
+        jwtUtils.validateToken(user, logoutRequest.getToken());
+        tokenRepository.removeUserToken(logoutRequest.getToken());
+        if (StringUtils.isNotEmpty(logoutRequest.getRefreshToken())) {
+            jwtUtils.validateRefreshToken(user, logoutRequest.getRefreshToken());
+            tokenRepository.removeUserRefreshToken(logoutRequest.getRefreshToken());
         }
     }
 }

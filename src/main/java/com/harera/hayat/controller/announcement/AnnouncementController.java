@@ -13,9 +13,11 @@ import com.harera.hayat.service.announcement.AnnouncementService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @RequestMapping("/api/v1/announcements")
+@Tag(name = "Announcement")
 public class AnnouncementController {
 
     private final AnnouncementService announcementService;

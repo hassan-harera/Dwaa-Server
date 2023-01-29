@@ -34,15 +34,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final ObjectMapper mapper;
     private final String UNAUTHORIZED = "unauthorized";
     private final JwtRequestFilter jwtRequestFilter;
-    private final PasswordEncoder passwordEncoder;
 
     public SecurityConfig(GlobalMessageRepository globalMessageRepository,
-                    ObjectMapper mapper, JwtRequestFilter jwtRequestFilter,
-                    PasswordEncoder passwordEncoder) {
+                    ObjectMapper mapper, JwtRequestFilter jwtRequestFilter) {
         this.globalMessageRepository = globalMessageRepository;
         this.mapper = mapper;
         this.jwtRequestFilter = jwtRequestFilter;
-        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -64,7 +61,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         // permit all
         auth.inMemoryAuthentication().withUser("admin")
-                        .password(passwordEncoder.encode("admin")).roles("ADMIN");
+                        .password(bCryptPasswordEncoder().encode("admin")).roles("ADMIN");
     }
 
     private void authenticateExceptionHandler(HttpServletRequest httpServletRequest,

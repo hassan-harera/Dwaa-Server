@@ -1,5 +1,7 @@
 package com.harera.hayat.service.firebase;
 
+import static org.apache.commons.lang3.StringUtils.isBlank;
+
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.modelmapper.ModelMapper;
@@ -9,13 +11,16 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseToken;
 import com.google.firebase.auth.UserRecord;
+import com.harera.hayat.exception.InvalidTokenException;
 import com.harera.hayat.exception.LoginException;
 import com.harera.hayat.model.user.FirebaseUser;
 import com.harera.hayat.model.user.auth.SignupRequest;
 import com.harera.hayat.util.ErrorCode;
 
 import kotlin.jvm.internal.Intrinsics;
+import lombok.extern.log4j.Log4j2;
 
+@Log4j2
 @Service
 public class FirebaseService {
 
@@ -27,22 +32,35 @@ public class FirebaseService {
         this.modelMapper = modelMapper;
     }
 
-    @NotNull
-    public FirebaseToken verifyToken(String token) {
+    public FirebaseToken getFirebaseToken(String token) {
+        if (isBlank(token))
+            throw new InvalidTokenException(ErrorCode.INVALID_FIREBASE_TOKEN,
+                            "Invalid Token");
         try {
-            return this.firebaseAuth.verifyIdToken(token, true);
+            FirebaseToken firebaseToken = firebaseAuth.verifyIdToken(token, true);
+            if (firebaseToken == null)
+                throw new InvalidTokenException(ErrorCode.INVALID_FIREBASE_TOKEN,
+                                "Invalid Token");
+            return firebaseToken;
         } catch (FirebaseAuthException e) {
-            throw new LoginException(ErrorCode.INVALID_FIREBASE_TOKEN, "Invalid token");
+            log.error(e);
+            throw new RuntimeException(e);
         }
     }
 
-    @NotNull
-    public UserRecord getUser(FirebaseToken firebaseToken) {
+    public UserRecord getUser(String uid) {
+        if (isBlank(uid))
+            throw new InvalidTokenException(ErrorCode.INVALID_FIREBASE_UID,
+                            "Invalid uid");
         try {
-            return firebaseAuth.getUser(
-                            firebaseToken != null ? firebaseToken.getUid() : null);
+            UserRecord user = firebaseAuth.getUser(uid);
+            if (user == null)
+                throw new InvalidTokenException(ErrorCode.INVALID_FIREBASE_TOKEN,
+                                "Invalid Token");
+            return user;
         } catch (FirebaseAuthException e) {
-            throw new LoginException(ErrorCode.INVALID_FIREBASE_TOKEN, "Invalid token");
+            log.error(e);
+            throw new RuntimeException(e);
         }
     }
 
@@ -65,6 +83,18 @@ public class FirebaseService {
                             FirebaseUser.class);
         } catch (FirebaseAuthException e) {
             throw new LoginException(ErrorCode.INVALID_FIREBASE_TOKEN, "Invalid token");
+        }
+    }
+
+    public String generateToken(String uid) {
+        if (isBlank(uid))
+            throw new InvalidTokenException(ErrorCode.INVALID_FIREBASE_UID,
+                            "Invalid uid");
+        try {
+            return firebaseAuth.createCustomToken(uid);
+        } catch (FirebaseAuthException e) {
+            log.error(e);
+            throw new RuntimeException(e);
         }
     }
 }

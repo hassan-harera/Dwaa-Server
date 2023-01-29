@@ -7,9 +7,9 @@ import static com.harera.hayat.util.ErrorCode.FORMAT_USER_MOBILE;
 import static com.harera.hayat.util.ErrorCode.INVALID_FIREBASE_TOKEN;
 import static com.harera.hayat.util.ErrorCode.MANDATORY_FIRST_NAME;
 import static com.harera.hayat.util.ErrorCode.MANDATORY_LAST_NAME;
+import static com.harera.hayat.util.ErrorCode.MANDATORY_LOGIN_OAUTH_TOKEN;
 import static com.harera.hayat.util.ErrorCode.MANDATORY_LOGIN_PASSWORD;
 import static com.harera.hayat.util.ErrorCode.MANDATORY_LOGIN_SUBJECT;
-import static com.harera.hayat.util.ErrorCode.MANDATORY_TOKEN;
 import static com.harera.hayat.util.ErrorCode.MANDATORY_USER_MOBILE;
 import static com.harera.hayat.util.ErrorCode.NOT_FOUND_USERNAME_OR_PASSWORD;
 import static com.harera.hayat.util.ErrorCode.UNIQUE_EMAIL;
@@ -17,6 +17,7 @@ import static com.harera.hayat.util.ErrorCode.UNIQUE_USER_MOBILE;
 import static com.harera.hayat.util.ErrorMessage.INCORRECT_USERNAME_PASSWORD_MESSAGE;
 import static com.harera.hayat.util.HayatStringUtils.isValidEmail;
 import static com.harera.hayat.util.SubjectUtils.INSTANCE;
+import static org.apache.commons.lang3.StringUtils.isBlank;
 
 import java.util.Optional;
 
@@ -88,12 +89,11 @@ public class AuthValidation {
     public void validate(OAuthLoginRequest loginRequest) {
         validateMandatory(loginRequest);
         FirebaseToken firebaseToken =
-                        firebaseService.verifyToken(loginRequest.getDeviceToken());
-        validateExistingEmail(firebaseToken.getEmail());
-        validateExistedUid(firebaseToken.getUid());
+                        firebaseService.getFirebaseToken(loginRequest.getDeviceToken());
+        validateUidExisted(firebaseToken.getUid());
     }
 
-    private void validateExistedUid(String uid) {
+    private void validateUidExisted(String uid) {
         if (!userRepository.existsByUid(uid)) {
             throw new LoginException(INVALID_FIREBASE_TOKEN, "Invalid firebase token");
         }
@@ -133,13 +133,6 @@ public class AuthValidation {
             validatePhoneNumberExisted(subject);
         } else {
             validateUsernameExisted(subject);
-        }
-    }
-
-    private void validateEmailExisted(String subject) {
-        if (!userRepository.existsByEmail(subject)) {
-            throw new LoginException(NOT_FOUND_USERNAME_OR_PASSWORD,
-                            INCORRECT_USERNAME_PASSWORD_MESSAGE);
         }
     }
 
@@ -208,8 +201,8 @@ public class AuthValidation {
     }
 
     private void validateMandatory(OAuthLoginRequest loginRequest) {
-        if (!StringUtils.hasText(loginRequest.getToken())) {
-            throw new MandatoryFieldException(MANDATORY_TOKEN, "token");
+        if (isBlank(loginRequest.getFirebaseToken())) {
+            throw new MandatoryFieldException(MANDATORY_LOGIN_OAUTH_TOKEN, "oauth_token");
         }
     }
 
@@ -220,7 +213,7 @@ public class AuthValidation {
         }
     }
 
-    private void validateExistingEmail(String subject) {
+    private void validateEmailExisted(String subject) {
         if (!userRepository.existsByEmail(subject)) {
             throw new LoginException(NOT_FOUND_USERNAME_OR_PASSWORD,
                             INCORRECT_USERNAME_PASSWORD_MESSAGE);

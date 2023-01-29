@@ -16,10 +16,11 @@ import com.harera.hayat.service.city.CityService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @RequestMapping("/api/v1/cities")
-//@Tag(name = "City")
+@Tag(name = "City")
 public class CityController {
 
     @Autowired

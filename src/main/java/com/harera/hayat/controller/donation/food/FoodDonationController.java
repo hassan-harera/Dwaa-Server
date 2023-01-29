@@ -19,9 +19,11 @@ import com.harera.hayat.service.donation.food.FoodDonationService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @RequestMapping("/api/v1/donations/food")
+@Tag(name = "Food-Donation")
 public class FoodDonationController {
 
     private final FoodDonationService foodDonationService;

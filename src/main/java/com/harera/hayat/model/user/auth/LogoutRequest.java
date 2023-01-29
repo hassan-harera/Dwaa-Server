@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @Data
-public class InvalidateLoginRequest {
+public class LogoutRequest {
 
     @JsonProperty("token")
     private String token;

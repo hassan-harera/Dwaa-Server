@@ -9,8 +9,11 @@ import com.harera.hayat.model.donation.DonationResponse;
 import com.harera.hayat.model.donation.property.PropertyDonationRequest;
 import com.harera.hayat.service.donation.DonationService;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("/api/v1/donations")
+@Tag(name = "Donation")
 public class DonationController {
 
     private final DonationService donationService;
