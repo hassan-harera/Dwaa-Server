@@ -1,0 +1,43 @@
+version: "3.8"
+
+services:
+  app:
+    build: ./Dockerfile
+    container_name: "hayat_app"
+    image: hayat_app:latest
+    ports:
+      - 8080:8080
+    depends_on:
+      - redis
+      - db
+    networks:
+      - hayat_internal_network
+      - hayat_app_network
+  redis:
+    container_name: "hayat_redis"
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    networks:
+      - hayat_internal_network
+  db:
+    image: mysql:8.0
+    container_name: "hayat_mysql"
+    environment:
+      - MYSQL_ROOT_PASSWORD=harera
+      - MYSQL_DATABASE=hayat
+    hostname: "localhost"
+    volumes:
+      - hayat_db:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    networks:
+      - hayat_internal_network
+networks:
+  hayat_app_network:
+    driver: bridge
+  hayat_internal_network:
+    driver: bridge
+    internal: true
+volumes:
+  hayat_db:
