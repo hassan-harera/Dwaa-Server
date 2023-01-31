@@ -1,4 +1,4 @@
-package com.harera.hayat.core.service.donation.medicine;
+package com.harera.hayat.service.donation.medicine;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -18,21 +18,21 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 
-import com.harera.hayat.core.config.NotNullableMapper;
-import com.harera.hayat.core.exception.EntityNotFoundException;
-import com.harera.hayat.core.model.city.City;
-import com.harera.hayat.core.model.donation.CommunicationMethod;
-import com.harera.hayat.core.model.donation.medicine.MedicineDonationRequest;
-import com.harera.hayat.core.model.donation.medicine.MedicineDonationResponse;
-import com.harera.hayat.core.model.medicine.Medicine;
-import com.harera.hayat.core.model.medicine.unit.MedicineUnit;
-import com.harera.hayat.core.repository.city.CityRepository;
-import com.harera.hayat.core.repository.donation.DonationRepository;
-import com.harera.hayat.core.repository.donation.medicine.MedicineDonationRepository;
-import com.harera.hayat.core.repository.medicine.MedicineRepository;
-import com.harera.hayat.core.repository.medicine.MedicineUnitRepository;
-import com.harera.hayat.core.service.donation.DonationValidation;
-import com.harera.hayat.core.service.user.auth.AuthService;
+import com.harera.hayat.config.NotNullableMapper;
+import com.harera.hayat.exception.EntityNotFoundException;
+import com.harera.hayat.model.city.City;
+import com.harera.hayat.model.donation.CommunicationMethod;
+import com.harera.hayat.model.donation.medicine.Medicine;
+import com.harera.hayat.model.donation.medicine.MedicineDonationRequest;
+import com.harera.hayat.model.donation.medicine.MedicineDonationResponse;
+import com.harera.hayat.model.donation.medicine.MedicineUnit;
+import com.harera.hayat.repository.city.CityRepository;
+import com.harera.hayat.repository.donation.DonationRepository;
+import com.harera.hayat.repository.donation.medicine.MedicineDonationRepository;
+import com.harera.hayat.repository.medicine.MedicineRepository;
+import com.harera.hayat.repository.medicine.MedicineUnitRepository;
+import com.harera.hayat.service.donation.DonationValidation;
+import com.harera.hayat.service.user.auth.JwtService;
 
 @ExtendWith(MockitoExtension.class)
 class MedicineDonationServiceTest {
@@ -51,7 +51,7 @@ class MedicineDonationServiceTest {
     @Mock
     private MedicineRepository medicineRepository;;
     @Mock
-    private AuthService authService;
+    private JwtService jwtService;
     @Mock
     private DonationRepository donationRepository;
 
@@ -64,7 +64,7 @@ class MedicineDonationServiceTest {
                         medicineDonationValidation, cityRepository,
                         medicineUnitRepository,
                         modelMapper, medicineDonationRepository, medicineRepository,
-                        authService);
+                        jwtService);
     }
 
     @Test

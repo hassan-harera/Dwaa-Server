@@ -1,11 +1,11 @@
-package com.harera.hayat.core.stub.user;
+package com.harera.hayat.stub.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.harera.hayat.core.model.user.User;
-import com.harera.hayat.core.repository.UserRepository;
-import com.harera.hayat.core.stub.PasswordStubs;
+import com.harera.hayat.model.user.User;
+import com.harera.hayat.repository.UserRepository;
+import com.harera.hayat.stub.PasswordStubs;
 
 @Service
 public class UserStubs {
@@ -30,6 +30,6 @@ public class UserStubs {
     }
 
     public User get(String mobile) {
-        return userRepository.findByMobile(mobile);
+        return userRepository.findByMobile(mobile).orElse(null);
     }
 }

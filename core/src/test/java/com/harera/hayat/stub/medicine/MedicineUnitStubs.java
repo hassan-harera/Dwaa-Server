@@ -1,10 +1,10 @@
-package com.harera.hayat.core.stub.medicine;
+package com.harera.hayat.stub.medicine;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.harera.hayat.core.model.medicine.unit.MedicineUnit;
-import com.harera.hayat.core.repository.medicine.MedicineUnitRepository;
+import com.harera.hayat.model.donation.medicine.MedicineUnit;
+import com.harera.hayat.repository.medicine.MedicineUnitRepository;
 
 @Service
 public class MedicineUnitStubs {

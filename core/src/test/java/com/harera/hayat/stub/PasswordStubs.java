@@ -1,4 +1,4 @@
-package com.harera.hayat.core.stub;
+package com.harera.hayat.stub;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

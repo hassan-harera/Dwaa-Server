@@ -1,4 +1,4 @@
-package com.harera.hayat.core.util;
+package com.harera.hayat.util;
 
 import static org.apache.commons.collections4.MapUtils.isNotEmpty;
 import static org.springframework.http.HttpMethod.PUT;
@@ -35,11 +35,11 @@ import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import com.harera.hayat.core.model.user.Role;
-import com.harera.hayat.core.model.user.auth.LoginRequest;
-import com.harera.hayat.core.model.user.auth.LoginResponse;
-import com.harera.hayat.core.service.user.UserService;
-import com.harera.hayat.core.service.user.auth.AuthService;
+import com.harera.hayat.model.user.Role;
+import com.harera.hayat.model.user.auth.LoginRequest;
+import com.harera.hayat.model.user.auth.LoginResponse;
+import com.harera.hayat.service.user.auth.AuthService;
+import com.harera.hayat.service.user.auth.JwtService;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -48,9 +48,9 @@ import lombok.extern.log4j.Log4j2;
 public class RequestUtil {
 
     @Autowired
-    private AuthService authService;
+    private JwtService jwtService;
     @Autowired
-    private UserService userService;
+    private AuthService authService;
     private RestTemplate restTemplate;
     @Value("${server.port}")
     private String serverPort;
@@ -184,7 +184,7 @@ public class RequestUtil {
         LoginRequest authCredentialsRequest = new LoginRequest();
         authCredentialsRequest.setSubject("01000000001");
         authCredentialsRequest.setPassword("admin");
-        LoginResponse loginResponse = userService.login(authCredentialsRequest);
+        LoginResponse loginResponse = authService.login(authCredentialsRequest);
         return loginResponse;
     }
 }

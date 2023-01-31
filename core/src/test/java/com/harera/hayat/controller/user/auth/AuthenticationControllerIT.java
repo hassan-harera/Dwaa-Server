@@ -1,4 +1,4 @@
-package com.harera.hayat.core.controller.user.auth;
+package com.harera.hayat.controller.user.auth;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -8,18 +8,19 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 
-import com.harera.hayat.core.ApplicationIT;
-import com.harera.hayat.core.model.user.FirebaseUser;
-import com.harera.hayat.core.model.user.User;
-import com.harera.hayat.core.model.user.auth.LoginRequest;
-import com.harera.hayat.core.model.user.auth.LoginResponse;
-import com.harera.hayat.core.model.user.auth.SignupRequest;
-import com.harera.hayat.core.model.user.auth.SignupResponse;
-import com.harera.hayat.core.service.firebase.FirebaseService;
-import com.harera.hayat.core.stub.PasswordStubs;
-import com.harera.hayat.core.stub.user.UserStubs;
-import com.harera.hayat.core.util.DataUtil;
-import com.harera.hayat.core.util.RequestUtil;
+import com.harera.hayat.ApplicationIT;
+import com.harera.hayat.model.user.FirebaseUser;
+import com.harera.hayat.model.user.User;
+import com.harera.hayat.model.user.auth.LoginRequest;
+import com.harera.hayat.model.user.auth.LoginResponse;
+import com.harera.hayat.model.user.auth.OAuthLoginRequest;
+import com.harera.hayat.model.user.auth.SignupRequest;
+import com.harera.hayat.model.user.auth.SignupResponse;
+import com.harera.hayat.service.firebase.FirebaseService;
+import com.harera.hayat.stub.PasswordStubs;
+import com.harera.hayat.stub.user.UserStubs;
+import com.harera.hayat.util.DataUtil;
+import com.harera.hayat.util.RequestUtil;
 
 import lombok.RequiredArgsConstructor;
 
@@ -61,6 +62,39 @@ class AuthenticationControllerIT extends ApplicationIT {
 
         // Cleanup
         dataUtil.delete(userStubs.get(mobile));
+    }
+
+    @Test
+    void oauthLogin_withValidRequest_thenValidateResponse() {
+        // Given
+        String url = "/api/v1/oauth/login";
+        String uid = "dxk4g5vcMpOwYAb6VNphhkjDEdE3";
+
+        String token = firebaseService.generateToken(uid);
+
+        OAuthLoginRequest oAuthLoginRequest = new OAuthLoginRequest();
+        oAuthLoginRequest.setDeviceToken("deviceToken");
+        oAuthLoginRequest.setFirebaseToken(token);
+
+        // When
+        User user = userStubs.insert(uid, "password");
+        ResponseEntity<LoginResponse> response = null;
+        try {
+            response = requestUtil.post(url, oAuthLoginRequest, null,
+                            LoginResponse.class);
+        } finally {
+            dataUtil.delete(user);
+        }
+
+        // Then
+        assertNotNull(response);
+        assertEquals(200, response.getStatusCodeValue());
+        assertNotNull(response.getBody());
+        assertNotNull(response.getBody().getToken());
+        assertNotNull(response.getBody().getRefreshToken());
+
+        // Cleanup
+        dataUtil.delete(userStubs.get(uid));
     }
 
     @Test
