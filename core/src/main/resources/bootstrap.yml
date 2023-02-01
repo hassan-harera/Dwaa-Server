@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: core-service
+  cloud:
+    config:
+      uri: ${CONFIG_SERVICE_URL}
+      fail-fast: true
+eureka:
+  client:
+    enabled: true
+    prefer-same-zone-eureka: true
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761
