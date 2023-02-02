@@ -17,6 +17,7 @@ public final class ErrorCode {
     public static final String MANDATORY_LOGIN_SUBJECT = "username_001";
 
     public static final String UNIQUE_USER_NAME = "username_002";
+    public static final String INCORRECT_USERNAME_OR_PASSWORD = "login_001";
 
     public static final String MANDATORY_LOGIN_PASSWORD = "password_001";
 
@@ -55,11 +56,11 @@ public final class ErrorCode {
     public static final String MANDATORY_DONATION_EXPIRATION_DATE = "donation_005";
     public static final String MANDATORY_DONATION_TITLE = "donation_006";
     public static final String MANDATORY_DONATION_AMOUNT = "donation_007";
-    public static final String MANDATORY_DONATION_DATE = "donation_011";
-
     public static final String FORMAT_DONATION_TITLE = "donation_008";
     public static final String FORMAT_DONATION_EXPIRATION_DATE = "donation_009";
     public static final String FORMAT_DONATION_AMOUNT = "donation_010";
+    public static final String MANDATORY_DONATION_DATE = "donation_011";
+    public static final String FORMAT_DONATION_IMAGE_FILE = "donation_012";
 
     public static final String MANDATORY_MEDICINE_DONATION_AMOUNT =
                     "medicine_donation_001";
@@ -73,9 +74,37 @@ public final class ErrorCode {
                     "food_donation_002";
     public static final String MANDATORY_FOOD_DONATION_UNIT = "food_donation_003";
 
-    public static final String FORMAT_FOOD_DONATION_AMOUNT = "food_donation_004";
     public static final String FORMAT_LOGIN_SUBJECT = "login_003";
     public static final String INVALID_FIREBASE_UID = "auth_001";
+
+    public static final String FORMAT_FOOD_DONATION_AMOUNT = "food_donation_004";
+    public static final String FORMAT_FOOD_DONATION_FOOD_EXPIRATION_DATE =
+                    "food_donation_005";
+    public static final String MANDATORY_DONATION_CITY_ID = "donation_012";
+
+    public static final String MANDATORY_PROPERTY_DONATION_ROOMS =
+                    "property_donation_001";
+    public static final String MANDATORY_PROPERTY_DONATION_BATH_ROOMS =
+                    "property_donation_002";
+    public static final String MANDATORY_PROPERTY_DONATION_KITCHENS =
+                    "property_donation_003";
+    public static final String MANDATORY_PROPERTY_DONATION_PEOPLE_CAPACITY =
+                    "property_donation_004";
+    public static final String MANDATORY_PROPERTY_DONATION_AVAILABLE_FROM =
+                    "property_donation_005";
+    public static final String MANDATORY_PROPERTY_DONATION_AVAILABLE_TO =
+                    "property_donation_006";
+    public static final String FORMAT_PROPERTY_DONATION_PEOPLE_CAPACITY =
+                    "property_donation_007";
+    public static final String FORMAT_PROPERTY_DONATION_ROOMS = "property_donation_008";
+    public static final String FORMAT_PROPERTY_DONATION_BATH_ROOMS =
+                    "property_donation_009";
+    public static final String FORMAT_PROPERTY_DONATION_KITCHENS =
+                    "property_donation_010";
+    public static final String FORMAT_PROPERTY_DONATION_AVAILABLE_FROM =
+                    "property_donation_011";
+    public static final String FORMAT_PROPERTY_DONATION_AVAILABLE_TO =
+                    "property_donation_012";
 
     private ErrorCode() {
     }

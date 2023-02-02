@@ -11,16 +11,10 @@ import com.harera.hayat.service.donation.DonationValidation;
 import com.harera.hayat.util.ErrorCode;
 
 @Service
-public class MedicineDonationValidation {
-
-    private final DonationValidation donationValidation;
-
-    public MedicineDonationValidation(DonationValidation donationValidation) {
-        this.donationValidation = donationValidation;
-    }
+public class MedicineDonationValidation extends DonationValidation {
 
     public void validateCreate(MedicineDonationRequest medicineDonationRequest) {
-        donationValidation.validate(medicineDonationRequest);
+        validateDonation(medicineDonationRequest);
         validateMandatoryCreate(medicineDonationRequest);
         validateFormatCreate(medicineDonationRequest);
     }

@@ -6,18 +6,17 @@ import java.util.List;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.harera.hayat.model.donation.Donation;
 import com.harera.hayat.model.donation.DonationDto;
 import com.harera.hayat.model.donation.DonationResponse;
 import com.harera.hayat.model.donation.food.FoodDonationResponse;
-import com.harera.hayat.model.donation.property.PropertyDonation;
-import com.harera.hayat.model.donation.property.PropertyDonationRequest;
 import com.harera.hayat.repository.city.CityRepository;
 import com.harera.hayat.repository.donation.DonationRepository;
 import com.harera.hayat.repository.donation.FoodDonationRepository;
+import com.harera.hayat.service.donation.food.FoodDonationService;
+import com.harera.hayat.service.donation.medicine.MedicineDonationService;
 
 @Service
 public class DonationService {
@@ -25,16 +24,21 @@ public class DonationService {
     private final DonationRepository donationRepository;
     private final FoodDonationRepository foodDonationRepository;
     private final DonationValidation donationValidation;
+    private final FoodDonationService foodDonationService;
+    private final MedicineDonationService medicinDonationService;
     private final ModelMapper modelMapper;
-
 
     public DonationService(DonationRepository donationRepository,
                     FoodDonationRepository foodDonationRepository,
                     DonationValidation donationValidation, CityRepository cityRepository,
+                    FoodDonationService foodDonationService,
+                    MedicineDonationService medicinDonationService,
                     ModelMapper modelMapper) {
         this.donationRepository = donationRepository;
         this.foodDonationRepository = foodDonationRepository;
         this.donationValidation = donationValidation;
+        this.foodDonationService = foodDonationService;
+        this.medicinDonationService = medicinDonationService;
         this.modelMapper = modelMapper;
     }
 
@@ -49,16 +53,6 @@ public class DonationService {
         return donationResponses;
     }
 
-    public ResponseEntity<DonationResponse> donateProperty(
-                    PropertyDonationRequest propertyDonationRequest) {
-        donationValidation.validateDonateProperty(propertyDonationRequest);
-        Donation donation = modelMapper.map(propertyDonationRequest, Donation.class);
-        PropertyDonation propertyDonation =
-                        modelMapper.map(propertyDonationRequest, PropertyDonation.class);
-        Donation save = donationRepository.save(donation);
-        DonationResponse donationResponse = modelMapper.map(save, DonationResponse.class);
-        return ResponseEntity.ok(donationResponse);
-    }
 
 
     public List<FoodDonationResponse> listFoodDonations() {
@@ -72,5 +66,9 @@ public class DonationService {
             foodDonationList.add(foodDonationResponse);
         });
         return foodDonationList;
+    }
+
+    public void deactivateExpiredDonations() {
+
     }
 }

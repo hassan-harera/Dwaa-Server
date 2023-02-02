@@ -8,26 +8,21 @@ import java.time.OffsetDateTime;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.harera.hayat.exception.MandatoryFieldException;
 import com.harera.hayat.model.donation.CommunicationMethod;
 import com.harera.hayat.model.donation.medicine.MedicineDonationRequest;
-import com.harera.hayat.service.donation.DonationValidation;
 import com.harera.hayat.util.ErrorCode;
 
 @ExtendWith(MockitoExtension.class)
 class MedicineDonationValidationTest {
 
-    @Mock
-    private DonationValidation donationValidation;
-
     private MedicineDonationValidation medicineDonationValidation;
 
     @BeforeEach
     void setUp() {
-        medicineDonationValidation = new MedicineDonationValidation(donationValidation);
+        medicineDonationValidation = new MedicineDonationValidation();
     }
 
     @Test

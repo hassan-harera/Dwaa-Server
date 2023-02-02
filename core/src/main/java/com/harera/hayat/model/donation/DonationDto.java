@@ -1,15 +1,19 @@
 package com.harera.hayat.model.donation;
 
 import java.time.OffsetDateTime;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.harera.hayat.model.BaseEntityDto;
 import com.harera.hayat.model.city.CityDto;
+import com.harera.hayat.model.image.DonationImageDto;
 import com.harera.hayat.model.user.UserDto;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Setter
+@Getter
 public class DonationDto extends BaseEntityDto {
 
     private String title;
@@ -29,7 +33,12 @@ public class DonationDto extends BaseEntityDto {
     @JsonProperty("communication_method")
     private CommunicationMethod communicationMethod;
 
+    @JsonProperty("city_id")
+    private Long cityId;
+
     private CityDto city;
 
     private UserDto user;
+
+    private List<DonationImageDto> images;
 }

@@ -2,7 +2,6 @@ package com.harera.hayat.service.user;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -122,9 +121,6 @@ class AuthValidationTest {
         LoginRequest loginRequest = new LoginRequest();
         loginRequest.setSubject(mobile);
         loginRequest.setPassword("password");
-
-        // when
-        when(userRepository.findByMobile(mobile)).thenReturn(null);
 
         // then
         assertThrows(LoginException.class,

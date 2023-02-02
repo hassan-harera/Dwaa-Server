@@ -58,7 +58,7 @@ class MedicineDonationServiceTest {
     @BeforeEach
     void setUp() {
         MedicineDonationValidation medicineDonationValidation =
-                        new MedicineDonationValidation(donationValidation);
+                        new MedicineDonationValidation();
         modelMapper = new NotNullableMapper();
         medicineDonationService = new MedicineDonationService(donationRepository,
                         medicineDonationValidation, cityRepository,
@@ -227,7 +227,6 @@ class MedicineDonationServiceTest {
                         medicineDonationResponse.getMedicineExpirationDate());
         assertEquals(request.getAmount(), medicineDonationResponse.getAmount());
 
-        verify(donationValidation, times(1)).validate(request);
         verify(medicineDonationRepository, times(1)).save(any());
     }
 }

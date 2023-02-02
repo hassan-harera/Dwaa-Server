@@ -13,11 +13,14 @@ import lombok.Data;
 public class MedicineDonationRequest extends MedicineDonationDto {
 
     @JsonProperty(value = "city_id")
-    private long cityId;
+    private Long cityId;
+
     @JsonProperty(value = "unit_id")
-    private long unitId;
+    private Long unitId;
+
     @JsonProperty(value = "medicine_id")
     private Long medicineId;
+
     @JsonProperty(value = "medicine_expiration_date")
     private OffsetDateTime medicineExpirationDate;
 }

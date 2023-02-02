@@ -6,14 +6,12 @@ import io.jsonwebtoken.Claims
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import org.springframework.beans.factory.annotation.Value
-import org.springframework.context.annotation.PropertySource
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.stereotype.Service
 import java.util.*
 import java.util.function.Function
 
 @Service
-@PropertySource("classpath:secrets.properties")
 class JwtServiceImpl : JwtService {
 
     @Value("\${secret-key}")

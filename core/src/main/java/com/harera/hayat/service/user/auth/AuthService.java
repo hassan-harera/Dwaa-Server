@@ -9,6 +9,7 @@ import java.util.Optional;
 
 import org.apache.commons.lang3.StringUtils;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -29,6 +30,8 @@ import com.harera.hayat.model.user.auth.SignupResponse;
 import com.harera.hayat.repository.UserRepository;
 import com.harera.hayat.repository.user.auth.TokenRepository;
 import com.harera.hayat.service.firebase.FirebaseService;
+
+import io.jsonwebtoken.JwtException;
 
 @Service
 public class AuthService {
@@ -159,5 +162,13 @@ public class AuthService {
             jwtUtils.validateRefreshToken(user, logoutRequest.getRefreshToken());
             tokenRepository.removeUserRefreshToken(logoutRequest.getRefreshToken());
         }
+    }
+
+    public User getRequestUser() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication()
+                        .getPrincipal();
+        if (principal instanceof User user)
+            return user;
+        throw new JwtException("Invalid token");
     }
 }

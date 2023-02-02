@@ -8,26 +8,21 @@ import java.time.OffsetDateTime;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.harera.hayat.exception.MandatoryFieldException;
 import com.harera.hayat.model.donation.CommunicationMethod;
 import com.harera.hayat.model.donation.medicine.MedicineDonationRequest;
-import com.harera.hayat.repository.city.CityRepository;
 import com.harera.hayat.util.ErrorCode;
 
 @ExtendWith(MockitoExtension.class)
 class DonationValidationTest {
 
-    @Mock
-    private CityRepository cityRepository;
-
     private DonationValidation donationValidation;
 
     @BeforeEach
     void setUp() {
-        donationValidation = new DonationValidation(cityRepository);
+        donationValidation = new DonationValidation();
     }
 
     @Test
@@ -47,7 +42,7 @@ class DonationValidationTest {
         // when
         Exception ex = null;
         try {
-            donationValidation.validate(request);
+            donationValidation.validateDonation(request);
         } catch (Exception e) {
             ex = e;
         }
@@ -74,7 +69,7 @@ class DonationValidationTest {
         // when
         Exception ex = null;
         try {
-            donationValidation.validate(request);
+            donationValidation.validateDonation(request);
         } catch (Exception e) {
             ex = e;
 

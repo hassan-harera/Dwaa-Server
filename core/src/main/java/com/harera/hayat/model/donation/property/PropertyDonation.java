@@ -6,16 +6,17 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-import com.harera.hayat.model.BaseEntity;
+import com.harera.hayat.model.donation.Donation;
 
 import lombok.Getter;
 import lombok.Setter;
 
+
 @Setter
 @Getter
 @Entity
-@Table(name = "donation_property")
-public class PropertyDonation extends BaseEntity {
+@Table(name = "property_donation")
+public class PropertyDonation extends Donation {
 
     @Column(name = "rooms")
     private int rooms;

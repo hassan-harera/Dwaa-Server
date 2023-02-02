@@ -10,16 +10,10 @@ import com.harera.hayat.service.donation.DonationValidation;
 import com.harera.hayat.util.ErrorCode;
 
 @Service
-public class FoodDonationValidation {
-
-    private final DonationValidation donationValidation;
-
-    public FoodDonationValidation(DonationValidation donationValidation) {
-        this.donationValidation = donationValidation;
-    }
+public class FoodDonationValidation extends DonationValidation {
 
     public void validateCreate(FoodDonationDto foodDonationRequest) {
-        donationValidation.validate(foodDonationRequest);
+        validateDonation(foodDonationRequest);
         validateMandatory(foodDonationRequest);
         validateFormat(foodDonationRequest);
     }
@@ -50,7 +44,7 @@ public class FoodDonationValidation {
     }
 
     public void validateUpdate(Long id, FoodDonationUpdateRequest request) {
-        donationValidation.validate(request);
+        validateDonation(request);
         validateMandatory(request);
         validateFormat(request);
     }
