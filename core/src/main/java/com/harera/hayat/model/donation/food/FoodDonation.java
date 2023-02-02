@@ -10,7 +10,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.harera.hayat.model.BaseEntity;
 import com.harera.hayat.model.donation.Donation;
 import com.harera.hayat.model.food.FoodUnit;
 
@@ -21,7 +20,7 @@ import lombok.Setter;
 @Getter
 @Entity
 @Table(name = "food_donation")
-public class FoodDonation extends BaseEntity {
+public class FoodDonation extends Donation {
 
     @Basic
     @Column(name = "food_expiration_date")

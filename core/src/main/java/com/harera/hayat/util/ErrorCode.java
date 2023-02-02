@@ -112,6 +112,7 @@ public final class ErrorCode {
     public static final String DIFFERENT_SIGNUP_MOBILE = "signup_006";
     public static final String UNIQUE_SIGNUP_EMAIL = "signup_007";
     public static final String UNIQUE_SIGNUP_MOBILE = "signup_008";
+    public static final String NOT_FOUND_PROPERTY_DONATION = "property_donation_013";
 
     private ErrorCode() {
     }

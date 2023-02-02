@@ -27,6 +27,9 @@ public class PropertyDonation extends Donation {
     @Column(name = "kitchens")
     private int kitchens;
 
+    @Column(name = "people_capacity")
+    private int peopleCapacity;
+
     @Column(name = "available_from")
     private OffsetDateTime availableFrom;
 

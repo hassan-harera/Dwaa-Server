@@ -25,7 +25,7 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 @RestController
 @RequestMapping("/api/v1")
-@Tag(name = "Auth", description = "Auth & Oauth API")
+@Tag(name = "Auth")
 public class AuthController {
 
     private final AuthService authService;

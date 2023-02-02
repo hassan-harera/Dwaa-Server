@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 
 import com.harera.hayat.exception.EntityNotFoundException;
 import com.harera.hayat.model.city.City;
+import com.harera.hayat.model.donation.DonationCategory;
+import com.harera.hayat.model.donation.DonationState;
 import com.harera.hayat.model.donation.property.PropertyDonation;
 import com.harera.hayat.model.donation.property.PropertyDonationRequest;
 import com.harera.hayat.model.donation.property.PropertyDonationResponse;
@@ -39,13 +41,11 @@ public class PropertyDonationService {
         PropertyDonation propertyDonation =
                         modelMapper.map(propertyDonationRequest, PropertyDonation.class);
         assignCity(propertyDonation, propertyDonationRequest.getCityId());
-        assignUser(propertyDonation);
+        propertyDonation.setUser(authService.getRequestUser());
+        propertyDonation.setState(DonationState.PENDING);
+        propertyDonation.setCategory(DonationCategory.PROPERTY);
         propertyDonationRepository.save(propertyDonation);
         return modelMapper.map(propertyDonation, PropertyDonationResponse.class);
-    }
-
-    private void assignUser(PropertyDonation propertyDonation) {
-        propertyDonation.setUser(authService.getRequestUser());
     }
 
     private void assignCity(PropertyDonation donation, Long cityId) {
@@ -53,5 +53,14 @@ public class PropertyDonationService {
                         .orElseThrow(() -> new EntityNotFoundException(City.class, cityId,
                                         ErrorCode.NOT_FOUND_DONATION_CITY));
         donation.setCity(city);
+    }
+
+    public PropertyDonationResponse get(Long propertyDonationId) {
+        PropertyDonation propertyDonation = propertyDonationRepository
+                        .findById(propertyDonationId)
+                        .orElseThrow(() -> new EntityNotFoundException(
+                                        PropertyDonation.class, propertyDonationId,
+                                        ErrorCode.NOT_FOUND_PROPERTY_DONATION));
+        return modelMapper.map(propertyDonation, PropertyDonationResponse.class);
     }
 }

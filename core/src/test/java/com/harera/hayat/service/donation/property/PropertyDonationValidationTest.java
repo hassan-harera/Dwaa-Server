@@ -26,11 +26,6 @@ class PropertyDonationValidationTest {
         propertyDonationValidation = new PropertyDonationValidation();
     }
 
-    /**
-     * //mandatory validation: title, communicationMethod,
-     * cityId, rooms, pathrooms, kitchens, availableFrom
-     * availableTo, peopleCapacity
-     */
     @Test
     void validateCreate_withoutTitle_shouldThrowException() {
         // given

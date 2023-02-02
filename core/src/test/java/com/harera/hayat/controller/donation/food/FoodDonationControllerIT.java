@@ -13,7 +13,6 @@ import org.springframework.http.ResponseEntity;
 import com.harera.hayat.ApplicationIT;
 import com.harera.hayat.model.city.City;
 import com.harera.hayat.model.donation.CommunicationMethod;
-import com.harera.hayat.model.donation.Donation;
 import com.harera.hayat.model.donation.DonationCategory;
 import com.harera.hayat.model.donation.DonationState;
 import com.harera.hayat.model.donation.food.FoodDonation;
@@ -99,10 +98,9 @@ class FoodDonationControllerIT extends ApplicationIT {
         FoodUnit foodUnit =
                         foodUnitStubs.insert("foodUnitArabicName", "foodUnitEnglishName");
 
-        Donation donation = donationStubs.insert("title", "description", city,
-                        DonationCategory.FOOD, DonationState.PENDING);
         FoodDonation foodDonation = foodDonationStubs.insert(foodUnit, 1F,
-                        OffsetDateTime.now(), donation);
+                        OffsetDateTime.now(), "title", DonationCategory.FOOD,
+                        "description", city, DonationState.PENDING);
 
         FoodDonationUpdateRequest request = new FoodDonationUpdateRequest();
         request.setCityId(city.getId());
@@ -136,7 +134,7 @@ class FoodDonationControllerIT extends ApplicationIT {
                             .isEqual(response.getFoodExpirationDate()));
         } finally {
             // Cleanup
-            dataUtil.delete(city, foodUnit, foodDonation, donation);
+            dataUtil.delete(city, foodUnit, foodDonation, foodDonation);
         }
     }
 
@@ -149,10 +147,9 @@ class FoodDonationControllerIT extends ApplicationIT {
         FoodUnit foodUnit =
                         foodUnitStubs.insert("foodUnitArabicName", "foodUnitEnglishName");
 
-        Donation donation = donationStubs.insert("title", "description", city,
-                        DonationCategory.FOOD, DonationState.PENDING);
         FoodDonation foodDonation = foodDonationStubs.insert(foodUnit, 1F,
-                        OffsetDateTime.now(), donation);
+                        OffsetDateTime.now(), "title", DonationCategory.FOOD,
+                        "description", city, DonationState.PENDING);
 
         try {
             // When
@@ -166,18 +163,18 @@ class FoodDonationControllerIT extends ApplicationIT {
             FoodDonationResponse response = responseEntity.getBody();
             assertNotNull(response);
 
-            assertEquals(donation.getTitle(), response.getTitle());
-            assertEquals(donation.getDescription(), response.getDescription());
-            assertEquals(donation.getCommunicationMethod(),
+            assertEquals(foodDonation.getTitle(), response.getTitle());
+            assertEquals(foodDonation.getDescription(), response.getDescription());
+            assertEquals(foodDonation.getCommunicationMethod(),
                             response.getCommunicationMethod());
-            assertEquals(donation.getCity().getId(), response.getCity().getId());
+            assertEquals(foodDonation.getCity().getId(), response.getCity().getId());
             assertEquals(foodDonation.getAmount(), response.getAmount());
             assertEquals(foodDonation.getUnit().getId(), response.getUnit().getId());
             assertTrue(foodDonation.getFoodExpirationDate().toLocalDate()
                             .isEqual(response.getFoodExpirationDate().toLocalDate()));
         } finally {
             // Cleanup
-            dataUtil.delete(city, foodUnit, foodDonation, donation);
+            dataUtil.delete(city, foodUnit, foodDonation, foodDonation);
         }
     }
 

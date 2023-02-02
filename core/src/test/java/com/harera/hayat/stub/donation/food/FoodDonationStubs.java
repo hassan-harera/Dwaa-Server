@@ -5,7 +5,9 @@ import java.time.OffsetDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.harera.hayat.model.donation.Donation;
+import com.harera.hayat.model.city.City;
+import com.harera.hayat.model.donation.DonationCategory;
+import com.harera.hayat.model.donation.DonationState;
 import com.harera.hayat.model.donation.food.FoodDonation;
 import com.harera.hayat.model.food.FoodUnit;
 import com.harera.hayat.repository.donation.FoodDonationRepository;
@@ -19,20 +21,27 @@ public class FoodDonationStubs {
     private final FoodDonationRepository foodDonationRepository;
 
     public FoodDonation create(FoodUnit unit, Float amount,
-                    OffsetDateTime foodExpirationDate, Donation donation) {
+                    OffsetDateTime foodExpirationDate, String title,
+                    DonationCategory category, String description, City city,
+                    DonationState state) {
         FoodDonation foodDonation = new FoodDonation();
         foodDonation.setId(0L);
         foodDonation.setUnit(unit);
         foodDonation.setAmount(amount);
         foodDonation.setFoodExpirationDate(foodExpirationDate);
-        foodDonation.setDonation(donation);
+        foodDonation.setTitle(title);
+        foodDonation.setCategory(category);
+        foodDonation.setCity(city);
+        foodDonation.setState(state);
         return foodDonation;
     }
 
     public FoodDonation insert(FoodUnit unit, Float amount,
-                    OffsetDateTime foodExpirationDate, Donation donation) {
-        FoodDonation foodDonation = create(unit, amount, foodExpirationDate, donation);
-        foodDonation.setId(0L);
+                    OffsetDateTime foodExpirationDate, String title,
+                    DonationCategory category, String description, City city,
+                    DonationState state) {
+        FoodDonation foodDonation = create(unit, amount, foodExpirationDate, title,
+                        category, description, city, state);
         return foodDonationRepository.save(foodDonation);
     }
 
