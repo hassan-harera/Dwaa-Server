@@ -13,11 +13,11 @@ open class Announcement : BaseEntity {
 
     @Basic
     @Column(name = "end_date", nullable = false)
-    var endDate: OffsetDateTime? = null
+    open var endDate: OffsetDateTime? = null
 
     @Basic
     @Column(name = "start_date", nullable = false)
-    var startDate: OffsetDateTime? = null
+    open var startDate: OffsetDateTime? = null
 
     @Basic
     @Column(name = "description", nullable = true)
@@ -25,7 +25,7 @@ open class Announcement : BaseEntity {
 
     @Basic
     @Column(name = "title", nullable = false)
-    lateinit var title: String
+    open lateinit var title: String
 
     constructor()
 }

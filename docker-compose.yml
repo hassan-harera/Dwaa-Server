@@ -9,13 +9,14 @@ services:
     depends_on:
       - redis
       - db
-      - service_discovery
+      - service-discovery
     networks:
       - hayat_internal_network
       - hayat_app_network
-  service_discovery:
+  service-discovery:
     container_name: "hayat_service_discovery"
     image: hayat_service_discovery:latest
+    hostname: "service-discovery"
     ports:
       - "8761:8761"
     networks:
