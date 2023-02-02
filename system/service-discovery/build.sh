@@ -1,2 +1,2 @@
 #!/bin/bash
-docker build ./system/service-discovery -t hayat_service_discovery:latest
+docker build . -t hayat_service_discovery:latest

@@ -5,7 +5,7 @@ docker-compose -f docker-compose.yml down
 mvn package -Dmaven.test.skip
 
 #Docker build
-bash ./system/service-discovery/build.sh
-bash ./core/build.sh
+docker build ./system/service-discovery -t hayat_service_discovery:latest
+docker build ./core -t hayat_app:latest
 
 docker-compose -f docker-compose.yml up -d

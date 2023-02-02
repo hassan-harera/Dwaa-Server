@@ -38,7 +38,7 @@
 
     <modules>
         <module>core</module>
-        <module>service-discovery</module>
+        <module>system/service-discovery</module>
     </modules>
 
     <repositories>

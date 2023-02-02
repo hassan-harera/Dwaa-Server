@@ -1,2 +1,2 @@
 #!/bin/bash
-docker build ./core -t hayat_app:latest
+docker build . -t hayat_app:latest
