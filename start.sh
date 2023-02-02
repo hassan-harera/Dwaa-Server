@@ -6,6 +6,7 @@ mvn package -Dmaven.test.skip
 
 #Docker build
 docker build ./system/service-discovery -t hayat_service_discovery:latest
+docker build ./system/config-service -t hayat_config_service:latest
 docker build ./core -t hayat_app:latest
 
 docker-compose -f docker-compose.yml up -d

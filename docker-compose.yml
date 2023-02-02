@@ -10,6 +10,7 @@ services:
       - redis
       - db
       - service-discovery
+      - config-service
     networks:
       - hayat_internal_network
       - hayat_app_network
@@ -21,6 +22,14 @@ services:
       - "8761:8761"
     networks:
       - hayat_app_network
+      - hayat_internal_network
+  config-service:
+    container_name: "hayat_config_service"
+    image: hayat_config_service:latest
+    hostname: "config-service"
+    ports:
+      - "8111:8111"
+    networks:
       - hayat_internal_network
   redis:
     container_name: "hayat_redis"

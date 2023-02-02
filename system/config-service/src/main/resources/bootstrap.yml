@@ -1,0 +1,14 @@
+server:
+  port: 8111
+
+spring:
+  application:
+    name: config-service
+  cloud:
+    config:
+      server:
+        native:
+          search-locations: classpath:/configuration
+  profiles:
+    active: native
+
