@@ -38,6 +38,7 @@
 
     <modules>
         <module>core</module>
+        <module>service-discovery</module>
     </modules>
 
     <repositories>

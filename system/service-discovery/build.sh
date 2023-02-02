@@ -1,3 +1,2 @@
 #!/bin/bash
-mvn package -Dmaven.test.skip
-docker build . -t hayat_service_discovery:latest
+docker build ./system/service-discovery -t hayat_service_discovery:latest
