@@ -3,7 +3,7 @@ package com.harera.hayat.model.user;
 import lombok.Data;
 
 @Data
-public class FirebaseUser extends UserDto {
+public class AppFirebaseUser extends UserDto {
 
     private String uid;
     private String email;

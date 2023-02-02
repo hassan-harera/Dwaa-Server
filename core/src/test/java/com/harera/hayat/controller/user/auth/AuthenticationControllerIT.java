@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 
 import com.harera.hayat.ApplicationIT;
-import com.harera.hayat.model.user.FirebaseUser;
+import com.harera.hayat.model.user.AppFirebaseUser;
 import com.harera.hayat.model.user.User;
 import com.harera.hayat.model.user.auth.LoginRequest;
 import com.harera.hayat.model.user.auth.LoginResponse;
@@ -110,14 +110,14 @@ class AuthenticationControllerIT extends ApplicationIT {
         signupRequest.setFirstName("Ahmed");
         signupRequest.setLastName("Mohamed");
 
-        FirebaseUser firebaseUser = new FirebaseUser();
-        firebaseUser.setMobile(mobile);
-        firebaseUser.setPassword(password);
-        firebaseUser.setFirstName("Ahmed");
-        firebaseUser.setLastName("Mohamed");
+        AppFirebaseUser appFirebaseUser = new AppFirebaseUser();
+        appFirebaseUser.setMobile(mobile);
+        appFirebaseUser.setPassword(password);
+        appFirebaseUser.setFirstName("Ahmed");
+        appFirebaseUser.setLastName("Mohamed");
 
         // When
-        when(firebaseService.createUser(signupRequest)).thenReturn(firebaseUser);
+        when(firebaseService.createUser(signupRequest)).thenReturn(appFirebaseUser);
         ResponseEntity<SignupResponse> response =
                         requestUtil.post(url, signupRequest, null, SignupResponse.class);
 

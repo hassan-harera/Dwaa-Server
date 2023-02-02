@@ -13,7 +13,8 @@ import com.google.firebase.auth.FirebaseToken;
 import com.google.firebase.auth.UserRecord;
 import com.harera.hayat.exception.InvalidTokenException;
 import com.harera.hayat.exception.LoginException;
-import com.harera.hayat.model.user.FirebaseUser;
+import com.harera.hayat.model.user.AppFirebaseToken;
+import com.harera.hayat.model.user.AppFirebaseUser;
 import com.harera.hayat.model.user.auth.SignupRequest;
 import com.harera.hayat.util.ErrorCode;
 
@@ -32,7 +33,7 @@ public class FirebaseService {
         this.modelMapper = modelMapper;
     }
 
-    public FirebaseToken getFirebaseToken(String token) {
+    public AppFirebaseToken getToken(String token) {
         if (isBlank(token))
             throw new InvalidTokenException(ErrorCode.INVALID_FIREBASE_TOKEN,
                             "Invalid Token");
@@ -41,14 +42,14 @@ public class FirebaseService {
             if (firebaseToken == null)
                 throw new InvalidTokenException(ErrorCode.INVALID_FIREBASE_TOKEN,
                                 "Invalid Token");
-            return firebaseToken;
+            return modelMapper.map(firebaseToken, AppFirebaseToken.class);
         } catch (FirebaseAuthException e) {
             log.error(e);
             throw new RuntimeException(e);
         }
     }
 
-    public UserRecord getUser(String uid) {
+    public AppFirebaseUser getUser(String uid) {
         if (isBlank(uid))
             throw new InvalidTokenException(ErrorCode.INVALID_FIREBASE_UID,
                             "Invalid uid");
@@ -57,7 +58,8 @@ public class FirebaseService {
             if (user == null)
                 throw new InvalidTokenException(ErrorCode.INVALID_FIREBASE_TOKEN,
                                 "Invalid Token");
-            return user;
+
+            return modelMapper.map(user, AppFirebaseUser.class);
         } catch (FirebaseAuthException e) {
             log.error(e);
             throw new RuntimeException(e);
@@ -65,7 +67,7 @@ public class FirebaseService {
     }
 
     @Nullable
-    public FirebaseUser createUser(@NotNull SignupRequest signupRequest) {
+    public AppFirebaseUser createUser(@NotNull SignupRequest signupRequest) {
         Intrinsics.checkNotNullParameter(signupRequest, "signupRequest");
         UserRecord.CreateRequest userRecord = (new UserRecord.CreateRequest())
                         .setPhoneNumber("+2" + signupRequest.getMobile())
@@ -80,7 +82,7 @@ public class FirebaseService {
 
         try {
             return modelMapper.map(firebaseAuth.createUser(userRecord),
-                            FirebaseUser.class);
+                            AppFirebaseUser.class);
         } catch (FirebaseAuthException e) {
             throw new LoginException(ErrorCode.INVALID_FIREBASE_TOKEN, "Invalid token");
         }

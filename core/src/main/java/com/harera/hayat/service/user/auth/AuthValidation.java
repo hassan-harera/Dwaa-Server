@@ -10,27 +10,31 @@ import static com.harera.hayat.util.ErrorCode.MANDATORY_LAST_NAME;
 import static com.harera.hayat.util.ErrorCode.MANDATORY_LOGIN_OAUTH_TOKEN;
 import static com.harera.hayat.util.ErrorCode.MANDATORY_LOGIN_PASSWORD;
 import static com.harera.hayat.util.ErrorCode.MANDATORY_LOGIN_SUBJECT;
+import static com.harera.hayat.util.ErrorCode.MANDATORY_SIGNUP_FIREBASE_TOKEN;
 import static com.harera.hayat.util.ErrorCode.MANDATORY_USER_MOBILE;
 import static com.harera.hayat.util.ErrorCode.NOT_FOUND_USERNAME_OR_PASSWORD;
 import static com.harera.hayat.util.ErrorCode.UNIQUE_EMAIL;
+import static com.harera.hayat.util.ErrorCode.UNIQUE_SIGNUP_EMAIL;
+import static com.harera.hayat.util.ErrorCode.UNIQUE_SIGNUP_MOBILE;
 import static com.harera.hayat.util.ErrorCode.UNIQUE_USER_MOBILE;
 import static com.harera.hayat.util.ErrorMessage.INCORRECT_USERNAME_PASSWORD_MESSAGE;
 import static com.harera.hayat.util.HayatStringUtils.isValidEmail;
 import static com.harera.hayat.util.SubjectUtils.INSTANCE;
 import static org.apache.commons.lang3.StringUtils.isBlank;
+import static org.springframework.util.StringUtils.hasText;
 
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
-import com.google.firebase.auth.FirebaseToken;
 import com.harera.hayat.exception.FieldFormatException;
 import com.harera.hayat.exception.LoginException;
 import com.harera.hayat.exception.MandatoryFieldException;
 import com.harera.hayat.exception.UniqueFieldException;
+import com.harera.hayat.model.user.AppFirebaseToken;
+import com.harera.hayat.model.user.AppFirebaseUser;
 import com.harera.hayat.model.user.User;
 import com.harera.hayat.model.user.auth.LoginRequest;
 import com.harera.hayat.model.user.auth.OAuthLoginRequest;
@@ -88,8 +92,8 @@ public class AuthValidation {
 
     public void validate(OAuthLoginRequest loginRequest) {
         validateMandatory(loginRequest);
-        FirebaseToken firebaseToken =
-                        firebaseService.getFirebaseToken(loginRequest.getDeviceToken());
+        AppFirebaseToken firebaseToken =
+                        firebaseService.getToken(loginRequest.getDeviceToken());
         validateUidExisted(firebaseToken.getUid());
     }
 
@@ -170,17 +174,19 @@ public class AuthValidation {
     }
 
     private void validateMandatory(SignupRequest signupRequest) {
-        //mandatory validation: mobile, firstName, lastName, password
-        if (!StringUtils.hasText(signupRequest.getMobile())) {
+        if (!hasText(signupRequest.getFirebaseToken())) {
+            throw new MandatoryFieldException(MANDATORY_SIGNUP_FIREBASE_TOKEN, "mobile");
+        }
+        if (!hasText(signupRequest.getMobile())) {
             throw new MandatoryFieldException(MANDATORY_USER_MOBILE, "mobile");
         }
-        if (!StringUtils.hasText(signupRequest.getFirstName())) {
+        if (!hasText(signupRequest.getFirstName())) {
             throw new MandatoryFieldException(MANDATORY_FIRST_NAME, "firstName");
         }
-        if (!StringUtils.hasText(signupRequest.getLastName())) {
+        if (!hasText(signupRequest.getLastName())) {
             throw new MandatoryFieldException(MANDATORY_LAST_NAME, "lastName");
         }
-        if (!StringUtils.hasText(signupRequest.getPassword())) {
+        if (!hasText(signupRequest.getPassword())) {
             throw new MandatoryFieldException(MANDATORY_LOGIN_PASSWORD, "password");
         }
     }
@@ -221,12 +227,48 @@ public class AuthValidation {
     }
 
     private void validateMandatory(LoginRequest loginRequest) {
-        if (!StringUtils.hasText(loginRequest.getSubject())) {
+        if (!hasText(loginRequest.getSubject())) {
             throw new MandatoryFieldException(MANDATORY_LOGIN_SUBJECT, "subject");
         }
 
-        if (!StringUtils.hasText(loginRequest.getPassword())) {
+        if (!hasText(loginRequest.getPassword())) {
             throw new MandatoryFieldException(MANDATORY_LOGIN_PASSWORD, "password");
+        }
+    }
+
+    public void validate(AppFirebaseUser firebaseUser, SignupRequest signupRequest) {
+        validateExisting(firebaseUser);
+        validateIdentical(firebaseUser, signupRequest);
+    }
+
+    private void validateExisting(AppFirebaseUser firebaseUser) {
+        if (userRepository.existsByUid(firebaseUser.getUid())) {
+            throw new UniqueFieldException(ErrorCode.UNIQUE_SIGNUP_UID, "firebase_uid",
+                            firebaseUser.getUid());
+        }
+        if (hasText(firebaseUser.getMobile())
+                        && userRepository.existsByMobile(firebaseUser.getMobile())) {
+            throw new UniqueFieldException(UNIQUE_SIGNUP_MOBILE, "firebase_uid",
+                            firebaseUser.getUid());
+        }
+        if (hasText(firebaseUser.getEmail())
+                        && userRepository.existsByEmail(firebaseUser.getEmail())) {
+            throw new UniqueFieldException(UNIQUE_SIGNUP_EMAIL, "firebase_uid",
+                            firebaseUser.getUid());
+        }
+    }
+
+    private void validateIdentical(AppFirebaseUser firebaseUser,
+                    SignupRequest signupRequest) {
+        if (hasText(firebaseUser.getMobile())
+                        && !firebaseUser.getMobile().equals(signupRequest.getMobile())) {
+            throw new FieldFormatException(ErrorCode.DIFFERENT_SIGNUP_MOBILE,
+                            MANDATORY_LAST_NAME);
+        }
+        if (hasText(firebaseUser.getEmail())
+                        && !firebaseUser.getEmail().equals(signupRequest.getEmail())) {
+            throw new FieldFormatException(ErrorCode.DIFFERENT_SIGNUP_MOBILE,
+                            MANDATORY_LAST_NAME);
         }
     }
 }

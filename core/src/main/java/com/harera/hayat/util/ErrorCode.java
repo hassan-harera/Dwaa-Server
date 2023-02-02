@@ -105,6 +105,13 @@ public final class ErrorCode {
                     "property_donation_011";
     public static final String FORMAT_PROPERTY_DONATION_AVAILABLE_TO =
                     "property_donation_012";
+    public static final String NOT_FOUND_LOGIN_USER = "login_004";
+    public static final String NOT_FOUND_USER = "user_001";
+    public static final String MANDATORY_SIGNUP_FIREBASE_TOKEN = "signup_004";
+    public static final String UNIQUE_SIGNUP_UID = "signup_005";
+    public static final String DIFFERENT_SIGNUP_MOBILE = "signup_006";
+    public static final String UNIQUE_SIGNUP_EMAIL = "signup_007";
+    public static final String UNIQUE_SIGNUP_MOBILE = "signup_008";
 
     private ErrorCode() {
     }

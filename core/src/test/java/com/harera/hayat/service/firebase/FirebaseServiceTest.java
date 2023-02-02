@@ -39,7 +39,7 @@ class FirebaseServiceTest {
         // when
         InvalidTokenException invalidTokenException =
                         assertThrows(InvalidTokenException.class,
-                                        () -> firebaseService.getFirebaseToken(token));
+                                        () -> firebaseService.getToken(token));
         // then
         assertEquals(ErrorCode.INVALID_FIREBASE_TOKEN, invalidTokenException.getCode());
     }
@@ -54,7 +54,7 @@ class FirebaseServiceTest {
         when(firebaseAuth.verifyIdToken(token, true)).thenReturn(null);
         InvalidTokenException invalidTokenException =
                         assertThrows(InvalidTokenException.class,
-                                        () -> firebaseService.getFirebaseToken(token));
+                                        () -> firebaseService.getToken(token));
         // then
         assertEquals(ErrorCode.INVALID_FIREBASE_TOKEN, invalidTokenException.getCode());
     }
@@ -69,7 +69,7 @@ class FirebaseServiceTest {
         when(firebaseAuth.verifyIdToken(token, true))
                         .thenThrow(FirebaseAuthException.class);
         assertThrows(RuntimeException.class,
-                        () -> firebaseService.getFirebaseToken(token));
+                        () -> firebaseService.getToken(token));
     }
 
     @Test
@@ -107,5 +107,4 @@ class FirebaseServiceTest {
         // when
         assertThrows(RuntimeException.class, () -> firebaseService.getUser(uid));
     }
-
 }

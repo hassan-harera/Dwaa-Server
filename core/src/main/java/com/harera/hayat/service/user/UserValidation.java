@@ -5,11 +5,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import com.google.firebase.auth.FirebaseToken;
 import com.harera.hayat.exception.FieldFormatException;
 import com.harera.hayat.exception.LoginException;
 import com.harera.hayat.exception.MandatoryFieldException;
 import com.harera.hayat.exception.UniqueFieldException;
+import com.harera.hayat.model.user.AppFirebaseToken;
 import com.harera.hayat.model.user.auth.LoginRequest;
 import com.harera.hayat.model.user.auth.OAuthLoginRequest;
 import com.harera.hayat.model.user.auth.SignupRequest;
@@ -55,8 +55,8 @@ public class UserValidation {
 
     public void validate(OAuthLoginRequest loginRequest) {
         validateMandatory(loginRequest);
-        FirebaseToken firebaseToken =
-                        firebaseService.getFirebaseToken(loginRequest.getDeviceToken());
+        AppFirebaseToken firebaseToken =
+                        firebaseService.getToken(loginRequest.getDeviceToken());
         validateExistingEmail(firebaseToken.getEmail());
         validateExistedUid(firebaseToken.getUid());
     }
