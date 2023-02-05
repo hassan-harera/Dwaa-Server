@@ -12,7 +12,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.harera.hayat.exception.MandatoryFieldException;
 import com.harera.hayat.model.donation.CommunicationMethod;
-import com.harera.hayat.model.donation.medicine.MedicineDonationRequest;
 import com.harera.hayat.util.ErrorCode;
 
 @ExtendWith(MockitoExtension.class)

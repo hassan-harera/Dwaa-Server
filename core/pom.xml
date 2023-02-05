@@ -25,6 +25,12 @@
             <version>5.0.0</version>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>com.harera.hayat</groupId>
+            <artifactId>common</artifactId>
+            <version>1.0</version>
+        </dependency>
     </dependencies>
 
 

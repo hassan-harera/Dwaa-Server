@@ -1,6 +1,6 @@
 package com.harera.hayat.service.announcement
 
-import com.harera.hayat.exception.EntityNotFoundException
+import com.harera.hayat.common.exception.EntityNotFoundException
 import com.harera.hayat.model.announcement.AnnouncementResponse
 import com.harera.hayat.repository.announcement.AnnouncementRepository
 import org.modelmapper.ModelMapper

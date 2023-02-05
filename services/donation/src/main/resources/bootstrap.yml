@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: donation-service
+  cloud:
+    config:
+      uri: http://config-service:8111
+      fail-fast: true

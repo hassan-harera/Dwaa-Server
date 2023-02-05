@@ -15,9 +15,9 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 
+import com.harera.hayat.common.model.city.City;
 import com.harera.hayat.config.NotNullableMapper;
 import com.harera.hayat.exception.EntityNotFoundException;
-import com.harera.hayat.model.city.City;
 import com.harera.hayat.model.donation.CommunicationMethod;
 import com.harera.hayat.model.donation.DonationCategory;
 import com.harera.hayat.model.donation.DonationState;

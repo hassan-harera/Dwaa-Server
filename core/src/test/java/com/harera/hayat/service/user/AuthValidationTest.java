@@ -1,6 +1,5 @@
 package com.harera.hayat.service.user;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -13,6 +12,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.harera.hayat.common.repository.UserRepository;
 import com.harera.hayat.exception.FieldFormatException;
 import com.harera.hayat.exception.LoginException;
 import com.harera.hayat.exception.MandatoryFieldException;
@@ -20,7 +20,6 @@ import com.harera.hayat.exception.UniqueFieldException;
 import com.harera.hayat.model.user.auth.LoginRequest;
 import com.harera.hayat.model.user.auth.OAuthLoginRequest;
 import com.harera.hayat.model.user.auth.SignupRequest;
-import com.harera.hayat.repository.UserRepository;
 import com.harera.hayat.service.firebase.FirebaseService;
 import com.harera.hayat.service.user.auth.AuthValidation;
 import com.harera.hayat.util.ErrorCode;

@@ -38,8 +38,10 @@
 
     <modules>
         <module>core</module>
+        <module>common</module>
         <module>system/service-discovery</module>
         <module>system/config-service</module>
+        <module>services/donation</module>
     </modules>
 
     <repositories>

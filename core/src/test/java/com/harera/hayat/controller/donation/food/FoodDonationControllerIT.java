@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 
 import com.harera.hayat.ApplicationIT;
-import com.harera.hayat.model.city.City;
+import com.harera.hayat.common.model.city.City;
 import com.harera.hayat.model.donation.CommunicationMethod;
 import com.harera.hayat.model.donation.DonationCategory;
 import com.harera.hayat.model.donation.DonationState;

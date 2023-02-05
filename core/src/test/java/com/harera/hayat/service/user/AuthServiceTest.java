@@ -12,6 +12,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.harera.hayat.common.repository.UserRepository;
 import com.harera.hayat.config.NotNullableMapper;
 import com.harera.hayat.model.user.AppFirebaseToken;
 import com.harera.hayat.model.user.AppFirebaseUser;
@@ -19,7 +20,6 @@ import com.harera.hayat.model.user.User;
 import com.harera.hayat.model.user.auth.LoginRequest;
 import com.harera.hayat.model.user.auth.SignupRequest;
 import com.harera.hayat.model.user.auth.SignupResponse;
-import com.harera.hayat.repository.UserRepository;
 import com.harera.hayat.repository.user.auth.TokenRepository;
 import com.harera.hayat.service.firebase.FirebaseService;
 import com.harera.hayat.service.user.auth.AuthService;
