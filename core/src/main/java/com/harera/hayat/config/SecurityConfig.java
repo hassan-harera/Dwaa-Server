@@ -19,6 +19,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.harera.hayat.filter.JwtRequestFilter;
@@ -49,12 +52,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 "/api/v1/notifications/**", "/v3/api-docs/**", "/swagger-ui/**",
                 "/swagger-resources/**" };
 
-        httpSecurity.csrf().disable().httpBasic().disable().formLogin().disable()
-                        .authorizeRequests().antMatchers(publicUris).permitAll()
+        httpSecurity.csrf().disable().httpBasic().disable().formLogin().disable().cors()
+                        .and().authorizeRequests().antMatchers(publicUris).permitAll()
                         .antMatchers("/**").authenticated().and()
                         .addFilterBefore(jwtRequestFilter,
                                         UsernamePasswordAuthenticationFilter.class)
                         .httpBasic();
+    }
+
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurerAdapter() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/**").allowedOrigins("http://localhost:3000");
+            }
+        };
     }
 
     @Override
