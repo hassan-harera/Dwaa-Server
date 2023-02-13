@@ -13,7 +13,6 @@ import java.util.*
 import java.util.function.Function
 
 @Service
-@PropertySource("classpath:secrets.properties")
 class JwtServiceImpl : JwtService {
 
     @Value("\${secret-key}")
