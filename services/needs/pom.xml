@@ -7,7 +7,7 @@
         <groupId>com.harera.hayat</groupId>
         <artifactId>Hayat-EG</artifactId>
         <version>1.0-SNAPSHOT</version>
-        <relativePath>../pom.xml</relativePath>
+        <relativePath>../../pom.xml</relativePath>
     </parent>
 
     <artifactId>needs</artifactId>
@@ -27,6 +27,13 @@
             <version>5.0.0</version>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>com.harera.hayat</groupId>
+            <artifactId>framework</artifactId>
+            <version>1.0</version>
+        </dependency>
+
     </dependencies>
 
     <build>

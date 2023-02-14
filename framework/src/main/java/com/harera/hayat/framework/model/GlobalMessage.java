@@ -1,10 +1,8 @@
-package com.harera.hayat.model.exception;
+package com.harera.hayat.framework.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-
-import com.harera.hayat.model.BaseEntity;
 
 import lombok.Data;
 

@@ -38,6 +38,7 @@
 
     <modules>
         <module>core</module>
+        <module>framework</module>
 <!--        <module>services/needs</module>-->
     </modules>
 

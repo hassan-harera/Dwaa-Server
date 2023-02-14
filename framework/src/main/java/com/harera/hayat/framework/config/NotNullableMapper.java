@@ -1,12 +1,12 @@
-package com.harera.hayat.config;
+package com.harera.hayat.framework.config;
 
 import static java.time.LocalDate.parse;
-import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 
+import org.apache.commons.lang3.StringUtils;
 import org.modelmapper.AbstractConverter;
 import org.modelmapper.AbstractProvider;
 import org.modelmapper.Converter;
@@ -14,7 +14,8 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.Provider;
 import org.modelmapper.convention.MatchingStrategies;
 
-import com.harera.hayat.util.DateFormat;
+import com.harera.hayat.framework.util.DateFormat;
+
 
 public class NotNullableMapper extends ModelMapper {
 
@@ -59,7 +60,7 @@ public class NotNullableMapper extends ModelMapper {
         return new AbstractConverter<>() {
             @Override
             protected LocalDate convert(String source) {
-                if (isNotBlank(source)) {
+                if (StringUtils.isNotBlank(source)) {
                     DateTimeFormatter format = DateTimeFormatter.ofPattern(DateFormat.DATE_FORMAT);
                     return parse(source, format);
                 }
@@ -81,7 +82,7 @@ public class NotNullableMapper extends ModelMapper {
         return new AbstractConverter<>() {
             @Override
             protected OffsetDateTime convert(String source) {
-                if (isNotBlank(source)) {
+                if (StringUtils.isNotBlank(source)) {
                     return OffsetDateTime.parse(source);
                 }
                 return null;
