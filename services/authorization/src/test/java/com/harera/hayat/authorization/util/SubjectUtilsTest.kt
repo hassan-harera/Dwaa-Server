@@ -1,4 +1,4 @@
-package com.harera.hayat.util
+package com.harera.hayat.authorization.util
 
 import com.harera.hayat.framework.util.SubjectUtils
 import org.junit.jupiter.api.Test

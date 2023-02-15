@@ -32,7 +32,7 @@ services:
     ports:
       - "3306:3306"
     networks:
-      - hayat_internal_network
+      - hayat_app_network
 networks:
   hayat_app_network:
     driver: bridge

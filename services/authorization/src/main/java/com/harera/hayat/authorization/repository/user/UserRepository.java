@@ -1,4 +1,4 @@
-package com.harera.hayat.framework.repository.user;
+package com.harera.hayat.authorization.repository.user;
 
 import java.util.Optional;
 
@@ -7,8 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.harera.hayat.framework.model.user.User;
-
+import com.harera.hayat.authorization.model.user.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
