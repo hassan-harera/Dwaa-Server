@@ -9,19 +9,20 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import com.harera.hayat.common.exception.DocumentNotFoundException;
 import com.harera.hayat.common.exception.EntityNotFoundException;
 import com.harera.hayat.common.model.city.City;
-import com.harera.hayat.common.model.food.FoodUnit;
 import com.harera.hayat.common.repository.city.CityRepository;
-import com.harera.hayat.common.repository.food.FoodUnitRepository;
-import com.harera.hayat.common.service.user.auth.JwtService;
+import com.harera.hayat.common.service.auth.JwtService;
 import com.harera.hayat.donation.model.donation.Donation;
 import com.harera.hayat.donation.model.donation.DonationCategory;
 import com.harera.hayat.donation.model.donation.food.FoodDonation;
 import com.harera.hayat.donation.model.donation.food.FoodDonationRequest;
 import com.harera.hayat.donation.model.donation.food.FoodDonationResponse;
 import com.harera.hayat.donation.model.donation.food.FoodDonationUpdateRequest;
+import com.harera.hayat.donation.model.food.FoodUnit;
 import com.harera.hayat.donation.repository.donation.food.FoodDonationRepository;
+import com.harera.hayat.donation.repository.food.FoodUnitRepository;
 
 @Service
 public class FoodDonationService {
@@ -73,7 +74,7 @@ public class FoodDonationService {
         foodDonationValidation.validateUpdate(id, request);
 
         FoodDonation foodDonation = foodDonationRepository.findById(id).orElseThrow(
-                        () -> new EntityNotFoundException(FoodDonation.class, id));
+                        () -> new DocumentNotFoundException(FoodDonation.class, id));
 
         modelMapper.map(request, foodDonation);
         foodDonation.setCity(getCity(request.getCityId()));
@@ -101,7 +102,7 @@ public class FoodDonationService {
 
     private FoodUnit getUnit(Long unitId) {
         return foodUnitRepository.findById(unitId).orElseThrow(
-                        () -> new EntityNotFoundException(FoodUnit.class, unitId));
+                        () -> new DocumentNotFoundException(FoodUnit.class, unitId));
 
     }
 
@@ -119,7 +120,7 @@ public class FoodDonationService {
 
     public FoodDonationResponse get(Long id) {
         FoodDonation foodDonation = foodDonationRepository.findById(id).orElseThrow(
-                        () -> new EntityNotFoundException(FoodDonation.class, id));
+                        () -> new DocumentNotFoundException(FoodDonation.class, id));
         FoodDonationResponse response =
                         modelMapper.map(foodDonation, FoodDonationResponse.class);
         modelMapper.map(foodDonation, response);

@@ -12,3 +12,8 @@ spring:
   profiles:
     active: native
 
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://service-discovery:8761/eureka
+      preferIpAddress: true

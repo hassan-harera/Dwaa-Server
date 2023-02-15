@@ -20,12 +20,10 @@ public class MedicineDonation extends Donation {
     @Field(name = "amount")
     private Float amount;
 
-    @Field(name = "unit")
     private MedicineUnit medicineUnit;
 
     @Field(name = "medicine_expiration_date")
     private OffsetDateTime medicineExpirationDate;
 
-    @Field(name = "medicine")
     private Medicine medicine;
 }

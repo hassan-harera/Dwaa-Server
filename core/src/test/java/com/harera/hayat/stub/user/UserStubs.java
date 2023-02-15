@@ -3,7 +3,7 @@ package com.harera.hayat.stub.user;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.harera.hayat.common.repository.UserRepository;
+import com.harera.hayat.common.repository.user.UserRepository;
 import com.harera.hayat.model.user.User;
 import com.harera.hayat.stub.PasswordStubs;
 

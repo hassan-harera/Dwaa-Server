@@ -1,6 +1,5 @@
 package com.harera.hayat.service.user;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -12,7 +11,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.harera.hayat.common.repository.UserRepository;
+import com.harera.hayat.common.repository.user.UserRepository;
+import com.harera.hayat.common.service.auth.UserUtils;
 import com.harera.hayat.config.NotNullableMapper;
 import com.harera.hayat.model.user.AppFirebaseToken;
 import com.harera.hayat.model.user.AppFirebaseUser;

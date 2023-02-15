@@ -1,22 +1,48 @@
 version: "3.8"
 
 services:
-  app:
-    container_name: "hayat_app"
-    image: hayat_app:latest
+  gateway:
+    container_name: "hayat_gateway_service"
+    image: hayat_gateway_service:latest
+    build:
+      context: ./system/gateway
+      dockerfile: Dockerfile
+    ports:
+      - 8443:8443
+    depends_on:
+      - donation-service
+      - core-service
+    networks:
+      - hayat_internal_network
+      - hayat_app_network
+  core-service:
+    container_name: "hayat_core"
+    image: hayat_core:latest
+    build:
+      context: ./core
+      dockerfile: Dockerfile
     ports:
       - 8080:8080
     depends_on:
       - redis
       - db
+      - mongo-db
       - service-discovery
       - config-service
+    healthcheck:
+      test: "curl --fail --silent confi-service:8111/actuator/health | grep UP || exit 1"
+      interval: 20s
+      timeout: 5s
+      retries: 5
+      start_period: 40s
     networks:
       - hayat_internal_network
-      - hayat_app_network
   service-discovery:
     container_name: "hayat_service_discovery"
     image: hayat_service_discovery:latest
+    build:
+      context: ./system/service-discovery
+      dockerfile: Dockerfile
     hostname: "service-discovery"
     ports:
       - "8761:8761"
@@ -26,6 +52,17 @@ services:
   config-service:
     container_name: "hayat_config_service"
     image: hayat_config_service:latest
+    build:
+      context: ./system/config-service
+      dockerfile: Dockerfile
+    depends_on:
+      - service-discovery
+    healthcheck:
+      test: "curl --fail --silent service-discovery:8761/actuator/health | grep UP || exit 1"
+      interval: 20s
+      timeout: 5s
+      retries: 5
+      start_period: 40s
     hostname: "config-service"
     ports:
       - "8111:8111"
@@ -34,16 +71,41 @@ services:
   donation-service:
     image: hayat_donation_service:latest
     container_name: "hayat_donation_service"
+    build:
+      context: ./services/donation
+      dockerfile: Dockerfile
     depends_on:
       - redis
       - db
+      - mongo-db
       - service-discovery
       - config-service
-    hostname: "donation-service"
-    ports:
-      - "8081:8081"
+    healthcheck:
+      test: "curl --fail --silent confi-service:8111/actuator/health | grep UP || exit 1"
+      interval: 20s
+      timeout: 5s
+      retries: 5
+      start_period: 40s
     networks:
       - hayat_internal_network
+    hostname: "donation-service"
+  #  authorization-service:
+  #    image: hayat_authorization_service:latest
+  #    container_name: "hayat_authorization_service"
+  #    build:
+  #      context: ./services/authorization
+  #      dockerfile: Dockerfile
+  #    depends_on:
+  #      - redis
+  #      - db
+  #      - mongo-db
+  #      - service-discovery
+  #      - config-service
+  #    hostname: "authorization-service"
+  #    ports:
+  #      - "8081:8081"
+  #    networks:
+  #      - hayat_internal_network
   redis:
     container_name: "hayat_redis"
     image: redis:latest
@@ -69,12 +131,13 @@ services:
     container_name: "hayat_mongodb"
     restart: always
     environment:
-      - MONGO_INITDB_ROOT_USERNAME=harera
-      - MONGO_INITDB_ROOT_PASSWORD=hayat
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=harera
+      - MONGO_INITDB_DATABASE=hayat
     volumes:
       - hayat_mongodb:/var/lib/mongodb
     ports:
-      - "3333:3333"
+      - "27017:27017"
     networks:
       - hayat_internal_network
 networks:
@@ -85,3 +148,4 @@ networks:
     internal: true
 volumes:
   hayat_db:
+  hayat_mongodb:

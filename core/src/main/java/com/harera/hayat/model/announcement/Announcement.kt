@@ -1,6 +1,6 @@
 package com.harera.hayat.model.announcement
 
-import com.harera.hayat.model.BaseEntity
+import com.harera.hayat.common.model.BaseEntity
 import java.time.OffsetDateTime
 import javax.persistence.Basic
 import javax.persistence.Column

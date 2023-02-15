@@ -3,12 +3,14 @@ package com.harera.hayat.donation.model.donation.food;
 import java.time.OffsetDateTime;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.harera.hayat.common.model.food.FoodUnitDto;
 import com.harera.hayat.donation.model.donation.DonationDto;
+import com.harera.hayat.donation.model.food.FoodUnitDto;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Setter
+@Getter
 public class FoodDonationDto extends DonationDto {
 
     private FoodUnitDto unit;

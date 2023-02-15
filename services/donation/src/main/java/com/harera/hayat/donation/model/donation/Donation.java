@@ -29,18 +29,13 @@ public class Donation extends BaseDocument {
     @Field(name = "expiration_date")
     private OffsetDateTime donationExpirationDate;
 
-    @Field(name = "expiration_date")
     private CommunicationMethod communicationMethod;
 
-    @Field(name = "category")
     private DonationCategory category;
 
-    @Field(name = "state")
     private DonationState state;
 
-    @Field(name = "city")
     private City city;
 
-    @Field(name = "user")
     private User user;
 }

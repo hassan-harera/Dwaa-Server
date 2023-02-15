@@ -2,6 +2,7 @@ package com.harera.hayat.common.model.user;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -14,7 +15,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.harera.hayat.common.model.BaseEntity;
-import com.harera.hayat.common.model.user.auth.UserAuthority;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -62,6 +62,12 @@ public class User extends BaseEntity implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return authorities;
+    }
+
+    public Collection<String> getRoles() {
+        return getAuthorities().stream()
+                        .map(authority -> authority.getAuthority().replace("ROLE_", ""))
+                        .collect(Collectors.toSet());
     }
 
     @Override

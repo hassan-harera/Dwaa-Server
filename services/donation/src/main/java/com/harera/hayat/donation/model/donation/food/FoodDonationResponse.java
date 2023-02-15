@@ -1,7 +1,9 @@
 package com.harera.hayat.donation.model.donation.food;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Setter
+@Getter
 public class FoodDonationResponse extends FoodDonationDto {
 }

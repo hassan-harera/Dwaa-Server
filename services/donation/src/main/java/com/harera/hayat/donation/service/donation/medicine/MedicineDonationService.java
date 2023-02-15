@@ -14,7 +14,7 @@ import com.harera.hayat.common.model.user.User;
 import com.harera.hayat.common.repository.city.CityRepository;
 import com.harera.hayat.common.repository.medicine.MedicineRepository;
 import com.harera.hayat.common.repository.medicine.MedicineUnitRepository;
-import com.harera.hayat.common.service.user.auth.JwtService;
+import com.harera.hayat.common.service.auth.JwtService;
 import com.harera.hayat.donation.model.donation.Donation;
 import com.harera.hayat.donation.model.donation.DonationCategory;
 import com.harera.hayat.donation.model.donation.medicine.MedicineDonation;

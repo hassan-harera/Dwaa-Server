@@ -4,7 +4,7 @@ import java.time.OffsetDateTime;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.harera.hayat.common.model.BaseEntityDto;
+import com.harera.hayat.common.model.BaseDocumentDto;
 import com.harera.hayat.common.model.city.CityDto;
 import com.harera.hayat.common.model.user.UserDto;
 import com.harera.hayat.donation.model.donation.image.DonationImageDto;
@@ -14,7 +14,7 @@ import lombok.Setter;
 
 @Setter
 @Getter
-public class DonationDto extends BaseEntityDto {
+public class DonationDto extends BaseDocumentDto {
 
     private String title;
 
